@@ -1,3 +1,13 @@
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+PROJECT_PATH = os.path.join(BASE_DIR, os.pardir)
+PROJECT_PATH = os.path.abspath(PROJECT_PATH)
+DATABASE_PATH = os.path.join(PROJECT_PATH, "birding_ear", 'birding_ear.db')
+print PROJECT_PATH
+
+
+
+
 """
 Django settings for birding_ear project.
 
@@ -7,10 +17,6 @@ https://docs.djangoproject.com/en/1.6/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
 # Quick-start development settings - unsuitable for production
@@ -36,6 +42,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'birding_ear'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -57,8 +64,9 @@ WSGI_APPLICATION = 'birding_ear.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': DATABASE_PATH,                      # Or path to database file if using sqlite3.
+
     }
 }
 
