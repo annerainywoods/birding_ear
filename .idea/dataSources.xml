@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="1912162694">
+  <component name="DataSourceManagerImpl" format="xml" hash="2420934470">
     <data-source source="LOCAL" name="birding_ear" uuid="09b755ad-e587-4c11-8a12-076aa0ce4544">
       <driver-ref>sqlite.xerial</driver-ref>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
