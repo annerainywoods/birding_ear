@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Birds</title>
+</head>
+
+<body>
+<h1>Birds in db</h1>
+
+{% if birds %}
+<ul>
+    {% for bird in birds %}
+    <li>{{ bird.name }} <br/>
+        <audio controls>
+            <source src='{{ bird.bird_call }}' type="audio/mpeg">
+        </audio>
+    <br/><br/></li>
+    {% endfor %}
+</ul>
+{% else %}
+<strong>There are no birds present.</strong>
+{% endif %}
+
+</body>
+</html>
