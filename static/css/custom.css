@@ -1,0 +1,261 @@
+@font-face {
+  font-family: 'Glyphicons Halflings';
+
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+
+/***************** Colors **************/
+.yellow { background-color:#d9a720;}
+.yellow:hover {background-color: #ebbb3b;}
+
+.olive { background-color:#818506;}
+.olive:hover { background-color: #929608;}
+.btn-group.olive a.btn, .btn-group.olive a.btn:hover { color:#818506; font-weight:bold; font-size:30px}
+h1.olive:hover { background-color:#818506;}
+button.olive, button.olive:hover { color: white}
+
+.blue-grey { background-color:#54728c;}
+.blue-grey:hover { background-color:#547c9e;}
+
+.lt-brown { background-color:#845d24;}
+.lt-brown:hover { background-color:#976926;}
+
+.dk-brown { background-color:#3f2c05;}
+.dk-brown:hover { background-color:#523d10;}
+
+.rust { background-color:#a44013;}
+.rust:hover { background-color:#b74e25;}
+
+/* dark grey #485661 */
+
+/*********** Common *********************/
+body {
+    font-family: Verdana, sans-serif;
+    font-size:24px;
+    margin:0;
+    padding:0;
+    background:black;
+}
+div#wrapper {
+    width: 500px;
+    min-height: 1000px;
+    margin:0 auto;
+    position:relative;
+    background: #e0e0e0;
+}
+h1#sitename {
+    font-family: Arvo, Times, sans-serif;
+    font-weight: 700;
+    margin:0;
+    background-color:#485661;
+    background-image: url("../../media/spectrogram.png");
+    background-repeat:no-repeat;
+    background-position: 160px 5px;
+    font-size:24px;
+    padding: 6px 0 8px 10px;
+}
+h1#sitename a {
+    color:#f9df06;
+    text-decoration:none;
+}
+h1#sitename span {
+    color:white;
+    display:inline;
+}
+a#menu {
+    background-color:white;
+    border: 1px solid rgb(204, 204, 204);
+    border-radius:6px;
+    width:70px;
+    height:70px;
+    display:block;
+    color:black;
+    position:absolute;
+    right:10px;
+    top:10px;
+    font-size:16px;
+    line-height: 16px;
+    text-align:center;
+    padding: 13px 0 0 0;
+    box-sizing: border-box;
+}
+a#menu span {
+    font-size:40px;
+}
+a#menu:hover {
+    text-decoration:none;
+    background-color:#eeeeee;
+}
+.favorite {
+    font-weight:bold;
+}
+.exclude {
+    text-decoration:line-through;
+}
+
+audio {
+    width:100%
+}
+
+h1 {
+    font-family: Arvo, Verdana, sans-serif;
+    font-weight: 400;
+    color:white;
+    font-size:40px;
+    margin:0;
+    padding: 10px 0 10px 10px;
+}
+h1 span {
+    display:block;
+    font-size:24px;
+}
+h2 {
+    font-family: Arvo, Verdana, sans-serif;
+    font-weight: 400;
+    margin:0;
+    padding: 30px 0 0 30px;
+    font-size:30px;
+}
+h3 {
+    font-family: Arvo, Verdana, sans-serif;
+    font-weight: 400;
+    margin:0;
+    padding: 0 30px 0 30px;
+    font-size:24px;
+}
+h4 {
+    margin:0;
+    padding:3px 0 0 6px;
+    font-size:22px;
+}
+
+/******************** Home ********************/
+.mix-icon ul {
+    margin: 0;
+    padding: 0;
+}
+.mix-icon ul li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.mix-icon{
+    width:124px;
+    margin: 10px 0 0 30px;
+}
+.mix-icon{
+    width: 124px;
+    height:200px;
+    float:left;
+    overflow: hidden;
+}
+.mix-icon ul {
+    width: 124px;
+    height: 124px;
+    border: 7px solid white;
+    border-radius:10px;
+    background-image: url("../../media/mix-icon.png");
+    color:white;
+    cursor: pointer;
+}
+.mix-icon li.mix_learned,
+.mix-icon li.mix_total {
+    display:block;
+    width:40px;
+    text-align:center;
+    margin: 3px 0 0 60px;
+    font-size: 20px;
+}
+.mix-icon li.mix_total{
+    border-top: solid 2px white;
+    margin-top: 0;
+}
+.mix-icon li.mix_abbr{
+    font-family: "Lucida Console", Verdana, monospace; font-weight: 400;
+    font-size:40px;
+    text-align:center;
+    line-height: 40px;
+}
+.mix-icon li.mix_abbr a, .mix-icon li.mix_abbr a:hover {
+    color:white;
+    text-decoration:none
+}
+.mix-icon.add-new li.verdana-plus {
+    font-size:80px;
+    display:block;
+    text-align:center;
+    margin:-10px 0 0 0;
+}
+.mix-icon.add-new li.mix_abbr {
+    font-size:24px;
+    display:block;
+    text-align:center;
+    margin:-30px 0 0 0;
+}
+
+/******************** Mix Detail ********************/
+
+#mix-detail-info {
+    margin:0 0 0 30px
+}
+#mix-detail-info ul {
+    margin:0;
+    padding:0;
+}
+#mix-detail-info ul li {
+    list-style-type: none;
+    margin:0;
+    padding:0;
+}
+#mix-detail-info span {
+    display:inline-block;
+    background-color:#485661;
+    color:white;
+    border-radius: 50%;
+    width:60px;
+    height:60px;
+    text-align:center;
+    padding:15px 0 0 0;
+    margin: 30px 10px 0 0;
+    font-size:32px
+}
+#mix-detail-info ul li ul {
+    margin: 0 0 0 70px
+}
+#mix-detail-info ul.inline-list li {
+    display: inline;
+}
+
+/***************drill*************/
+#drill {
+    margin:30px;
+}
+#drill p {
+    margin: 0 0 40px 0;
+    text-align:center;
+}
+.drill-btns {
+    margin: 10px 0 60px 0;
+}
+.drill-btns .btn {
+    display:block;
+    height:60px;
+    margin:10px 0;
+    padding:10px 0 0 30px;
+    text-align:left;
+    font-size: 24px;
+}
+.drill-btns .btn:hover {
+    background-color: #bbb
+}
+#drill input[type="checkbox"] {
+    width: 30px;
+    height: 30px;
+    margin:0 0 0 -40px;
+    padding:0;
+}
+#drill .checkbox label {
+    font-size: 20px;
+    padding:0 0 0 40px
+}
