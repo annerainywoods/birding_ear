@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BirdingEar</title>
+
+    <!-- Bootstrap -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+    <link href='http://fonts.googleapis.com/css?family=Arvo:400,700' rel='stylesheet' type='text/css'>
+    <link href="../css/custom.css" rel="stylesheet">
+  </head>
+  <body>
+  <div id="wrapper">
+    <h1 id="sitename"><a href="#">Birding<span>Ear</span></a></h1>
+    <a href="#" id="menu-icon"><span class="glyphicon glyphicon-list"></span><span class="sr-only">Navigation</span></a>
+    <h1>Settings</h1>
+    <div id="settings">
+    <form role="form">
+        <h4>Bird Frequency in Drills <a href="#" title="Adjust how often new, learned and missed birds come up in the drill questions."><span class="glyphicon glyphicon-info-sign"></span></a></h4>
+        <div class="form-group">
+            <label class="control-label">New Birds</label>
+            <div>
+                <select class="form-control input-lg">
+                  <option>Very High</option>
+                  <option>High</option>
+                  <option selected>Medium</option>
+                  <option>Low</option>
+                  <option>Very Low</option>
+                  <option>None</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Learned Birds</label>
+            <div>
+                <select class="form-control input-lg">
+                  <option>Very High</option>
+                  <option>High</option>
+                  <option>Medium</option>
+                  <option>Low</option>
+                  <option selected>Very Low</option>
+                  <option>None</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Missed Birds</label>
+            <div>
+                <select class="form-control input-lg">
+                  <option>Very High</option>
+                  <option selected>High</option>
+                  <option>Medium</option>
+                  <option>Low</option>
+                  <option>Very Low</option>
+                  <option>None</option>
+                </select>
+            </div>
+        </div>
+        <hr>
+        <h4>Drill Batches <a href="#" title="Break a large bird mix into smaller batches. When you've learned most of the birds in the batch, the remaining missed birds will carry over into the next batch."><span class="glyphicon glyphicon-info-sign"></span></a></h4>
+        <div class="form-group">
+            <label class="control-label">Birds per batch</label>
+            <div>
+                <select class="form-control input-lg">
+                  <option>10</option>
+                  <option>20</option>
+                  <option selected>30</option>
+                  <option>40</option>
+                  <option>50</option>
+                  <option>All</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Start new batch at</label>
+            <div>
+                <select class="form-control input-lg">
+                  <option>50% learned</option>
+                  <option>60% learned</option>
+                  <option>70% learned</option>
+                  <option selected>80% learned</option>
+                  <option>90% learned</option>
+                  <option>100% learned</option>
+                </select>
+            </div>
+        </div>
+        <hr>
+        <h4>Drill Challenge Level <a href="#" title="Make the drill questions more challenging by skipping right to the bird sound, without hearing the name of it first. Or group similar birds together, making it tougher to identify each bird."><span class="glyphicon glyphicon-info-sign"></span></a></h4>
+        <div class="checkbox checkbox-lg">
+            <label style="display:inline"><input type="checkbox"> Hear the bird sound without the bird name</label>
+        </div>
+        <div class="checkbox checkbox-lg">
+            <label style="display:inline"><input type="checkbox"> Group related birds in batch whenever possible</label>
+        </div>
+        <hr>
+
+    </form>
+    </div><!--drill-->
+    <div class="clearfix"></div>
+    </div><!--end wrapper-->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../js/bootstrap.min.js"></script>
+  </body>
+</html>

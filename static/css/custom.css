@@ -18,8 +18,11 @@ button.yellow, button.yellow:hover { color: white}
 h1.olive, h1.olive:hover { background-color:#818506; color: white }
 button.olive, button.olive:hover { color: white}
 
-.blue-grey { background-color:#54728c;}
-.blue-grey:hover { background-color:#547c9e;}
+.blue { background-color:#1b507e;}
+.blue:hover { background-color:#155b96;}
+.btn-group.blue a.btn, .btn-group.blue a.btn:hover { color:#054a84; }
+h1.blue, h1.blue:hover { background-color:#054a84; color: white }
+button.blue, button.blue:hover { color: white}
 
 .lt-brown { background-color:#845d24;}
 .lt-brown:hover { background-color:#976926;}
@@ -37,13 +40,13 @@ h1.rust, h1.rust:hover { background-color:#a44013; color: white }
 button.rust, button.rust:hover { color: white}
 
 .dk-grey { background-color:#333;}
-.dk-grey:hover {background-color: #485661;}
+.dk-grey:hover {background-color: #494949;}
 
 .theme-grey { background-color:#4b6071;}
-.theme-grey:hover {background-color: #4b6071;}
+.theme-grey:hover {background-color: #506e86;}
 .btn-group.theme-grey a.btn, .btn-group.theme-grey a.btn:hover { color:#4b6071; }
 h1.theme-grey, h1.theme-grey:hover { background-color:#4b6071; color: white }
-button.rust, button.theme-grey:hover { color: white}
+button.theme-grey, button.theme-grey:hover { color: white}
 /* theme grey #485661 */
 
 /*********** Common *********************/
@@ -127,7 +130,14 @@ div#menu {
 .exclude {
     text-decoration:line-through;
 }
-
+hr {
+    background:#ccc;
+    border:0;
+    height:1px;
+    clear:both;
+    margin:10px 0 20px 0;
+    display:block;
+}
 audio {
     width:100%
 }
@@ -167,12 +177,19 @@ h3 {
     font-size:24px;
 }
 h4 {
+    margin:0 0 10px 0;
+    padding:0;
+    font-size:20px;
+    font-weight:700;
+}
+.mix-icon h4 {
     margin:0;
     padding:3px 0 0 6px;
-    font-size:22px;
+    font-size:20px;
+    font-weight:normal;
 }
 
-#bird-detail, #drill, #edit, #favorites, #mix-detail-info  {
+#bird-detail, #drill, #edit, #favorites, #mix-detail-info, #settings  {
     margin:30px;
 }
 .checkbox-lg {
@@ -329,5 +346,13 @@ h4 {
     border-bottom: 1px solid #ccc;
 }
 
-/*********************Bird detail*************************/
+/*********************Settings*************************/
 
+#settings form label {
+    display:inline-block;
+    font-weight:normal;
+    width:180px;
+}
+#settings form div div {
+    display:inline-block;
+}
