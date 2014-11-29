@@ -24,24 +24,26 @@
   <div id="wrapper">
     <h1 id="sitename"><a href="#">Birding<span>Ear</span></a></h1>
     <a href="#" id="menu-icon"><span class="glyphicon glyphicon-list"></span><span class="sr-only">Navigation</span></a>
-    <h1 class="olive">Drill</h1>
-    <div id="drill">
+    <h1 class="theme-grey">Favorites <a href="#" title="Add two or more favorites and you'll automatically get a Favorites mix that you can drill and quiz on."><span class="glyphicon glyphicon-info-sign"></span></a></h1>
+    <div class="btn-group btn-group-justified theme-grey" role="group" aria-label="Justified button group">
+      <a href="#" class="btn btn-default" role="button">DRILL</a>
+      <a href="#" class="btn btn-default" role="button">QUIZ</a>
+    </div>
+    <div id="favorites">
+    <p>Favorites compilation</p>
     <audio controls>
         <source src="../../media/call_common_loon.mp3" type="audio/mpeg" />
     </audio>
-    <p>What was that last call?</p>
-    <form class="drill-btns" role="form">
-        <button class="btn btn-default btn-lg btn-block" role="button">Western Grebe</button>
-        <button class="btn btn-default btn-lg btn-block" role="button">Common Loon</button>
-        <button class="btn btn-default btn-lg btn-block" role="button">Great Blue Heron</button>
-    </form>
-    <div class="checkbox checkbox-lg">
-        <label><input type="checkbox" value=""> Listen-only mode</label> <a href="#" title="Listen-only mode will disable the answer options and autoplay the bird sounds. BirdingEar can't track your learned birds in this mode, so drill settings that involve tracking won't be applied."><span class="glyphicon glyphicon-info-sign"></span></a>
-    </div>
-
-    <button type="button" class="btn btn-default btn-lg olive">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back to the PNW bird mix
-    </button>
+    <dl>
+        <dt><a href="#">Common Loon</a></dt>
+        <dd><a href="#">Unfavorite</a></dd>
+        <dt><a href="#">Horned Grebe</a></dt>
+        <dd><a href="#">Unfavorite</a></dd>
+        <dt><a href="#">Great Blue Heron</a></dt>
+        <dd><a href="#">Unfavorite</a></dd>
+        <dt><a href="#">Western Grebe</a></dt>
+        <dd><a href="#">Unfavorite</a></dd>
+    </dl>
 
     </div><!--drill-->
     <div class="clearfix"></div>

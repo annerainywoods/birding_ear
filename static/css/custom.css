@@ -8,11 +8,14 @@
 /***************** Colors **************/
 .yellow { background-color:#d9a720;}
 .yellow:hover {background-color: #ebbb3b;}
+.btn-group.yellow a.btn, .btn-group.yellow a.btn:hover { color:#d9a720 }
+h1.yellow, h1.yellow:hover { background-color:#d9a720; color: white }
+button.yellow, button.yellow:hover { color: white}
 
 .olive { background-color:#818506;}
 .olive:hover { background-color: #929608;}
-.btn-group.olive a.btn, .btn-group.olive a.btn:hover { color:#818506; font-weight:bold; font-size:30px}
-h1.olive:hover { background-color:#818506;}
+.btn-group.olive a.btn, .btn-group.olive a.btn:hover { color:#818506; }
+h1.olive, h1.olive:hover { background-color:#818506; color: white }
 button.olive, button.olive:hover { color: white}
 
 .blue-grey { background-color:#54728c;}
@@ -23,16 +26,30 @@ button.olive, button.olive:hover { color: white}
 
 .dk-brown { background-color:#3f2c05;}
 .dk-brown:hover { background-color:#523d10;}
+.btn-group.dk-brown a.btn, .btn-group.dk-brown a.btn:hover { color:#3f2c05; }
+h1.dk-brown, h1.dk-brown:hover { background-color:#3f2c05; color: white }
+button.dk-brown, button.dk-brown:hover { color: white}
 
 .rust { background-color:#a44013;}
 .rust:hover { background-color:#b74e25;}
+.btn-group.rust a.btn, .btn-group.rust a.btn:hover { color:#a44013; }
+h1.rust, h1.rust:hover { background-color:#a44013; color: white }
+button.rust, button.rust:hover { color: white}
 
-/* dark grey #485661 */
+.dk-grey { background-color:#333;}
+.dk-grey:hover {background-color: #485661;}
+
+.theme-grey { background-color:#4b6071;}
+.theme-grey:hover {background-color: #4b6071;}
+.btn-group.theme-grey a.btn, .btn-group.theme-grey a.btn:hover { color:#4b6071; }
+h1.theme-grey, h1.theme-grey:hover { background-color:#4b6071; color: white }
+button.rust, button.theme-grey:hover { color: white}
+/* theme grey #485661 */
 
 /*********** Common *********************/
 body {
     font-family: Verdana, sans-serif;
-    font-size:24px;
+    font-size:20px;
     margin:0;
     padding:0;
     background:black;
@@ -49,9 +66,9 @@ h1#sitename {
     font-weight: 700;
     margin:0;
     background-color:#485661;
-    background-image: url("../../media/spectrogram.png");
+    background-image: url("../../media/sprite.png");
     background-repeat:no-repeat;
-    background-position: 160px 5px;
+    background-position: 135px -10px;
     font-size:24px;
     padding: 6px 0 8px 10px;
 }
@@ -63,7 +80,7 @@ h1#sitename span {
     color:white;
     display:inline;
 }
-a#menu {
+a#menu-icon {
     background-color:white;
     border: 1px solid rgb(204, 204, 204);
     border-radius:6px;
@@ -80,12 +97,29 @@ a#menu {
     padding: 13px 0 0 0;
     box-sizing: border-box;
 }
-a#menu span {
+a#menu-icon span {
     font-size:40px;
 }
-a#menu:hover {
+a#menu-icon:hover {
     text-decoration:none;
     background-color:#eeeeee;
+}
+div#menu {
+    position:absolute;
+    right:10px;
+    top:75px;
+    background-color:#fff;
+    width:400px;
+    padding:10px;
+    border: 1px solid rgb(204, 204, 204);
+    border-radius:6px 0 6px 6px;
+}
+.nav-pills li a {
+    background-color:#ccc
+}
+.nav-pills li a:hover {
+    background-color:#485661;
+    color:white
 }
 .favorite {
     font-weight:bold;
@@ -97,24 +131,32 @@ a#menu:hover {
 audio {
     width:100%
 }
+.btn-group a.btn {
+    font-weight:bold; font-size:30px
+}
+.tooltip-inner {
+    text-align: left;
+}
 
 h1 {
     font-family: Arvo, Verdana, sans-serif;
     font-weight: 400;
-    color:white;
+    color:#333;
     font-size:40px;
     margin:0;
-    padding: 10px 0 10px 10px;
+    padding: 10px 0 10px 30px;
 }
 h1 span {
     display:block;
     font-size:24px;
 }
+h1 a span.glyphicon {
+    color:white
+}
 h2 {
     font-family: Arvo, Verdana, sans-serif;
     font-weight: 400;
-    margin:0;
-    padding: 30px 0 0 30px;
+    margin: 20px 90px 20px 30px;
     font-size:30px;
 }
 h3 {
@@ -128,6 +170,23 @@ h4 {
     margin:0;
     padding:3px 0 0 6px;
     font-size:22px;
+}
+
+#bird-detail, #drill, #edit, #favorites, #mix-detail-info  {
+    margin:30px;
+}
+.checkbox-lg {
+    padding: 10px 0;
+}
+.checkbox-lg input[type="checkbox"] {
+    width: 30px;
+    height: 30px;
+    margin:0 0 0 -40px;
+    padding:0;
+}
+.checkbox-lg label {
+    font-size: 20px;
+    padding:0 0 0 40px !important
 }
 
 /******************** Home ********************/
@@ -155,9 +214,13 @@ h4 {
     height: 124px;
     border: 7px solid white;
     border-radius:10px;
-    background-image: url("../../media/mix-icon.png");
+    background-image: url("../../media/sprite.png");
+    background-position: 0 -111px;
     color:white;
     cursor: pointer;
+}
+.mix-icon.trophy ul {
+    background-position: -135px -111px;
 }
 .mix-icon li.mix_learned,
 .mix-icon li.mix_total {
@@ -194,43 +257,39 @@ h4 {
     margin:-30px 0 0 0;
 }
 
-/******************** Mix Detail ********************/
+/******************** Mix Detail & Bird Detail ********************/
 
-#mix-detail-info {
-    margin:0 0 0 30px
-}
-#mix-detail-info ul {
+
+.detail-info ul {
     margin:0;
     padding:0;
 }
-#mix-detail-info ul li {
+.detail-info ul li {
     list-style-type: none;
     margin:0;
     padding:0;
 }
-#mix-detail-info span {
+.detail-info span.bullet {
     display:inline-block;
     background-color:#485661;
     color:white;
     border-radius: 50%;
-    width:60px;
-    height:60px;
+    width:50px;
+    height:50px;
     text-align:center;
-    padding:15px 0 0 0;
+    padding:10px 0 0 0;
     margin: 30px 10px 0 0;
-    font-size:32px
+    font-size:28px
 }
-#mix-detail-info ul li ul {
+.detail-info ul li ul {
     margin: 0 0 0 70px
 }
-#mix-detail-info ul.inline-list li {
+.detail-info ul.inline-list li {
     display: inline;
 }
 
 /***************drill*************/
-#drill {
-    margin:30px;
-}
+
 #drill p {
     margin: 0 0 40px 0;
     text-align:center;
@@ -238,24 +297,37 @@ h4 {
 .drill-btns {
     margin: 10px 0 60px 0;
 }
-.drill-btns .btn {
-    display:block;
+.drill-btns button {
     height:60px;
     margin:10px 0;
     padding:10px 0 0 30px;
-    text-align:left;
     font-size: 24px;
+    background-color: #333;
+    color:white
 }
-.drill-btns .btn:hover {
-    background-color: #bbb
+.drill-btns button:hover {
+    background-color: black;
+    color:white
 }
-#drill input[type="checkbox"] {
-    width: 30px;
-    height: 30px;
-    margin:0 0 0 -40px;
-    padding:0;
+
+
+
+
+
+/*********************Favorites*************************/
+
+
+#favorites dt {
+    display:inline-block;
+    width:70%;
+    border-bottom: 1px solid #ccc;
+    margin:10px 0 5px 0;
 }
-#drill .checkbox label {
-    font-size: 20px;
-    padding:0 0 0 40px
+#favorites dd {
+    display:inline-block;
+    width:27%;
+    border-bottom: 1px solid #ccc;
 }
+
+/*********************Bird detail*************************/
+
