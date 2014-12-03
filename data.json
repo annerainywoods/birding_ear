@@ -93,14 +93,13 @@
         "model": "birding_ear.bird",
         "fields": {
             "name": "Common Loon",
-            "played": false,
+            
             "favorite": false,
             "bird_call": "/media/call_common_loon.mp3",
             "state": [1],
             "bird_type": 1,
             "excluded": false,
-            "narration": "/media/nar_common_loon.mp3",
-            "learned": false
+            "narration": "/media/nar_common_loon.mp3"
         }
     },
     {
@@ -108,14 +107,13 @@
         "model": "birding_ear.bird",
         "fields": {
             "name": "Pied-billed Grebe",
-            "played": false,
+            
             "favorite": false,
             "bird_call": "/media/call_pied-billed_grebe.mp3",
             "state": [1],
             "bird_type": 1,
             "excluded": false,
-            "narration": "/media/nar_pied-billed_grebe.mp3",
-            "learned": false
+            "narration": "/media/nar_pied-billed_grebe.mp3"
         }
     },
     {
@@ -123,14 +121,13 @@
         "model": "birding_ear.bird",
         "fields": {
             "name": "Horned Grebe",
-            "played": false,
+            
             "favorite": false,
             "bird_call": "/media/call_horned_grebe.mp3",
             "state": [1],
             "bird_type": 1,
             "excluded": false,
-            "narration": "/media/nar_horned_grebe.mp3",
-            "learned": false
+            "narration": "/media/nar_horned_grebe.mp3"
         }
     },
     {
@@ -138,14 +135,13 @@
         "model": "birding_ear.bird",
         "fields": {
             "name": "Western Grebe",
-            "played": false,
+            
             "favorite": false,
             "bird_call": "/media/call_western_grebe.mp3",
             "state": [1],
             "bird_type": 1,
             "excluded": false,
-            "narration": "/media/nar_western_grebe.mp3",
-            "learned": false
+            "narration": "/media/nar_western_grebe.mp3"
         }
     },
     {
@@ -153,14 +149,13 @@
         "model": "birding_ear.bird",
         "fields": {
             "name": "Red-necked Grebe",
-            "played": false,
+            
             "favorite": false,
             "bird_call": "/media/call_red-necked_grebe.mp3",
             "state": [1],
             "bird_type": 1,
             "excluded": false,
-            "narration": "/media/nar_red-necked_grebe.mp3",
-            "learned": false
+            "narration": "/media/nar_red-necked_grebe.mp3"
         }
     },
     {
@@ -168,14 +163,13 @@
         "model": "birding_ear.bird",
         "fields": {
             "name": "Double-crested Cormorant",
-            "played": false,
+            
             "favorite": false,
             "bird_call": "/media/call_double-crested_cormorant.mp3",
             "state": [1],
             "bird_type": 1,
             "excluded": false,
-            "narration": "/media/nar_double-crested_cormorant.mp3",
-            "learned": false
+            "narration": "/media/nar_double-crested_cormorant.mp3"
         }
     },
     {
@@ -183,14 +177,13 @@
         "model": "birding_ear.bird",
         "fields": {
             "name": "Great Blue Heron",
-            "played": false,
+            
             "favorite": false,
             "bird_call": "/media/call_great_blue_heron.mp3",
             "state": [1],
             "bird_type": 2,
             "excluded": false,
-            "narration": "/media/nar_great_blue_heron.mp3",
-            "learned": false
+            "narration": "/media/nar_great_blue_heron.mp3"
         }
     },
     {
@@ -198,14 +191,13 @@
         "model": "birding_ear.bird",
         "fields": {
             "name": "Green Heron",
-            "played": false,
+            
             "favorite": false,
             "bird_call": "/media/call_green_heron.mp3",
             "state": [1],
             "bird_type": 2,
             "excluded": false,
-            "narration": "/media/nar_green_heron.mp3",
-            "learned": false
+            "narration": "/media/nar_green_heron.mp3"
         }
     },
     {
@@ -213,14 +205,12 @@
         "model": "birding_ear.bird",
         "fields": {
             "name": "Tri-color Heron",
-            "played": true,
             "favorite": true,
             "bird_call": "/media/tri-colored_heron.mp3",
             "state": [1],
             "bird_type": 2,
             "excluded": true,
-            "narration": "/media/nar_tri-colored_heron.mp3",
-            "learned": true
+            "narration": "/media/nar_tri-colored_heron.mp3"
         }
     },
     {

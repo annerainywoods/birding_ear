@@ -105,7 +105,8 @@ a#menu-icon span {
 }
 a#menu-icon:hover {
     text-decoration:none;
-    background-color:#eeeeee;
+    background-color:#fff;
+    color: #337ab7;
 }
 div#menu {
     position:absolute;
@@ -299,13 +300,13 @@ h4 {
     font-size:28px
 }
 .detail-info ul li ul {
-    margin: 0 0 0 70px
+    margin: 0 0 0 60px
 }
 .detail-info ul.inline-list li {
     display: inline;
 }
 
-/***************drill*************/
+/*************** Drill*************/
 
 #drill p {
     margin: 0 0 40px 0;
@@ -323,15 +324,12 @@ h4 {
     color:white
 }
 .drill-btns button:hover {
-    background-color: black;
+    background-color: #494949;
     color:white
 }
 
 
-
-
-
-/*********************Favorites*************************/
+/********************* Favorites*************************/
 
 
 #favorites dt {
@@ -346,7 +344,7 @@ h4 {
     border-bottom: 1px solid #ccc;
 }
 
-/*********************Settings*************************/
+/********************* Settings*************************/
 
 #settings form label {
     display:inline-block;

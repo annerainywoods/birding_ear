@@ -19,6 +19,13 @@ EDIT MIX // When user clicks Edit from a mix
 
 VIEW MIX // When user clicks View from a mix
 
+VIEW BIRD // When user clicks bird link from a mix or favorites list
+
+FAVORITES // When user clicks "Favorites"
+    Get all birds, regardless of mix, that are marked as favorites
+    Display with link to bird, link to unfavorite
+    If there are two or more birds, show link to Drill and Quiz
+
 START DRILL // When user clicks Drill from a mix
     Get Mix ID
     Test that mix has at least 1 bird
@@ -37,9 +44,11 @@ CREATE DRILL QUESTION // program initiates this at end of START DRILL, or user s
         test for frequency range random number corresponds to
         select random bird from corresponding bird pile
     Select two distractor birds at random from entire mix
+
     Randomize order of question_bird and distractor birds
     Concatenate audio for narration and call for all three birds + call of question_bird
     Display multiple choice
+    When user leaves Drill pause the drill
 
 CREATE FEEDBACK // When user selects an answer
     Check if selected answer is the question_bird
