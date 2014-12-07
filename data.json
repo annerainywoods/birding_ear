@@ -75,142 +75,124 @@
         "pk": 9,
         "model": "contenttypes.contenttype",
         "fields": {
-            "model": "bird_type",
-            "name": "bird_type",
+            "model": "birdtype",
+            "name": "bird type",
             "app_label": "birding_ear"
         }
     },
     {
-        "pk": "4kd5jd1gh6g6fplgnr2mvuby4j5uuq3l",
+        "pk": 10,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "userbird",
+            "name": "user bird",
+            "app_label": "birding_ear"
+        }
+    },
+    {
+        "pk": 11,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "mix",
+            "name": "mix",
+            "app_label": "birding_ear"
+        }
+    },
+    {
+        "pk": 12,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "drill",
+            "name": "drill",
+            "app_label": "birding_ear"
+        }
+    },
+    {
+        "pk": "e922yi63z07tw25bp80pbmftfld2n2rs",
         "model": "sessions.session",
         "fields": {
-            "expire_date": "2014-12-06T05:21:25.555Z",
+            "expire_date": "2014-12-21T06:54:39.655Z",
             "session_data": "YmZmYjFhMzU0NWM5MzNiYjBkNzg5MTc3NDc1YWRlMjRkMmZmMWZhZTp7Il9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6MX0="
         }
     },
     {
-        "pk": 1,
+        "pk": "Common Loon",
         "model": "birding_ear.bird",
         "fields": {
-            "name": "Common Loon",
-            
-            "favorite": false,
+            "states": [1],
+            "bird_type": 2,
             "bird_call": "/media/call_common_loon.mp3",
-            "state": [1],
-            "bird_type": 1,
-            "excluded": false,
             "narration": "/media/nar_common_loon.mp3"
         }
     },
     {
-        "pk": 2,
+        "pk": "Double-crested Cormorant",
         "model": "birding_ear.bird",
         "fields": {
-            "name": "Pied-billed Grebe",
-            
-            "favorite": false,
-            "bird_call": "/media/call_pied-billed_grebe.mp3",
-            "state": [1],
-            "bird_type": 1,
-            "excluded": false,
-            "narration": "/media/nar_pied-billed_grebe.mp3"
-        }
-    },
-    {
-        "pk": 3,
-        "model": "birding_ear.bird",
-        "fields": {
-            "name": "Horned Grebe",
-            
-            "favorite": false,
-            "bird_call": "/media/call_horned_grebe.mp3",
-            "state": [1],
-            "bird_type": 1,
-            "excluded": false,
-            "narration": "/media/nar_horned_grebe.mp3"
-        }
-    },
-    {
-        "pk": 4,
-        "model": "birding_ear.bird",
-        "fields": {
-            "name": "Western Grebe",
-            
-            "favorite": false,
-            "bird_call": "/media/call_western_grebe.mp3",
-            "state": [1],
-            "bird_type": 1,
-            "excluded": false,
-            "narration": "/media/nar_western_grebe.mp3"
-        }
-    },
-    {
-        "pk": 5,
-        "model": "birding_ear.bird",
-        "fields": {
-            "name": "Red-necked Grebe",
-            
-            "favorite": false,
-            "bird_call": "/media/call_red-necked_grebe.mp3",
-            "state": [1],
-            "bird_type": 1,
-            "excluded": false,
-            "narration": "/media/nar_red-necked_grebe.mp3"
-        }
-    },
-    {
-        "pk": 6,
-        "model": "birding_ear.bird",
-        "fields": {
-            "name": "Double-crested Cormorant",
-            
-            "favorite": false,
+            "states": [1],
+            "bird_type": 2,
             "bird_call": "/media/call_double-crested_cormorant.mp3",
-            "state": [1],
-            "bird_type": 1,
-            "excluded": false,
             "narration": "/media/nar_double-crested_cormorant.mp3"
         }
     },
     {
-        "pk": 7,
+        "pk": "Great Blue Heron",
         "model": "birding_ear.bird",
         "fields": {
-            "name": "Great Blue Heron",
-            
-            "favorite": false,
+            "states": [1],
+            "bird_type": 1,
             "bird_call": "/media/call_great_blue_heron.mp3",
-            "state": [1],
-            "bird_type": 2,
-            "excluded": false,
             "narration": "/media/nar_great_blue_heron.mp3"
         }
     },
     {
-        "pk": 8,
+        "pk": "Green Heron",
         "model": "birding_ear.bird",
         "fields": {
-            "name": "Green Heron",
-            
-            "favorite": false,
+            "states": [1],
+            "bird_type": 1,
             "bird_call": "/media/call_green_heron.mp3",
-            "state": [1],
-            "bird_type": 2,
-            "excluded": false,
             "narration": "/media/nar_green_heron.mp3"
         }
     },
     {
-        "pk": 9,
+        "pk": "Horned Grebe",
         "model": "birding_ear.bird",
         "fields": {
-            "name": "Tri-color Heron",
-            "favorite": true,
-            "bird_call": "/media/tri-colored_heron.mp3",
-            "state": [1],
+            "states": [1],
             "bird_type": 2,
-            "excluded": true,
-            "narration": "/media/nar_tri-colored_heron.mp3"
+            "bird_call": "/media/call_horned_grebe.mp3",
+            "narration": "/media/nar_horned_grebe.mp3"
+        }
+    },
+    {
+        "pk": "Pied-billed Grebe",
+        "model": "birding_ear.bird",
+        "fields": {
+            "states": [1],
+            "bird_type": 2,
+            "bird_call": "/media/call_pied-billed_grebe.mp3",
+            "narration": "/media/nar_pied-billed_grebe.mp3"
+        }
+    },
+    {
+        "pk": "Red-necked Grebe",
+        "model": "birding_ear.bird",
+        "fields": {
+            "states": [1],
+            "bird_type": 2,
+            "bird_call": "/media/call_red-necked_grebe.mp3",
+            "narration": "/media/nar_red-necked_grebe.mp3"
+        }
+    },
+    {
+        "pk": "Western Grebe",
+        "model": "birding_ear.bird",
+        "fields": {
+            "states": [1],
+            "bird_type": 2,
+            "bird_call": "/media/call_western_grebe.mp3",
+            "narration": "/media/nar_western_grebe.mp3"
         }
     },
     {
@@ -236,16 +218,37 @@
     },
     {
         "pk": 1,
-        "model": "birding_ear.bird_type",
+        "model": "birding_ear.birdtype",
+        "fields": {
+            "name": "Heronlike Birds"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "birding_ear.birdtype",
         "fields": {
             "name": "Diving Birds"
         }
     },
     {
-        "pk": 2,
-        "model": "birding_ear.bird_type",
+        "pk": 1,
+        "model": "birding_ear.userbird",
         "fields": {
-            "name": "Heronlike Birds"
+            "favorite": false,
+            "bird": "Common Loon",
+            "excluded": false,
+            "bird_pile": "N"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "birding_ear.mix",
+        "fields": {
+            "color": "RUS",
+            "states": [1],
+            "nickname": "TES",
+            "description": "Test",
+            "bird_types": [1, 2]
         }
     },
     {
@@ -468,8 +471,8 @@
         "pk": 25,
         "model": "auth.permission",
         "fields": {
-            "codename": "add_bird_type",
-            "name": "Can add bird_type",
+            "codename": "add_birdtype",
+            "name": "Can add bird type",
             "content_type": 9
         }
     },
@@ -477,8 +480,8 @@
         "pk": 26,
         "model": "auth.permission",
         "fields": {
-            "codename": "change_bird_type",
-            "name": "Can change bird_type",
+            "codename": "change_birdtype",
+            "name": "Can change bird type",
             "content_type": 9
         }
     },
@@ -486,27 +489,108 @@
         "pk": 27,
         "model": "auth.permission",
         "fields": {
-            "codename": "delete_bird_type",
-            "name": "Can delete bird_type",
+            "codename": "delete_birdtype",
+            "name": "Can delete bird type",
             "content_type": 9
+        }
+    },
+    {
+        "pk": 28,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_userbird",
+            "name": "Can add user bird",
+            "content_type": 10
+        }
+    },
+    {
+        "pk": 29,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_userbird",
+            "name": "Can change user bird",
+            "content_type": 10
+        }
+    },
+    {
+        "pk": 30,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_userbird",
+            "name": "Can delete user bird",
+            "content_type": 10
+        }
+    },
+    {
+        "pk": 31,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_mix",
+            "name": "Can add mix",
+            "content_type": 11
+        }
+    },
+    {
+        "pk": 32,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_mix",
+            "name": "Can change mix",
+            "content_type": 11
+        }
+    },
+    {
+        "pk": 33,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_mix",
+            "name": "Can delete mix",
+            "content_type": 11
+        }
+    },
+    {
+        "pk": 34,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "add_drill",
+            "name": "Can add drill",
+            "content_type": 12
+        }
+    },
+    {
+        "pk": 35,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "change_drill",
+            "name": "Can change drill",
+            "content_type": 12
+        }
+    },
+    {
+        "pk": 36,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "delete_drill",
+            "name": "Can delete drill",
+            "content_type": 12
         }
     },
     {
         "pk": 1,
         "model": "auth.user",
         "fields": {
-            "username": "rainywoods",
+            "username": "student",
             "first_name": "",
             "last_name": "",
             "is_active": true,
             "is_superuser": true,
             "is_staff": true,
-            "last_login": "2014-11-22T05:21:25.541Z",
+            "last_login": "2014-12-07T06:54:39.646Z",
             "groups": [],
             "user_permissions": [],
-            "password": "pbkdf2_sha256$12000$QiSrCulPAU2L$95/HvNaeBs5bRLw2LE2EIi8IxzCqlw42u300hBt2AN0=",
+            "password": "pbkdf2_sha256$12000$z2eIg1OUA6lP$Rc26Pe9NOajbdopSaO0gBeIWqc6hKIPSpXEBowIzV00=",
             "email": "",
-            "date_joined": "2014-11-22T05:20:47.368Z"
+            "date_joined": "2014-12-07T06:54:12.326Z"
         }
     },
     {
@@ -514,12 +598,12 @@
         "model": "admin.logentry",
         "fields": {
             "action_flag": 1,
-            "action_time": "2014-11-22T05:25:45.824Z",
-            "object_repr": "OR",
+            "action_time": "2014-12-07T06:54:54.833Z",
+            "object_repr": "Heronlike Birds",
             "object_id": "1",
             "change_message": "",
             "user": 1,
-            "content_type": 8
+            "content_type": 9
         }
     },
     {
@@ -527,12 +611,12 @@
         "model": "admin.logentry",
         "fields": {
             "action_flag": 1,
-            "action_time": "2014-11-22T05:25:52.911Z",
-            "object_repr": "WA",
+            "action_time": "2014-12-07T06:55:00.638Z",
+            "object_repr": "Diving Birds",
             "object_id": "2",
             "change_message": "",
             "user": 1,
-            "content_type": 8
+            "content_type": 9
         }
     },
     {
@@ -540,9 +624,9 @@
         "model": "admin.logentry",
         "fields": {
             "action_flag": 1,
-            "action_time": "2014-11-22T05:25:59.704Z",
-            "object_repr": "CA",
-            "object_id": "3",
+            "action_time": "2014-12-07T06:55:35.519Z",
+            "object_repr": "OR",
+            "object_id": "1",
             "change_message": "",
             "user": 1,
             "content_type": 8
@@ -553,12 +637,12 @@
         "model": "admin.logentry",
         "fields": {
             "action_flag": 1,
-            "action_time": "2014-11-22T05:26:07.877Z",
-            "object_repr": "Diving Birds",
-            "object_id": "1",
+            "action_time": "2014-12-07T06:55:40.754Z",
+            "object_repr": "WA",
+            "object_id": "2",
             "change_message": "",
             "user": 1,
-            "content_type": 9
+            "content_type": 8
         }
     },
     {
@@ -566,12 +650,12 @@
         "model": "admin.logentry",
         "fields": {
             "action_flag": 1,
-            "action_time": "2014-11-22T05:26:20.150Z",
-            "object_repr": "Common Loon",
-            "object_id": "1",
+            "action_time": "2014-12-07T06:55:44.416Z",
+            "object_repr": "CA",
+            "object_id": "3",
             "change_message": "",
             "user": 1,
-            "content_type": 7
+            "content_type": 8
         }
     },
     {
@@ -579,9 +663,9 @@
         "model": "admin.logentry",
         "fields": {
             "action_flag": 1,
-            "action_time": "2014-11-22T05:28:11.767Z",
-            "object_repr": "Pied-billed Grebe",
-            "object_id": "2",
+            "action_time": "2014-12-07T06:56:33.690Z",
+            "object_repr": "Common Loon",
+            "object_id": "Common Loon",
             "change_message": "",
             "user": 1,
             "content_type": 7
@@ -591,11 +675,11 @@
         "pk": 7,
         "model": "admin.logentry",
         "fields": {
-            "action_flag": 2,
-            "action_time": "2014-11-22T05:28:21.408Z",
-            "object_repr": "Common Loon",
-            "object_id": "1",
-            "change_message": "No fields changed.",
+            "action_flag": 1,
+            "action_time": "2014-12-07T06:56:56.917Z",
+            "object_repr": "Western Grebe",
+            "object_id": "Western Grebe",
+            "change_message": "",
             "user": 1,
             "content_type": 7
         }
@@ -604,11 +688,11 @@
         "pk": 8,
         "model": "admin.logentry",
         "fields": {
-            "action_flag": 2,
-            "action_time": "2014-11-22T05:28:36.045Z",
-            "object_repr": "Common Loon",
-            "object_id": "1",
-            "change_message": "Changed state.",
+            "action_flag": 1,
+            "action_time": "2014-12-07T06:57:24.115Z",
+            "object_repr": "Great Blue Heron",
+            "object_id": "Great Blue Heron",
+            "change_message": "",
             "user": 1,
             "content_type": 7
         }
@@ -617,37 +701,37 @@
         "pk": 9,
         "model": "admin.logentry",
         "fields": {
-            "action_flag": 2,
-            "action_time": "2014-11-22T05:28:41.329Z",
-            "object_repr": "Pied-billed Grebe",
-            "object_id": "2",
-            "change_message": "No fields changed.",
+            "action_flag": 1,
+            "action_time": "2014-12-07T06:57:59.326Z",
+            "object_repr": "TES",
+            "object_id": "1",
+            "change_message": "",
             "user": 1,
-            "content_type": 7
+            "content_type": 11
         }
     },
     {
         "pk": 10,
         "model": "admin.logentry",
         "fields": {
-            "action_flag": 2,
-            "action_time": "2014-11-22T05:28:52.810Z",
-            "object_repr": "Common Loon",
+            "action_flag": 1,
+            "action_time": "2014-12-07T06:58:14.961Z",
+            "object_repr": "UserBird object",
             "object_id": "1",
-            "change_message": "Changed state.",
+            "change_message": "",
             "user": 1,
-            "content_type": 7
+            "content_type": 10
         }
     },
     {
         "pk": 11,
         "model": "admin.logentry",
         "fields": {
-            "action_flag": 2,
-            "action_time": "2014-11-22T05:28:58.231Z",
-            "object_repr": "Pied-billed Grebe",
-            "object_id": "2",
-            "change_message": "No fields changed.",
+            "action_flag": 1,
+            "action_time": "2014-12-07T06:59:45.291Z",
+            "object_repr": "Red-necked Grebe",
+            "object_id": "Red-necked Grebe",
+            "change_message": "",
             "user": 1,
             "content_type": 7
         }
@@ -656,11 +740,11 @@
         "pk": 12,
         "model": "admin.logentry",
         "fields": {
-            "action_flag": 2,
-            "action_time": "2014-11-22T05:29:02.879Z",
-            "object_repr": "Common Loon",
-            "object_id": "1",
-            "change_message": "No fields changed.",
+            "action_flag": 1,
+            "action_time": "2014-12-07T07:00:15.939Z",
+            "object_repr": "Pied-billed Grebe",
+            "object_id": "Pied-billed Grebe",
+            "change_message": "",
             "user": 1,
             "content_type": 7
         }
@@ -669,11 +753,11 @@
         "pk": 13,
         "model": "admin.logentry",
         "fields": {
-            "action_flag": 2,
-            "action_time": "2014-11-22T05:29:08.832Z",
-            "object_repr": "Pied-billed Grebe",
-            "object_id": "2",
-            "change_message": "No fields changed.",
+            "action_flag": 1,
+            "action_time": "2014-12-07T07:00:53.568Z",
+            "object_repr": "Green Heron",
+            "object_id": "Green Heron",
+            "change_message": "",
             "user": 1,
             "content_type": 7
         }
@@ -682,11 +766,11 @@
         "pk": 14,
         "model": "admin.logentry",
         "fields": {
-            "action_flag": 2,
-            "action_time": "2014-11-22T05:29:15.673Z",
-            "object_repr": "Common Loon",
-            "object_id": "1",
-            "change_message": "Changed state.",
+            "action_flag": 1,
+            "action_time": "2014-12-07T07:01:17.588Z",
+            "object_repr": "Double-crested Cormorant",
+            "object_id": "Double-crested Cormorant",
+            "change_message": "",
             "user": 1,
             "content_type": 7
         }
@@ -695,232 +779,11 @@
         "pk": 15,
         "model": "admin.logentry",
         "fields": {
-            "action_flag": 2,
-            "action_time": "2014-11-22T05:29:21.246Z",
-            "object_repr": "Pied-billed Grebe",
-            "object_id": "2",
-            "change_message": "No fields changed.",
-            "user": 1,
-            "content_type": 7
-        }
-    },
-    {
-        "pk": 16,
-        "model": "admin.logentry",
-        "fields": {
-            "action_flag": 2,
-            "action_time": "2014-11-22T05:29:25.213Z",
-            "object_repr": "Common Loon",
-            "object_id": "1",
-            "change_message": "No fields changed.",
-            "user": 1,
-            "content_type": 7
-        }
-    },
-    {
-        "pk": 17,
-        "model": "admin.logentry",
-        "fields": {
             "action_flag": 1,
-            "action_time": "2014-11-22T05:30:12.960Z",
+            "action_time": "2014-12-07T07:02:32.466Z",
             "object_repr": "Horned Grebe",
-            "object_id": "3",
+            "object_id": "Horned Grebe",
             "change_message": "",
-            "user": 1,
-            "content_type": 7
-        }
-    },
-    {
-        "pk": 18,
-        "model": "admin.logentry",
-        "fields": {
-            "action_flag": 1,
-            "action_time": "2014-11-22T05:30:45.293Z",
-            "object_repr": "Western Grebe",
-            "object_id": "4",
-            "change_message": "",
-            "user": 1,
-            "content_type": 7
-        }
-    },
-    {
-        "pk": 19,
-        "model": "admin.logentry",
-        "fields": {
-            "action_flag": 1,
-            "action_time": "2014-11-22T05:31:35.281Z",
-            "object_repr": "Red-necked Grebe",
-            "object_id": "5",
-            "change_message": "",
-            "user": 1,
-            "content_type": 7
-        }
-    },
-    {
-        "pk": 20,
-        "model": "admin.logentry",
-        "fields": {
-            "action_flag": 2,
-            "action_time": "2014-11-22T05:31:57.232Z",
-            "object_repr": "Western Grebe",
-            "object_id": "4",
-            "change_message": "No fields changed.",
-            "user": 1,
-            "content_type": 7
-        }
-    },
-    {
-        "pk": 21,
-        "model": "admin.logentry",
-        "fields": {
-            "action_flag": 2,
-            "action_time": "2014-11-22T05:32:03.603Z",
-            "object_repr": "Red-necked Grebe",
-            "object_id": "5",
-            "change_message": "No fields changed.",
-            "user": 1,
-            "content_type": 7
-        }
-    },
-    {
-        "pk": 22,
-        "model": "admin.logentry",
-        "fields": {
-            "action_flag": 2,
-            "action_time": "2014-11-22T05:32:15.434Z",
-            "object_repr": "Pied-billed Grebe",
-            "object_id": "2",
-            "change_message": "Changed narration and bird_call.",
-            "user": 1,
-            "content_type": 7
-        }
-    },
-    {
-        "pk": 23,
-        "model": "admin.logentry",
-        "fields": {
-            "action_flag": 1,
-            "action_time": "2014-11-22T05:33:32.866Z",
-            "object_repr": "Double-crested Cormorant",
-            "object_id": "6",
-            "change_message": "",
-            "user": 1,
-            "content_type": 7
-        }
-    },
-    {
-        "pk": 24,
-        "model": "admin.logentry",
-        "fields": {
-            "action_flag": 1,
-            "action_time": "2014-11-22T05:34:19.524Z",
-            "object_repr": "Heronlike Birds",
-            "object_id": "2",
-            "change_message": "",
-            "user": 1,
-            "content_type": 9
-        }
-    },
-    {
-        "pk": 25,
-        "model": "admin.logentry",
-        "fields": {
-            "action_flag": 1,
-            "action_time": "2014-11-22T05:34:26.263Z",
-            "object_repr": "Great Blue Heron",
-            "object_id": "7",
-            "change_message": "",
-            "user": 1,
-            "content_type": 7
-        }
-    },
-    {
-        "pk": 26,
-        "model": "admin.logentry",
-        "fields": {
-            "action_flag": 1,
-            "action_time": "2014-11-22T05:35:09.029Z",
-            "object_repr": "Green Heron",
-            "object_id": "8",
-            "change_message": "",
-            "user": 1,
-            "content_type": 7
-        }
-    },
-    {
-        "pk": 27,
-        "model": "admin.logentry",
-        "fields": {
-            "action_flag": 2,
-            "action_time": "2014-11-23T01:53:06.989Z",
-            "object_repr": "Red-necked Grebe",
-            "object_id": "5",
-            "change_message": "No fields changed.",
-            "user": 1,
-            "content_type": 7
-        }
-    },
-    {
-        "pk": 28,
-        "model": "admin.logentry",
-        "fields": {
-            "action_flag": 2,
-            "action_time": "2014-11-23T01:53:14.159Z",
-            "object_repr": "Red-necked Grebe",
-            "object_id": "5",
-            "change_message": "No fields changed.",
-            "user": 1,
-            "content_type": 7
-        }
-    },
-    {
-        "pk": 29,
-        "model": "admin.logentry",
-        "fields": {
-            "action_flag": 2,
-            "action_time": "2014-11-25T03:18:25.753Z",
-            "object_repr": "Double-crested Cormorant",
-            "object_id": "6",
-            "change_message": "Changed narration and bird_call.",
-            "user": 1,
-            "content_type": 7
-        }
-    },
-    {
-        "pk": 30,
-        "model": "admin.logentry",
-        "fields": {
-            "action_flag": 2,
-            "action_time": "2014-11-25T03:48:50.512Z",
-            "object_repr": "Common Loon",
-            "object_id": "1",
-            "change_message": "Changed bird_call.",
-            "user": 1,
-            "content_type": 7
-        }
-    },
-    {
-        "pk": 31,
-        "model": "admin.logentry",
-        "fields": {
-            "action_flag": 2,
-            "action_time": "2014-11-25T04:12:07.574Z",
-            "object_repr": "Common Loon",
-            "object_id": "1",
-            "change_message": "Changed narration.",
-            "user": 1,
-            "content_type": 7
-        }
-    },
-    {
-        "pk": 32,
-        "model": "admin.logentry",
-        "fields": {
-            "action_flag": 2,
-            "action_time": "2014-11-25T04:13:58.947Z",
-            "object_repr": "Common Loon",
-            "object_id": "1",
-            "change_message": "Changed narration.",
             "user": 1,
             "content_type": 7
         }

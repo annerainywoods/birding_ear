@@ -2,79 +2,163 @@ from django.db import models
 
 
 class Bird(models.Model):
-    name = models.CharField(max_length=50)
-    narration = models.CharField(max_length=255)
-    bird_call = models.CharField(max_length=255)
-    state = models.ManyToManyField('State')
-    bird_type = models.ForeignKey('Bird_type')
-    excluded = models.BooleanField(default=False)
-    favorite = models.BooleanField(default=False)
-    bird_pile = models.ForeignKey('Bird_pile', blank=True, null=True)
+    name = models.CharField("common name", max_length=50, primary_key=True)
+    narration = models.CharField("narrated name", max_length=255)
+    bird_call = models.CharField("bird call", max_length=255)
+    states = models.ManyToManyField('State', verbose_name="states")
+    bird_type = models.ForeignKey('BirdType', verbose_name="type of bird")
 
     def __unicode__(self):
-        return self.name
+        return (self.name)
+
 
 class State(models.Model):
-    name = models.CharField(max_length=2)
+    name = models.CharField("U.S.State", max_length=2)
 
     def __unicode__(self):
         return self.name
 
-class Bird_type(models.Model):
-    name = models.CharField(max_length=100, default='All')
+
+class BirdType(models.Model):
+    name = models.CharField(max_length=100)
 
     def __unicode__(self):
         return self.name
 
-class Bird_pile(models.Model):
-    name = models.CharField(max_length=10, default='unplayed')
 
-    def __unicode__(self):
-        return self.name
+class UserBird(models.Model): #needs user
+    BIRD_PILE = (
+        ('N', 'New'),
+        ('L', 'Learned'),
+        ('M', 'Missed')
+    )
+    bird = models.OneToOneField('Bird', verbose_name="static bird data")
+    bird_pile = models.CharField("bird pile", max_length=1, choices=BIRD_PILE, default='N')
+    favorite = models.BooleanField("saved as favorite", default=False)
+    excluded = models.BooleanField("excluded from drill", default=False)
+#    user = models.ForeignKey(User)
 
-class Mix(models.Model):
-    nickname = models.CharField(max_length=3)
-    description = models.CharField(max_length=255)
-    state = models.ManyToManyField('State')
-    bird_type = models.ManyToManyField('Bird_type')
-    color = models.ForeignKey('Color', blank=True, null=True)
+#    def __unicode__(Bird):
+#        return Bird.name
+
+
+class Mix(models.Model):  # needs user
+    COLOR = (
+        ('OLV', 'Olive'),
+        ('YEL', 'Yellow'),
+        ('RUS', 'Rust'),
+        ('DKB', 'Dark Brown'),
+        ('LTB', 'Light Brown'),
+        ('DGY', 'Dark Grey')
+    )
+    nickname = models.CharField("three-letter name", max_length=3)
+    description = models.CharField("short description", max_length=255)
+    states = models.ManyToManyField('State', verbose_name="state filters")
+    bird_types = models.ManyToManyField('BirdType', verbose_name="bird type filters")
+    color = models.CharField("color", max_length=3, choices=COLOR, default='OLV')
+#    user = models.ForeignKey(User)
 
     def __unicode__(self):
         return self.nickname
 
-#There is a special mix for Favorites. It has a nickname and a description that are constants.
 
-class Color(models.Model):
-    name = models.CharField(max_length=20)
+# class FavMix(model.Model):  # needs user
+#     COLOR = ('THM', 'Theme Grey')
+#     NICKNAME = "FAV"
+#     DESCRIPTION = "Favorites"
+#     favorites = models.ForeignKey('UserBird')
+#     user = models.ForeignKey(User)
+#
+#     def __unicode__(self):
+#         return self.id
 
-    def __unicode__(self):
-        return self.name
 
-class Drill(models.Model):
-    listen_only = models.BooleanField(default=False) #this form control is at the level of the question, so this setting can change while drill is in progress
-    frequency_unplayed = models.ForeignKey('Frequency', to_field='unplayed', related_name='+', blank=True, null=True)
-    frequency_learned = models.ForeignKey('Frequency', to_field='learned', related_name='+', blank=True, null=True)
-    frequency_missed = models.ForeignKey('Frequency', to_field='missed', related_name='+', blank=True, null=True)
-    batch = models.ForeignKey('Batch', to_field='quantity', related_name='+', blank=True, null=True)
-    percent_learned = models.ForeignKey('Batch', to_field='percent_learned', related_name='+', blank=True, null=True)
-    bird_name_withheld = models.BooleanField(default=False)
-    related_birds = models.BooleanField(default=False)
-    mix = models.ForeignKey(Mix, to_field='id')
+class Drill(models.Model):  # needs user
+    FREQUENCY_NEW = (
+        (0, 'None'),
+        (1, 'Very low'),
+        (2, 'Low'),
+        (3, 'Medium'),
+        (4, 'High'),
+        (5, 'Very high')
+    )
+    FREQUENCY_MISSED = (
+        (0, 'None'),
+        (1, 'Very low'),
+        (2, 'Low'),
+        (3, 'Medium'),
+        (4, 'High'),
+        (5, 'Very high')
+    )
+    FREQUENCY_LEARNED = (
+        (0, 'None'),
+        (1, 'Very low'),
+        (2, 'Low'),
+        (3, 'Medium'),
+        (4, 'High'),
+        (5, 'Very high')
+    )
+    BATCH_SIZE = (
+        (10, '10'),
+        (20, '20'),
+        (30, '30'),
+        (40, '40'),
+        (50, '50'),
+    )
+    NEXT_BATCH = (
+        (60, '60% learned'),
+        (70, '70% learned'),
+        (80, '80% learned'),
+        (90, '90% learned'),
+        (100, '100% learned'),
+    )
+    DRILL_ORDER = (
+        ('RAN', 'Random'),
+        ('REL', 'Related')
+    )
+    mix = models.OneToOneField('Mix', verbose_name="mix for drill")
+#    fav_mix = models.OneToOneField('FavMix', verbose_name="fav mix for drill")
+    listen_only = models.BooleanField("listen only", default=False)
+    frequency_new = models.SmallIntegerField("% new birds", max_length=1, choices=FREQUENCY_NEW, default=3)
+    frequency_learned = models.SmallIntegerField("% learned birds", max_length=1, choices=FREQUENCY_LEARNED, default=2)
+    frequency_missed = models.SmallIntegerField("% missed birds", max_length=1, choices=FREQUENCY_MISSED, default=5)
+    batch_size = models.SmallIntegerField("number of birds per batch", max_length=2, choices=BATCH_SIZE, default=30)
+    next_batch = models.SmallIntegerField("start new batch at", max_length=2, choices=NEXT_BATCH, default=80)
+    challenge_level = models.BooleanField("hear bird sound without its name", default=False)
+    drill_order = models.CharField("drill order", max_length=3, choices=DRILL_ORDER, default="RAN")
+#    user = models.ForeignKey(User)
 
-    def __unicode__(self):
-        return self.mix
+#    def __unicode__(mix.nickname):
+#        return mix.nickname
 
-class Frequency(models.Model):
-    unplayed = models.CharField(max_length=9, default='Medium', unique=True)
-    learned = models.CharField(max_length=9, default='Very Low', unique=True)
-    missed = models.CharField(max_length=9, default='High', unique=True)
 
-    def __unicode__(self):
-        return self.unplayed
+# class Quiz(models.Model):  # needs user
+#     NUM_QUESTIONS = (
+#         (5, '5'),
+#         (10, '10'),
+#         (15, '15'),
+#         (20, '20')
+#     )
+#     LEVELS = (
+#         (1, 'Rookie Birder'),
+#         (2, 'Advanced Birder'),
+#         (3, 'Expert Birder')
+#     )
+#     MESSAGE = (
+#         (1, 'Good job! Keep drilling to learn those birds.'),
+#         (2, 'Excellent! Very impressive achievement.'),
+#         (3, 'Wow! You have developed quite the birding ear.')
+#     )
+#     mix = models.OneToOneField('Mix', verbose_name="mix for drill")
+#     fav_mix = models.OneToOneField('FavMix', verbose_name="fav mix for drill")
+#     partial_credit = models.BooleanField("Credit for last word of bird name", default=True)
+#     num_questions = models.SmallIntegerField("number of questions", max_length=2, choices=NUM_QUESTIONS, default=10)
+#     levels = models.SmallIntegerField("birding level", max_length=1, choices=LEVELS, default=1)
+#     message = models.SmallIntegerField("encouraging message", max_length=1, choices=MESSAGE, default=1)
+#     user = models.ForeignKey(User)
 
-class Batch(models.Model):
-    quantity = models.SmallIntegerField(max_length=2, default=30, unique=True)
-    percent_learned = models.SmallIntegerField(max_length=2, default=80, unique=True)#Does this have to be exactly what is in the form? Form will say 80% learned
+#    def __unicode__(mix.nickname):
+#        return mix.nickname
 
-    def __unicode__(self):
-        return self.batch
+
+#  class QuizQuestion(models.Model):  # needs user

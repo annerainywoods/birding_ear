@@ -6,48 +6,51 @@
 }
 
 /***************** Colors **************/
-.yellow { background-color:#d9a720;}
-.yellow:hover {background-color: #ebbb3b;}
-.btn-group.yellow a.btn, .btn-group.yellow a.btn:hover { color:#d9a720 }
-h1.yellow, h1.yellow:hover { background-color:#d9a720; color: white }
-button.yellow, button.yellow:hover { color: white}
+.mix-icon .yellow { background-color:#d9a720;}
+.mix-icon .yellow:hover {background-color: #ebbb3b;}
+body.yellow .colored-btn-group a.btn, body.yellow .colored-btn-group a.btn:hover { color:#d9a720; }
+body.yellow h1, body.olive h1:hover { background-color:#d9a720; color: white }
+body.yellow .colored-btn { background-color:#d9a720; color: white }
+body.yellow .colored-btn:hover { background-color:#ebbb3b; color: white }
 
-.olive { background-color:#818506;}
-.olive:hover { background-color: #929608;}
-.btn-group.olive a.btn, .btn-group.olive a.btn:hover { color:#818506; }
-h1.olive, h1.olive:hover { background-color:#818506; color: white }
-button.olive, button.olive:hover { color: white}
+.mix-icon .olive { background-color:#818506;}
+.mix-icon .olive:hover { background-color:#929608;}
+body.olive .colored-btn-group a.btn, body.lt-brown .colored-btn-group a.btn:hover { color:#818506; }
+body.olive h1, body.olive h1:hover { background-color:#818506; color: white }
+body.olive .colored-btn { background-color:#818506; color: white }
+body.olive .colored-btn:hover { background-color:#929608; color: white }
 
-.blue { background-color:#1b507e;}
-.blue:hover { background-color:#155b96;}
-.btn-group.blue a.btn, .btn-group.blue a.btn:hover { color:#054a84; }
-h1.blue, h1.blue:hover { background-color:#054a84; color: white }
-button.blue, button.blue:hover { color: white}
+.mix-icon .lt-brown { background-color:#845d24;}
+.mix-icon .lt-brown:hover { background-color:#976926;}
+body.lt-brown .colored-btn-group a.btn, body.lt-brown .colored-btn-group a.btn:hover { color:#845d24; }
+body.lt-brown h1, body.lt.brown h1:hover { background-color:#845d24; color: white }
+body.lt-brown .colored-btn { background-color:#845d24; color: white }
+body.lt-brown .colored-btn:hover { background-color:#976926; color: white }
 
-.lt-brown { background-color:#845d24;}
-.lt-brown:hover { background-color:#976926;}
+.mix-icon .dk-brown { background-color:#3f2c05;}
+.mix-icon .dk-brown:hover { background-color:#523d10;}
+body.dk-brown .colored-btn-group a.btn, body.dk-brown .colored-btn-group a.btn:hover { color:#3f2c05; }
+body.dk-brown h1, body.dk-brown h1:hover { background-color:#3f2c05; color: white }
+body.dk-brown .colored-btn { background-color:#3f2c05; color: white }
+body.dk-brown .colored-btn:hover { background-color:#523d10; color: white }
 
-.dk-brown { background-color:#3f2c05;}
-.dk-brown:hover { background-color:#523d10;}
-.btn-group.dk-brown a.btn, .btn-group.dk-brown a.btn:hover { color:#3f2c05; }
-h1.dk-brown, h1.dk-brown:hover { background-color:#3f2c05; color: white }
-button.dk-brown, button.dk-brown:hover { color: white}
+.mix-icon .rust { background-color:#a44013;}
+.mix-icon .rust:hover { background-color:#b74e25;}
+body.rust .colored-btn-group a.btn, body.rust .colored-btn-group a.btn:hover { color:#a44013; }
+body.rust h1, body.rust h1:hover { background-color:#a44013; color: white }
+body.rust .colored-btn { background-color:#a44013; color: white }
+body.rust .colored-btn:hover { background-color:#b74e25; color: white }
 
-.rust { background-color:#a44013;}
-.rust:hover { background-color:#b74e25;}
-.btn-group.rust a.btn, .btn-group.rust a.btn:hover { color:#a44013; }
-h1.rust, h1.rust:hover { background-color:#a44013; color: white }
-button.rust, button.rust:hover { color: white}
+.mix-icon .dk-grey { background-color:#333;}
+.mix-icon .dk-grey:hover {background-color: #494949;}
 
-.dk-grey { background-color:#333;}
-.dk-grey:hover {background-color: #494949;}
+.mix-icon .theme-grey { background-color:#4b6071;}
+.mix-icon .theme-grey:hover {background-color: #506e86;}
+body.theme-grey .colored-btn-group a.btn, body.theme-grey .colored-btn-group a.btn:hover { color:#4b6071; }
+body.theme-grey h1, body.theme-grey h1:hover { background-color:#4b6071; color: white }
+body.theme-grey .colored-btn { background-color:#4b6071; color: white }
+body.theme-grey .colored-btn:hover { background-color:#506e86; color: white }
 
-.theme-grey { background-color:#4b6071;}
-.theme-grey:hover {background-color: #506e86;}
-.btn-group.theme-grey a.btn, .btn-group.theme-grey a.btn:hover { color:#4b6071; }
-h1.theme-grey, h1.theme-grey:hover { background-color:#4b6071; color: white }
-button.theme-grey, button.theme-grey:hover { color: white}
-/* theme grey #485661 */
 
 /*********** Common *********************/
 body {

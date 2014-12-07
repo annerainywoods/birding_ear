@@ -3,10 +3,10 @@ from django.db import models
 
 class Bird(models.Model):
     name = models.CharField(max_length=50)
-    narration = models.CharField(max_length=255)
-    bird_call = models.CharField(max_length=255)
-    state = models.ManyToManyField('State')
-    bird_type = models.ForeignKey('Bird_type')
+    narration = models.CharField(max_length=255, blank=True, null=True)
+    bird_call = models.CharField(max_length=255, blank=True, null=True)
+    state = models.ManyToManyField('State', blank=True, null=True)
+    bird_type = models.ForeignKey('Bird_type', blank=True, null=True)
     excluded = models.BooleanField(default=False)
     played = models.BooleanField(default=False)
     learned = models.BooleanField(default=False)
