@@ -1,12 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Bird(models.Model):
     name = models.CharField("common name", max_length=50, primary_key=True)
     narration = models.CharField("narrated name", max_length=255)
     bird_call = models.CharField("bird call", max_length=255)
-    states = models.ManyToManyField('State', verbose_name="states")
-    bird_type = models.ForeignKey('BirdType', verbose_name="type of bird")
+    states = models.ManyToManyField('State', verbose_name="states", blank=True, null=True)
+    bird_type = models.ForeignKey('BirdType', verbose_name="type of bird", blank=True, null=True)
 
     def __unicode__(self):
         return (self.name)
@@ -36,10 +37,10 @@ class UserBird(models.Model): #needs user
     bird_pile = models.CharField("bird pile", max_length=1, choices=BIRD_PILE, default='N')
     favorite = models.BooleanField("saved as favorite", default=False)
     excluded = models.BooleanField("excluded from drill", default=False)
-#    user = models.ForeignKey(User)
+    user = models.ForeignKey(User)
 
-#    def __unicode__(Bird):
-#        return Bird.name
+    def __unicode__(self):
+        return self.bird.name
 
 
 class Mix(models.Model):  # needs user
@@ -56,7 +57,7 @@ class Mix(models.Model):  # needs user
     states = models.ManyToManyField('State', verbose_name="state filters")
     bird_types = models.ManyToManyField('BirdType', verbose_name="bird type filters")
     color = models.CharField("color", max_length=3, choices=COLOR, default='OLV')
-#    user = models.ForeignKey(User)
+    user = models.ForeignKey(User)
 
     def __unicode__(self):
         return self.nickname
@@ -126,10 +127,10 @@ class Drill(models.Model):  # needs user
     next_batch = models.SmallIntegerField("start new batch at", max_length=2, choices=NEXT_BATCH, default=80)
     challenge_level = models.BooleanField("hear bird sound without its name", default=False)
     drill_order = models.CharField("drill order", max_length=3, choices=DRILL_ORDER, default="RAN")
-#    user = models.ForeignKey(User)
+    user = models.ForeignKey(User)
 
-#    def __unicode__(mix.nickname):
-#        return mix.nickname
+    def __unicode__(self):
+        return self.mix.nickname
 
 
 # class Quiz(models.Model):  # needs user

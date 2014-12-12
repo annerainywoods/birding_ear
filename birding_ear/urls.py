@@ -13,9 +13,8 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'birding_ear.views.index'),
+    url(r'^ajax/', views.ajax, name="ajax"),
     (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
         'document_root': settings.MEDIA_ROOT}),
-    # url(r'^ajax/', views.ajax, name="ajax"),
-    #
-    # url(r'^dom$', views.dom, name="dom"),
+    url(r'^dom$', views.dom, name="dom"),
 )

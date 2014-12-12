@@ -10,9 +10,9 @@
 {% if birds %}
 <ul>
     {% for bird in birds %}
-    <li>{{ bird.name }} <br/>
+    <li>{{ bird.bird.name }} <br/>
         <audio controls>
-            <source src='{{ bird.bird_call }}' type="audio/mpeg">
+            <source src='{{ bird.bird.bird_call }}' type="audio/mpeg">
         </audio>
     <br/><br/></li>
     {% endfor %}

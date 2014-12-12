@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+var game = {
+    score : 0,
+    win : function(amount) {
+        this.score += amount;
+    }
+}
+game.win(99);
+game.win(2);
+console.log(game.score)
+</script>
+</body>
+</html>
