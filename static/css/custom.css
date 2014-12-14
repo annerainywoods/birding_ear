@@ -6,43 +6,43 @@
 }
 
 /***************** Colors **************/
-.mix-icon .yellow { background-color:#d9a720;}
-.mix-icon .yellow:hover {background-color: #ebbb3b;}
-body.yellow .colored-btn-group a.btn, body.yellow .colored-btn-group a.btn:hover { color:#d9a720; }
-body.yellow h1, body.olive h1:hover { background-color:#d9a720; color: white }
-body.yellow .colored-btn { background-color:#d9a720; color: white }
-body.yellow .colored-btn:hover { background-color:#ebbb3b; color: white }
+.mix-icon .YEL { background-color:#d9a720;}
+.mix-icon .YEL:hover {background-color: #ebbb3b;}
+body.YEL .colored-btn-group a.btn, body.YEL .colored-btn-group a.btn:hover { color:#d9a720; }
+body.YEL h1, body.olive h1:hover { background-color:#d9a720; color: white }
+body.YEL .colored-btn { background-color:#d9a720; color: white }
+body.YEL .colored-btn:hover { background-color:#ebbb3b; color: white }
 
-.mix-icon .olive { background-color:#818506;}
-.mix-icon .olive:hover { background-color:#929608;}
-body.olive .colored-btn-group a.btn, body.lt-brown .colored-btn-group a.btn:hover { color:#818506; }
-body.olive h1, body.olive h1:hover { background-color:#818506; color: white }
-body.olive .colored-btn { background-color:#818506; color: white }
-body.olive .colored-btn:hover { background-color:#929608; color: white }
+.mix-icon .OLV { background-color:#818506;}
+.mix-icon .OLV:hover { background-color:#929608;}
+body.OLV .colored-btn-group a.btn, body.lt-brown .colored-btn-group a.btn:hover { color:#818506; }
+body.OLV h1, body.OLV h1:hover { background-color:#818506; color: white }
+body.OLV .colored-btn { background-color:#818506; color: white }
+body.OLV .colored-btn:hover { background-color:#929608; color: white }
 
-.mix-icon .lt-brown { background-color:#845d24;}
-.mix-icon .lt-brown:hover { background-color:#976926;}
-body.lt-brown .colored-btn-group a.btn, body.lt-brown .colored-btn-group a.btn:hover { color:#845d24; }
-body.lt-brown h1, body.lt.brown h1:hover { background-color:#845d24; color: white }
-body.lt-brown .colored-btn { background-color:#845d24; color: white }
-body.lt-brown .colored-btn:hover { background-color:#976926; color: white }
+.mix-icon .LTB { background-color:#845d24;}
+.mix-icon .LTB:hover { background-color:#976926;}
+body.LTB .colored-btn-group a.btn, body.LTB .colored-btn-group a.btn:hover { color:#845d24; }
+body.LTB h1, body.lt.brown h1:hover { background-color:#845d24; color: white }
+body.LTB .colored-btn { background-color:#845d24; color: white }
+body.LTB .colored-btn:hover { background-color:#976926; color: white }
 
-.mix-icon .dk-brown { background-color:#3f2c05;}
-.mix-icon .dk-brown:hover { background-color:#523d10;}
-body.dk-brown .colored-btn-group a.btn, body.dk-brown .colored-btn-group a.btn:hover { color:#3f2c05; }
-body.dk-brown h1, body.dk-brown h1:hover { background-color:#3f2c05; color: white }
-body.dk-brown .colored-btn { background-color:#3f2c05; color: white }
-body.dk-brown .colored-btn:hover { background-color:#523d10; color: white }
+.mix-icon .DKB { background-color:#3f2c05;}
+.mix-icon .DKB:hover { background-color:#523d10;}
+body.DKB .colored-btn-group a.btn, body.DKB .colored-btn-group a.btn:hover { color:#3f2c05; }
+body.DKB h1, body.DKB h1:hover { background-color:#3f2c05; color: white }
+body.DKB .colored-btn { background-color:#3f2c05; color: white }
+body.DKB .colored-btn:hover { background-color:#523d10; color: white }
 
-.mix-icon .rust { background-color:#a44013;}
-.mix-icon .rust:hover { background-color:#b74e25;}
-body.rust .colored-btn-group a.btn, body.rust .colored-btn-group a.btn:hover { color:#a44013; }
-body.rust h1, body.rust h1:hover { background-color:#a44013; color: white }
-body.rust .colored-btn { background-color:#a44013; color: white }
-body.rust .colored-btn:hover { background-color:#b74e25; color: white }
+.mix-icon .RUS { background-color:#a44013;}
+.mix-icon .RUS:hover { background-color:#b74e25;}
+body.RUS .colored-btn-group a.btn, body.RUS .colored-btn-group a.btn:hover { color:#a44013; }
+body.RUS h1, body.RUS h1:hover { background-color:#a44013; color: white }
+body.RUS .colored-btn { background-color:#a44013; color: white }
+body.RUS .colored-btn:hover { background-color:#b74e25; color: white }
 
-.mix-icon .dk-grey { background-color:#333;}
-.mix-icon .dk-grey:hover {background-color: #494949;}
+.mix-icon .DGY { background-color:#333;}
+.mix-icon .DGY:hover {background-color: #494949;}
 
 .mix-icon .theme-grey { background-color:#4b6071;}
 .mix-icon .theme-grey:hover {background-color: #506e86;}
@@ -72,7 +72,7 @@ h1#sitename {
     font-weight: 700;
     margin:0;
     background-color:#485661;
-    background-image: url("../../media/sprite.png");
+    background-image: url("../media/sprite.png");
     background-repeat:no-repeat;
     background-position: 135px -10px;
     font-size:24px;
@@ -211,6 +211,12 @@ h4 {
 }
 
 /******************** Home ********************/
+a.mix-icon {
+    display:block;
+}
+a.mix-icon:hover {
+    text-decoration:none !important;
+}
 .mix-icon ul {
     margin: 0;
     padding: 0;
@@ -235,7 +241,7 @@ h4 {
     height: 124px;
     border: 7px solid white;
     border-radius:10px;
-    background-image: url("../../media/sprite.png");
+    background-image: url("../media/sprite.png");
     background-position: 0 -111px;
     color:white;
     cursor: pointer;
@@ -261,7 +267,7 @@ h4 {
     text-align:center;
     line-height: 40px;
 }
-.mix-icon li.mix_abbr a, .mix-icon li.mix_abbr a:hover {
+.mix-icon a:hover {
     color:white;
     text-decoration:none
 }

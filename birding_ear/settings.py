@@ -5,6 +5,7 @@ PROJECT_PATH = os.path.abspath(PROJECT_PATH)
 DATABASE_PATH = os.path.join(PROJECT_PATH, 'birding_ear', 'birding_ear.db')
 TEMPLATE_PATH = os.path.join(PROJECT_PATH, 'birding_ear', 'templates')
 MEDIA_ROOT = os.path.join(PROJECT_PATH, 'birding_ear', 'media')
+STATIC_PATH = os.path.join(PROJECT_PATH, 'birding_ear', 'static')
 print MEDIA_ROOT
 
 
@@ -99,5 +100,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = (
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    STATIC_PATH,
+)
+
+
 MEDIA_URL = '/media/'
-print MEDIA_URL
+
+

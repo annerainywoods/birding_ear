@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
 
 
 class Bird(models.Model):
@@ -14,7 +15,7 @@ class Bird(models.Model):
 
 
 class State(models.Model):
-    name = models.CharField("U.S.State", max_length=2)
+    name = models.CharField("U.S.State", max_length=3)
 
     def __unicode__(self):
         return self.name
@@ -38,6 +39,11 @@ class UserBird(models.Model): #needs user
     favorite = models.BooleanField("saved as favorite", default=False)
     excluded = models.BooleanField("excluded from drill", default=False)
     user = models.ForeignKey(User)
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.bird.name)
+        super(UserBird, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.bird.name
@@ -54,10 +60,15 @@ class Mix(models.Model):  # needs user
     )
     nickname = models.CharField("three-letter name", max_length=3)
     description = models.CharField("short description", max_length=255)
-    states = models.ManyToManyField('State', verbose_name="state filters")
-    bird_types = models.ManyToManyField('BirdType', verbose_name="bird type filters")
+    states = models.ManyToManyField('State', blank=True, null=True, verbose_name="state filters")
+    bird_types = models.ManyToManyField('BirdType', blank=True, null=True, verbose_name="bird type filters")
     color = models.CharField("color", max_length=3, choices=COLOR, default='OLV')
     user = models.ForeignKey(User)
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.nickname)
+        super(Mix, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.nickname

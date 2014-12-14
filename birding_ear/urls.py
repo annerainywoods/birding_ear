@@ -13,6 +13,8 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'birding_ear.views.index'),
+    url(r'^bird_detail/(?P<bird_name_slug>[\w\-]+)/$', 'birding_ear.views.bird_detail'),
+    url(r'^mix_detail/(?P<mix_nickname_slug>[\w\-]+)/$', 'birding_ear.views.mix_detail'),
     url(r'^ajax/', views.ajax, name="ajax"),
     (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
         'document_root': settings.MEDIA_ROOT}),
