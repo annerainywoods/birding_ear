@@ -21,18 +21,41 @@ def index(request):
 def mix_detail(request, mix_nickname_slug):
     context_dict = {}
     mix = Mix.objects.get(slug=mix_nickname_slug)
+    context_dict['mix_slug'] = mix_nickname_slug
     context_dict['mix_nickname'] = mix.nickname
     context_dict['mix_description'] = mix.description
     context_dict['mix_color'] = mix.color
     context_dict['mix_states'] = mix.states.all()
     context_dict['mix_bird_types'] = mix.bird_types.all()
-    if (mix.bird_types.all()):
+
+    if mix.bird_types.all():
+        # if a bird_type filter exists for the mix, find the matching birds
         bird_list = UserBird.objects.all().filter(bird__bird_type__in=mix.bird_types.all())
     else:
         bird_list = UserBird.objects.all()
-    # loop thru states?
+
+#    if mix.states.all():
+        # if a state filter exists for the mix, find the matching birds
+#        for b in bird_list:
+            # if a bird matches the states in the bird mix, go to next bird
+            # otherwise, delete it from the list of birds
+#            if b.filter(bird__states__in=mix.states.all()):
+#                continue
+#            else:
+#                bird_list.remove(b)
+
     context_dict['birds'] = bird_list
     return render_to_response('mix_detail.html', context_dict)
+
+def mix_settings(request, mix_nickname_slug):
+    context_dict = {}
+    mix = Mix.objects.get(slug=mix_nickname_slug)
+    context_dict['mix_nickname'] = mix.nickname
+    context_dict['mix_description'] = mix.description
+    context_dict['mix_color'] = mix.color
+    context_dict['mix_states'] = mix.states.all()
+
+    return render_to_response('mix_edit.html', context_dict)
 
 
 def bird_detail(request, bird_name_slug):
@@ -48,8 +71,6 @@ def bird_detail(request, bird_name_slug):
     context_dict['bird_pile'] = bird.bird_pile
     #mix-list needs API
     return render_to_response('bird_detail.html', context_dict)
-
-
 
 
 @csrf_exempt

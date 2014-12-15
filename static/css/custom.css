@@ -15,7 +15,7 @@ body.YEL .colored-btn:hover { background-color:#ebbb3b; color: white }
 
 .mix-icon .OLV { background-color:#818506;}
 .mix-icon .OLV:hover { background-color:#929608;}
-body.OLV .colored-btn-group a.btn, body.lt-brown .colored-btn-group a.btn:hover { color:#818506; }
+body.OLV .colored-btn-group a.btn, body.lt-brown .colored-btn-group a.btn:hover { color:#818506; position:relative }
 body.OLV h1, body.OLV h1:hover { background-color:#818506; color: white }
 body.OLV .colored-btn { background-color:#818506; color: white }
 body.OLV .colored-btn:hover { background-color:#929608; color: white }
@@ -89,7 +89,7 @@ h1#sitename span {
 a#menu-icon {
     background-color:white;
     border: 1px solid rgb(204, 204, 204);
-    border-radius:6px;
+    border-radius: 6px;
     width:70px;
     height:70px;
     display:block;
@@ -102,6 +102,7 @@ a#menu-icon {
     text-align:center;
     padding: 13px 0 0 0;
     box-sizing: border-box;
+    z-index:50
 }
 a#menu-icon span {
     font-size:40px;
@@ -120,6 +121,8 @@ div#menu {
     padding:10px;
     border: 1px solid rgb(204, 204, 204);
     border-radius:6px 0 6px 6px;
+    z-index: 50;
+    display:none;
 }
 .nav-pills li a {
     background-color:#ccc
@@ -147,6 +150,9 @@ audio {
 }
 .btn-group a.btn {
     font-weight:bold; font-size:30px
+}
+.btn-default:hover {
+    background: #ccc;
 }
 .tooltip-inner {
     text-align: left;

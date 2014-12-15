@@ -108,6 +108,6 @@ STATICFILES_DIRS = (
 )
 
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/static/media/'
 
 

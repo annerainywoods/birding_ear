@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load staticfiles%}
+
+{% block title %}My amazing blog{% endblock %}
+
+{% block body %}<body class="{{ mix_color }}"  onload="myFunction()">{% endblock %}
+
+{% block maincontent %}
+    <h1>Edit {{ mix_nickname }}</h1>
+    <div id="edit">
+    <form role="form">
+        <div class="form-group">
+            <label for="">Nickname</label> <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Think of a 1-3 letter nickname or abbreviation to call your bird mix. For example PNW would be a good nickname for a Pacific Northwest bird mix. You can always change this later."><span class="glyphicon glyphicon-info-sign"></span></a>
+            <input type="" class="form-control input-lg" id="" placeholder="{{ mix_nickname }}" maxlength="3">
+         </div>
+        <div class="form-group">
+            <label for="">Short Description</label> <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Descriptions can be as long as you would like, but under 30 characters looks best. You can always change this later."><span class="glyphicon glyphicon-info-sign"></span></a>
+            <input type="" class="form-control input-lg" id="" placeholder="{{ mix_description }}">
+        </div>
+        <hr>
+        <div class="form-group">
+            <label>States</label> <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Choose your home state to learn birds in your area. Cover a bigger geographic area by adding bordering states. You can change this later if you want to add or delete states. Or you can make different mixes for different states."><span class="glyphicon glyphicon-info-sign"></span></a>
+            <select class="form-control input-lg">
+              <option>All</option>
+              <option>AL</option>
+              <option>AK</option>
+              <option>AZ</option>
+              <option>AR</option>
+              <option>CA</option>
+           </select>
+        </div>
+        <a role="button" class="btn btn-default btn-lg pull-right"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add another</a><br />&nbsp;
+        <hr>
+        <div class="form-group">
+            <label>Bird Types</label> <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Narrow your mix by choosing one or more bird types. You can change this later if you want to add or delete bird types."><span class="glyphicon glyphicon-info-sign"></span></a>
+            <select class="form-control input-lg">
+              <option>All</option>
+              <option>Diving Birds</option>
+              <option>Heronlike Birds</option>
+              <option>Sparrows, Grossbeaks & Buntings</option>
+              <option>Kinglets, Bluebirds & Thrushes</option>
+           </select>
+        </div>
+        <a role="button" class="btn btn-default btn-lg pull-right"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add another</a><br />&nbsp;
+       <hr>
+        <div class="form-group">
+            <label>Color</label> <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Choose a color for the icon on the home page. You can change this whenever you want."><span class="glyphicon glyphicon-info-sign"></span></a>
+            <select class="form-control input-lg" id="color-options">
+              <option value="OLV" id="OLV">Olive</option>
+              <option value="YEL" id="YEL">Yellow</option>
+              <option value="LTB" id="LTB">Light Brown</option>
+              <option value="DKB" id="DKB">Dark Brown</option>
+              <option value="RUS" id="RUS">Rust</option>
+              <option value="DGY" id="DGY">Dark Grey</option>
+           </select>
+        </div>
+
+        <hr>
+    </form>
+
+
+    <button type="button" class="btn btn-default btn-lg colored-btn">SAVE</button>
+
+    </div><!--edit-->
+    <script type="text/javascript">
+    <!--
+    function myFunction() {
+        document.getElementById("{{ mix_color }}").selected = true;
+    }
+        /*http://www.w3schools.com/jsref/prop_option_selected.asp
+        http://stackoverflow.com/questions/4590311/set-option-selected-attribute-from-dynamic-created-optionhttp://stackoverflow.com/questions/4590311/set-option-selected-attribute-from-dynamic-created-option
+         */
+    //-->
+    </script>
+{% endblock maincontent %}
