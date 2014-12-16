@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% load staticfiles%}
 
-{% block title %}My amazing blog{% endblock %}
+{% block title %}Edit {{ mix_nickname }} Mix{% endblock %}
 
 {% block body %}<body class="{{ mix_color }}"  onload="myFunction()">{% endblock %}
 
 {% block maincontent %}
-    <h1>Edit {{ mix_nickname }}</h1>
+    <h1>{{ mix_nickname }}</h1>
     <div id="edit">
     <form role="form">
         <div class="form-group">
@@ -68,7 +68,8 @@
         document.getElementById("{{ mix_color }}").selected = true;
     }
         /*http://www.w3schools.com/jsref/prop_option_selected.asp
-        http://stackoverflow.com/questions/4590311/set-option-selected-attribute-from-dynamic-created-optionhttp://stackoverflow.com/questions/4590311/set-option-selected-attribute-from-dynamic-created-option
+        http://stackoverflow.com/questions/4590311/set-option-selected-attribute-from-dynamic-created-option
+
          */
     //-->
     </script>

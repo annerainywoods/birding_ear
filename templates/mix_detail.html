@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load staticfiles%}
 
-{% block title %}My amazing blog{% endblock %}
+{% block title %}{{ mix_nickname }} Mix{% endblock %}
 
 {% block body %}<body class="{{ mix_color }}">{% endblock %}
 
@@ -41,15 +41,15 @@
             </ul>
         </li>
         <li><span class="glyphicon glyphicon-folder-open bullet" aria-hidden="true"></span><strong>Birds in the mix</strong>  <a href="#" title="Bolded birds are in your favorites list. Crossed out birds have been excluded from drills. You can update both these settings by clicking on the bird's name."><span class="glyphicon glyphicon-info-sign"></span></a>
-            {% if birds %}
             <ul>
+            {% if birds %}
                 {% for bird in birds %}
                 <li><a href="/bird_detail/{{ bird.slug }}">{{ bird.bird.name }}</a></li>
                 {% endfor %}
-            </ul>
             {% else %}
-            <strong>There are no birds present.</strong>
+                <li>No birds match your selected states and bird types. <a href="/mix_settings/{{ mix_slug }}">Change settings</a></li>
             {% endif %}
+            </ul>
         </li>
     </ul>
     </div><!--mix-detail-info-->

@@ -1,7 +1,7 @@
 '''
 
 MIX DETAIL
-- figure out state filters
+- subtract one data set from another
 - move mix data out of view and into API
     for each mix ( mix nickname & description, drill settings, for each bird static and user data )
     can API hold calculated data? How many birds are learned, how many total
@@ -15,6 +15,7 @@ MIX EDIT
 - display an input for all selected bird types
 - how to update database with form data
 - get popovers functional for find other plugin
+- make mix nickname link back to mix detail
 
 MIX NEW
 - can this use the same template? Differences: no placeholder values, color should be theme grey
@@ -36,5 +37,7 @@ BASE
 MODELS
 - make mix nickname unique=True - will this be true for the user or for the system?
 - Userbird, display bird name and user id. What about Drill and Mix?
+
+Put in remaining static pages
 
 '''
