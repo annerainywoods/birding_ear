@@ -1,21 +1,25 @@
 '''
 
 MIX DETAIL
-- subtract one data set from another
-- move mix data out of view and into API
-    for each mix ( mix nickname & description, drill settings, for each bird static and user data )
-    can API hold calculated data? How many birds are learned, how many total
-- use API to generate the bird list on the mix
-- set classes of "favorite" and "excluded" on the bird links
+- add heart icon with javascript
+
+if(bird.favorite):
+    html_classes.append("favorite")
+    ....
+html_classes = " ".join(html_classes)
+
+
+
 
 MIX EDIT
-- value for "All" should be NULL
+- add accordion for filters
 - trigger color option selected without onload in body, and without flicker
-- display an input for all selected state filters
-- display an input for all selected bird types
 - how to update database with form data
 - get popovers functional for find other plugin
 - make mix nickname link back to mix detail
+
+
+
 
 MIX NEW
 - can this use the same template? Differences: no placeholder values, color should be theme grey

@@ -41,6 +41,18 @@ class UserBird(models.Model): #needs user
     user = models.ForeignKey(User)
     slug = models.SlugField(unique=True)
 
+    def html_classes(self):
+        bird = self
+        if bird.favorite & bird.excluded:
+            html_classes = "favorite excluded"
+        elif bird.favorite:
+            html_classes = "favorite"
+        elif bird.excluded:
+            html_classes = "excluded"
+        else:
+            html_classes = "default"
+        return html_classes
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.bird.name)
         super(UserBird, self).save(*args, **kwargs)
@@ -69,6 +81,32 @@ class Mix(models.Model):  # needs user
     def save(self, *args, **kwargs):
         self.slug = slugify(self.nickname)
         super(Mix, self).save(*args, **kwargs)
+
+    def num_learned(self):
+        mix = self
+        if mix.bird_types.all() and mix.states.all():
+            num_learned = len(UserBird.objects.all().filter(bird__bird_type__in=mix.bird_types.all())\
+            .filter(bird__states__in=mix.states.all()).distinct().filter(bird_pile__in='L'))
+        elif mix.bird_types.all():
+            num_learned = len(UserBird.objects.all().filter(bird__bird_type__in=mix.bird_types.all()).filter(bird_pile__in='L'))
+        elif mix.states.all():
+            num_learned = len(UserBird.objects.all().filter(bird__states__in=mix.states.all()).distinct().filter(bird_pile__in='L'))
+        else:
+            num_learned = len(UserBird.objects.all().filter(bird_pile__in='L'))
+        return num_learned
+
+    def bird_list(self):
+        mix = self
+        if mix.bird_types.all() and mix.states.all():
+            bird_list = UserBird.objects.all().filter(bird__bird_type__in=mix.bird_types.all())\
+                .filter(bird__states__in=mix.states.all()).distinct()
+        elif mix.bird_types.all():
+            bird_list = UserBird.objects.all().filter(bird__bird_type__in=mix.bird_types.all())
+        elif mix.states.all():
+            bird_list = UserBird.objects.all().filter(bird__states__in=mix.states.all()).distinct()
+        else:
+            bird_list = UserBird.objects.all()
+        return bird_list
 
     def __unicode__(self):
         return self.nickname

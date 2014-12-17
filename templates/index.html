@@ -11,8 +11,8 @@
         {% for mix in mixes %}
         <a href="/mix_detail/{{ mix.slug }}" title="Go to {{ mix.description }}" class="mix-icon">
         <ul class="{{ mix.color }}">
-            <li class="mix_learned">31<span class="sr-only"> Learned</span></li>
-            <li class="mix_total">34<span class="sr-only"> Total</span></li>
+            <li class="mix_learned">{{ mix.num_learned }}<span class="sr-only"> Learned</span></li>
+            <li class="mix_total">{{ mix.bird_list.count }}<span class="sr-only"> Total</span></li>
             <li class="mix_abbr">{{ mix.nickname }}</li>
         </ul>
         <h4>{{ mix.description }}</h4>

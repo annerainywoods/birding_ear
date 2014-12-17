@@ -9,7 +9,7 @@
 .mix-icon .YEL { background-color:#d9a720;}
 .mix-icon .YEL:hover {background-color: #ebbb3b;}
 body.YEL .colored-btn-group a.btn, body.YEL .colored-btn-group a.btn:hover { color:#d9a720; }
-body.YEL h1, body.olive h1:hover { background-color:#d9a720; color: white }
+body.YEL h1, body.YEL h1:hover { background-color:#d9a720; color: white }
 body.YEL .colored-btn { background-color:#d9a720; color: white }
 body.YEL .colored-btn:hover { background-color:#ebbb3b; color: white }
 
@@ -23,7 +23,7 @@ body.OLV .colored-btn:hover { background-color:#929608; color: white }
 .mix-icon .LTB { background-color:#845d24;}
 .mix-icon .LTB:hover { background-color:#976926;}
 body.LTB .colored-btn-group a.btn, body.LTB .colored-btn-group a.btn:hover { color:#845d24; }
-body.LTB h1, body.lt.brown h1:hover { background-color:#845d24; color: white }
+body.LTB h1, body.LTB h1:hover { background-color:#845d24; color: white }
 body.LTB .colored-btn { background-color:#845d24; color: white }
 body.LTB .colored-btn:hover { background-color:#976926; color: white }
 
@@ -43,6 +43,10 @@ body.RUS .colored-btn:hover { background-color:#b74e25; color: white }
 
 .mix-icon .DGY { background-color:#333;}
 .mix-icon .DGY:hover {background-color: #494949;}
+body.DGY .colored-btn-group a.btn, body.RUS .colored-btn-group a.btn:hover { color:#333; }
+body.DGY h1, body.DGY h1:hover { background-color:#333; color: white }
+body.DGY .colored-btn { background-color:#333; color: white }
+body.DGY .colored-btn:hover { background-color:#494949; color: white }
 
 .mix-icon .theme-grey { background-color:#4b6071;}
 .mix-icon .theme-grey:hover {background-color: #506e86;}
@@ -134,8 +138,11 @@ div#menu {
 .favorite {
     font-weight:bold;
 }
-.exclude {
+.excluded {
     text-decoration:line-through;
+}
+.excluded:hover {
+    text-decoration:line-through underline;
 }
 hr {
     background:#ccc;
@@ -221,7 +228,7 @@ a.mix-icon {
     display:block;
 }
 a.mix-icon:hover {
-    text-decoration:none !important;
+    text-decoration:none
 }
 .mix-icon ul {
     margin: 0;
@@ -233,14 +240,11 @@ a.mix-icon:hover {
     padding: 0;
 }
 .mix-icon{
-    width:124px;
-    margin: 10px 0 0 30px;
-}
-.mix-icon{
     width: 124px;
     height:200px;
     float:left;
     overflow: hidden;
+    margin: 10px 0 0 30px;
 }
 .mix-icon ul {
     width: 124px;
@@ -250,7 +254,6 @@ a.mix-icon:hover {
     background-image: url("../media/sprite.png");
     background-position: 0 -111px;
     color:white;
-    cursor: pointer;
 }
 .mix-icon.trophy ul {
     background-position: -135px -111px;
@@ -321,6 +324,22 @@ a.mix-icon:hover {
     display: inline;
 }
 
+/************** Mix Edit ************/
+#state-buttons {
+    margin:0 -30px 0 0;
+    padding:0;
+    display:none;
+}
+#state-buttons li {
+    margin: 10px 30px 0 0;
+    display: inline-block;
+    width: 25px;
+    height: 15px;
+
+}
+#type-categories {
+    display:none
+}
 /*************** Drill*************/
 
 #drill p {

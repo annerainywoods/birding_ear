@@ -16,7 +16,7 @@
     <div id="mix-detail-info" class="detail-info">
 
     <ul>
-        <li><span class="glyphicon glyphicon-headphones bullet" aria-hidden="true"></span><strong>50 out of 50 birds learned</strong> <a href="#" title="When you get a bird right in a drill or quiz, then it gets the status of 'learned'. If you miss the bird in a future drill or quiz, it will go back to 'unlearned'."><span class="glyphicon glyphicon-info-sign"></span></a></li>
+        <li><span class="glyphicon glyphicon-headphones bullet" aria-hidden="true"></span><strong>{{ num_learned }} out of {{bird_list.count}} birds learned</strong> <a href="#" title="When you get a bird right in a drill or quiz, then it gets the status of 'learned'. If you miss the bird in a future drill or quiz, it will go back to 'unlearned'."><span class="glyphicon glyphicon-info-sign"></span></a></li>
         <li><span class="glyphicon glyphicon-map-marker bullet" aria-hidden="true"></span><strong>States</strong>
 
             <ul class="inline-list">
@@ -42,9 +42,9 @@
         </li>
         <li><span class="glyphicon glyphicon-folder-open bullet" aria-hidden="true"></span><strong>Birds in the mix</strong>  <a href="#" title="Bolded birds are in your favorites list. Crossed out birds have been excluded from drills. You can update both these settings by clicking on the bird's name."><span class="glyphicon glyphicon-info-sign"></span></a>
             <ul>
-            {% if birds %}
-                {% for bird in birds %}
-                <li><a href="/bird_detail/{{ bird.slug }}">{{ bird.bird.name }}</a></li>
+            {% if bird_list %}
+                {% for bird in bird_list %}
+                <li><a href="/bird_detail/{{ bird.slug }}" class="{{ bird.html_classes }}">{{ bird.bird.name }} <span class="glyphicon glyphicon-heart"></span></a></li>
                 {% endfor %}
             {% else %}
                 <li>No birds match your selected states and bird types. <a href="/mix_settings/{{ mix_slug }}">Change settings</a></li>
