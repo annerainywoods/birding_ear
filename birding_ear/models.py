@@ -110,15 +110,16 @@ class Mix(models.Model):  # needs user
 
     def bird_list(self):
         mix = self
-        if mix.bird_types.all() and mix.states.all():
-            bird_list = UserBird.objects.all().filter(bird__bird_type__in=mix.bird_types.all())\
+        user = self.user
+        if mix.bird_types.filter(mix__user=user) and mix.states.filter(mix__user=user):
+            bird_list = UserBird.objects.filter(user=user).filter(bird__bird_type__in=mix.bird_types.all())\
                 .filter(bird__states__in=mix.states.all()).distinct()
-        elif mix.bird_types.all():
-            bird_list = UserBird.objects.all().filter(bird__bird_type__in=mix.bird_types.all())
-        elif mix.states.all():
-            bird_list = UserBird.objects.all().filter(bird__states__in=mix.states.all()).distinct()
+        elif mix.bird_types.filter(mix__user=user):
+            bird_list = UserBird.objects.filter(user=user).filter(bird__bird_type__in=mix.bird_types.all())
+        elif mix.states.filter(mix__user=user):
+            bird_list = UserBird.objects.filter(user=user).filter(bird__states__in=mix.states.all()).distinct()
         else:
-            bird_list = UserBird.objects.all()
+            bird_list = UserBird.objects.filter(user=user)
         return bird_list
 
     def __unicode__(self):
