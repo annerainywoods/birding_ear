@@ -39,7 +39,7 @@ class UserBird(models.Model): #needs user
         ('L', 'Learned'),
         ('M', 'Missed')
     )
-    bird = models.OneToOneField('Bird', verbose_name="static bird data")
+    bird = models.ForeignKey('Bird', verbose_name="static bird data")
     bird_pile = models.CharField("bird pile", max_length=1, choices=BIRD_PILE, default='N')
     favorite = models.BooleanField("saved as favorite", default=False)
     excluded = models.BooleanField("excluded from drill", default=False)
