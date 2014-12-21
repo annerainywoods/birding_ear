@@ -19,8 +19,6 @@ MIX EDIT
 - make mix nickname link back to mix detail
 
 
-
-
 MIX NEW
 - can this use the same template? Differences: no placeholder values, color should be theme grey
 - how to save initial form data
@@ -32,7 +30,6 @@ BIRD DETAIL
 - fix check box style on firefox (and other browsers?)
 
 HOME
-- use api to get learned and total numbers
 - if learned = total, give mix the trophy class
 
 BASE
@@ -40,7 +37,8 @@ BASE
 
 MODELS
 - make mix nickname unique=True - will this be true for the user or for the system?
-- Userbird, display bird name and user id. What about Drill and Mix?
+- Userbird, display bird name and user id. What about Drill and Mix?\
+- get user into context_dict
 
 Put in remaining static pages
 

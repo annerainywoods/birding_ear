@@ -9,9 +9,14 @@ class Bird(models.Model):
     bird_call = models.CharField("bird call", max_length=255)
     states = models.ManyToManyField('State', verbose_name="states", blank=True, null=True)
     bird_type = models.ForeignKey('BirdType', verbose_name="type of bird", blank=True, null=True)
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Bird, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return (self.name)
+        return self.name
 
 
 class State(models.Model):
@@ -39,7 +44,6 @@ class UserBird(models.Model): #needs user
     favorite = models.BooleanField("saved as favorite", default=False)
     excluded = models.BooleanField("excluded from drill", default=False)
     user = models.ForeignKey(User)
-    slug = models.SlugField(unique=True)
 
     def html_classes(self):
         bird = self
@@ -53,12 +57,20 @@ class UserBird(models.Model): #needs user
             html_classes = "default"
         return html_classes
 
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.bird.name)
-        super(UserBird, self).save(*args, **kwargs)
+    def parent_mixes(self):
+        bird = self
+        parent_mixes = []
+        for m in Mix.objects.all():
+            for b in m.bird_list:
+                if b == bird:
+                    parent_mixes.append({
+                        "mix": m.nickname
+                    })
+        return parent_mixes
+
 
     def __unicode__(self):
-        return self.bird.name
+        return self.user.username + "-" + self.bird.name
 
 
 class Mix(models.Model):  # needs user
@@ -68,7 +80,8 @@ class Mix(models.Model):  # needs user
         ('RUS', 'Rust'),
         ('DKB', 'Dark Brown'),
         ('LTB', 'Light Brown'),
-        ('DGY', 'Dark Grey')
+        ('DGY', 'Dark Grey'),
+        ('TGY', 'Theme Grey')
     )
     nickname = models.CharField("three-letter name", max_length=3)
     description = models.CharField("short description", max_length=255)
@@ -109,7 +122,7 @@ class Mix(models.Model):  # needs user
         return bird_list
 
     def __unicode__(self):
-        return self.nickname
+        return self.user.username + "-" + self.nickname
 
 
 # class FavMix(model.Model):  # needs user

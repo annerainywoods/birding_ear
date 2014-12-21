@@ -40,11 +40,11 @@
             {% endif %}
             </ul>
         </li>
-        <li><span class="glyphicon glyphicon-folder-open bullet" aria-hidden="true"></span><strong>Birds in the mix</strong>  <a href="#" title="Bolded birds are in your favorites list. Crossed out birds have been excluded from drills. You can update both these settings by clicking on the bird's name."><span class="glyphicon glyphicon-info-sign"></span></a>
+        <li><span class="glyphicon glyphicon-folder-open bullet" aria-hidden="true"></span><strong>Birds in the mix</strong>  <a href="#" title="Birds with hearts are in your favorites list. Crossed out birds have been excluded from drills. You can update both these settings by clicking on the bird's name."><span class="glyphicon glyphicon-info-sign"></span></a>
             <ul>
             {% if bird_list %}
                 {% for bird in bird_list %}
-                <li><a href="/bird_detail/{{ bird.slug }}" class="{{ bird.html_classes }}">{{ bird.bird.name }} <span class="glyphicon glyphicon-heart"></span></a></li>
+                <li><a href="/bird_detail/{{ bird.bird.slug }}" class="{{ bird.html_classes }}">{{ bird.bird.name }} </a></li>
                 {% endfor %}
             {% else %}
                 <li>No birds match your selected states and bird types. <a href="/mix_settings/{{ mix_slug }}">Change settings</a></li>
@@ -53,4 +53,16 @@
         </li>
     </ul>
     </div><!--mix-detail-info-->
+    <script>
+        /* look for class where string contains "favorite"*/
+       /*  add <span class="glyphicon glyphicon-heart"></span> to end of a*/
+        var favoriteSpan = " <span class='glyphicon glyphicon-heart'></span>";
+        var favorites = document.getElementsByClassName("favorite");
+        for (var i = 0; i < favorites.length; i++) {
+            var content = ""
+            content = favorites[i].innerHTML;
+            favorites[i].innerHTML = content + favoriteSpan;
+        }
+
+    </script>
 {% endblock maincontent %}

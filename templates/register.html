@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load staticfiles%}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}<body class="DGY">{% endblock %}
+
+{% block maincontent %}
+    <h2>Register</h2>
+    <div id="login">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="">Username</label>
+                <input name="username" type="" class="form-control input-lg" id="">
+            </div>
+            <div class="form-group">
+                <label for="">Password</label>
+                <input name="password" type="password" class="form-control input-lg" id="">
+            </div>
+
+            <input type="submit" class="btn btn-default btn-lg colored-btn" value="REGISTER">
+
+        </form>
+    </div>
+{% endblock maincontent %}

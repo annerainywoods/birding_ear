@@ -110,4 +110,8 @@ STATICFILES_DIRS = (
 
 MEDIA_URL = '/static/media/'
 
+LOGIN_URL = '/login'
+
+LOGOUT_URL = '/login'
+
 

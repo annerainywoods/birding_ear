@@ -7,6 +7,7 @@
 
 {% block maincontent %}
     <h2>My Bird Mixes</h2>
+
     {% if mixes %}
         {% for mix in mixes %}
         <a href="/mix_detail/{{ mix.slug }}" title="Go to {{ mix.description }}" class="mix-icon">
@@ -19,18 +20,18 @@
         </a><!--end mix-icon-->
     {% endfor %}
     {% else %}
-            <strong>There are no mixes present.</strong>
+            <!--<strong>There are no mixes present.</strong>-->
     {% endif %}
     <a href="#" title="Go to Favorites" class="mix-icon">
-        <ul class="theme-grey">
+        <ul class="TGY">
             <li class="mix_learned">6</li>
             <li class="mix_total">7</li>
             <li class="mix_abbr">FAV</li>
         </ul>
         <h4>Favorites</h4>
     </a><!--end mix-icon-->
-    <a href="/mix_settings" title="Add a new bird mix" class="mix-icon add-new">
-        <ul class="theme-grey">
+    <a href="/mix_settings_new" title="Add a new bird mix" class="mix-icon add-new">
+        <ul class="TGY">
             <li class="verdana-plus">+</li>
             <li class="mix_abbr">ADD NEW</li>
         </ul>

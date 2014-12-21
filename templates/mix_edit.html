@@ -1,31 +1,42 @@
 {% extends "base.html" %}
 {% load staticfiles%}
 
-{% block title %}Edit {{ mix_nickname }} Mix{% endblock %}
+{% block title %}
+    {% if mix_nickname %}
+    Edit {{ mix_nickname }}
+    {% else %}
+    Add New
+    {% endif %}
+Mix{% endblock %}
 
 {% block body %}<body class="{{ mix_color }}"  onload="myFunction()">{% endblock %}
 
 {% block maincontent %}
+    {% if mix_nickname %}
     <h1>{{ mix_nickname }}</h1>
+    {% else %}
+    <h1>Add New Mix</h1>
+    {% endif %}
     <div id="edit">
-    <form role="form">
+    <form role="form" method="POST">
+        {% csrf_token %}
         <div class="form-group">
             <label for="">Nickname</label> <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Think of a 1-3 letter nickname or abbreviation to call your bird mix. For example PNW would be a good nickname for a Pacific Northwest bird mix. You can always change this later."><span class="glyphicon glyphicon-info-sign"></span></a>
-            <input type="" class="form-control input-lg" id="" value="{{ mix_nickname }}" maxlength="3">
+            <input name="nickname" type="" class="form-control input-lg" id="" value="{{ mix_nickname }}" maxlength="3">
          </div>
         <div class="form-group">
             <label for="">Short Description</label> <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Descriptions can be as long as you would like, but under 30 characters looks best. You can always change this later."><span class="glyphicon glyphicon-info-sign"></span></a>
-            <input type="" class="form-control input-lg" id="" value="{{ mix_description }}">
+            <input name="description" type="" class="form-control input-lg" id="" value="{{ mix_description }}">
         </div>
         <div class="form-group">
             <label>Color</label> <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Choose a color for the icon on the home page. You can change this whenever you want."><span class="glyphicon glyphicon-info-sign"></span></a>
             <select class="form-control input-lg" id="color-options">
-              <option value="OLV" id="OLV">Olive</option>
-              <option value="YEL" id="YEL">Yellow</option>
-              <option value="LTB" id="LTB">Light Brown</option>
-              <option value="DKB" id="DKB">Dark Brown</option>
-              <option value="RUS" id="RUS">Rust</option>
-              <option value="DGY" id="DGY">Dark Grey</option>
+              <option value="OLV" id="OLV" name="OLV">Olive</option>
+              <option value="YEL" id="YEL" name="YEL">Yellow</option>
+              <option value="LTB" id="LTB" name="LTB">Light Brown</option>
+              <option value="DKB" id="DKB" name="DKB">Dark Brown</option>
+              <option value="RUS" id="RUS" name="RUS">Rust</option>
+              <option value="DGY" id="DGY" name="DGY">Dark Grey</option>
            </select>
         </div>
 
@@ -118,10 +129,10 @@
         </div>
        <hr>
 
+    <input type="submit" class="btn btn-default btn-lg colored-btn" value="SAVE">
     </form>
 
 
-    <button type="button" class="btn btn-default btn-lg colored-btn">SAVE</button>
 
     </div><!--edit-->
     <script type="text/javascript">

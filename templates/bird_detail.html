@@ -36,8 +36,13 @@
         </li>
         <li><span class="glyphicon glyphicon-folder-open bullet" aria-hidden="true"></span><strong>Bird mixes with this bird</strong>
             <ul>
-                <li><a href="#"><strong>COB:</strong> Coastal Birds</a></li>
-                <li><a href="#"><strong>PNW:</strong> Washington and Oregon</a></li>
+                {% if parent_mixes %}
+                <li>"parent_mixes" TRUE</li>
+                {% else %}
+                <li>"parent_mixes" FALSE</li>
+                {% endif %}
+                <!--<li><a href="#"><strong>COB:</strong> Coastal Birds</a></li>
+                <li><a href="#"><strong>PNW:</strong> Washington and Oregon</a></li>-->
             </ul>
         </li>
     </ul>

@@ -48,12 +48,12 @@ body.DGY h1, body.DGY h1:hover { background-color:#333; color: white }
 body.DGY .colored-btn { background-color:#333; color: white }
 body.DGY .colored-btn:hover { background-color:#494949; color: white }
 
-.mix-icon .theme-grey { background-color:#4b6071;}
-.mix-icon .theme-grey:hover {background-color: #506e86;}
-body.theme-grey .colored-btn-group a.btn, body.theme-grey .colored-btn-group a.btn:hover { color:#4b6071; }
-body.theme-grey h1, body.theme-grey h1:hover { background-color:#4b6071; color: white }
-body.theme-grey .colored-btn { background-color:#4b6071; color: white }
-body.theme-grey .colored-btn:hover { background-color:#506e86; color: white }
+.mix-icon .TGY { background-color:#4b6071;}
+.mix-icon .TGY:hover {background-color: #506e86;}
+body.TGY .colored-btn-group a.btn, body.TGY .colored-btn-group a.btn:hover { color:#4b6071; }
+body.TGY h1, body.TGY h1:hover { background-color:#4b6071; color: white }
+body.TGY .colored-btn { background-color:#4b6071; color: white }
+body.TGY .colored-btn:hover { background-color:#506e86; color: white }
 
 
 /*********** Common *********************/
@@ -136,7 +136,7 @@ div#menu {
     color:white
 }
 .favorite {
-    font-weight:bold;
+
 }
 .excluded {
     text-decoration:line-through;
@@ -206,7 +206,7 @@ h4 {
     font-weight:normal;
 }
 
-#bird-detail, #drill, #edit, #favorites, #mix-detail-info, #settings  {
+#bird-detail, #drill, #edit, #favorites, #mix-detail-info, #settings, #login  {
     margin:30px;
 }
 .checkbox-lg {
