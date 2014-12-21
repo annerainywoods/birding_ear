@@ -95,18 +95,21 @@ class Mix(models.Model):  # needs user
         self.slug = slugify(self.nickname)
         super(Mix, self).save(*args, **kwargs)
 
+
     def num_learned(self):
         mix = self
-        if mix.bird_types.all() and mix.states.all():
-            num_learned = len(UserBird.objects.all().filter(bird__bird_type__in=mix.bird_types.all())\
-            .filter(bird__states__in=mix.states.all()).distinct().filter(bird_pile__in='L'))
-        elif mix.bird_types.all():
-            num_learned = len(UserBird.objects.all().filter(bird__bird_type__in=mix.bird_types.all()).filter(bird_pile__in='L'))
-        elif mix.states.all():
-            num_learned = len(UserBird.objects.all().filter(bird__states__in=mix.states.all()).distinct().filter(bird_pile__in='L'))
+        user = self.user
+        if mix.bird_types.filter(mix__user=user) and mix.states.filter(mix__user=user):
+            bird_list = len(UserBird.objects.filter(user=user).filter(bird__bird_type__in=mix.bird_types.all())\
+                .filter(bird__states__in=mix.states.all()).distinct().filter(bird_pile__in='L'))
+        elif mix.bird_types.filter(mix__user=user):
+            bird_list = len(UserBird.objects.filter(user=user).filter(bird__bird_type__in=mix.bird_types.all()).filter(bird_pile__in='L'))
+        elif mix.states.filter(mix__user=user):
+            bird_list = len(UserBird.objects.filter(user=user).filter(bird__states__in=mix.states.all()).distinct().filter(bird_pile__in='L'))
         else:
-            num_learned = len(UserBird.objects.all().filter(bird_pile__in='L'))
-        return num_learned
+            bird_list = len(UserBird.objects.filter(user=user).filter(bird_pile__in='L'))
+        return bird_list
+
 
     def bird_list(self):
         mix = self

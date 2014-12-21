@@ -109,7 +109,7 @@ def mix_settings_new(request):
 @login_required
 def bird_detail(request, bird_name_slug):
     context_dict = {}
-    bird = UserBird.objects.get(bird__slug=bird_name_slug)
+    bird = UserBird.objects.filter(user=request.user).get(bird__slug=bird_name_slug)
     context_dict['bird_name'] = bird.bird.name
     context_dict['bird_call'] = bird.bird.bird_call
     context_dict['bird_type'] = bird.bird.bird_type
@@ -118,7 +118,6 @@ def bird_detail(request, bird_name_slug):
     if bird.favorite:
         context_dict['excluded'] = "checked=checked"
     context_dict['bird_pile'] = bird.bird_pile
-    #find mixes where bird is in mix
     context_dict['parent_mixes'] = bird.parent_mixes
     context = RequestContext(request)
 
