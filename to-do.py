@@ -4,7 +4,6 @@ LOGOUT
 - login screen this redirects to does not accept login
 
 MIX EDIT
-- update database with form data
 - add functionality for states and types (post and get)
 - get popovers functional for find other plugin
 - make mix nickname link back to mix detail
