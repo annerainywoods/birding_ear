@@ -76,13 +76,15 @@ def mix_detail(request, mix_nickname_slug):
 
 
 @login_required
-def mix_settings(request, mix_nickname_slug):
+def mix_settings_edit(request, mix_nickname_slug):
     context_dict = {}
     mix = Mix.objects.get(slug=mix_nickname_slug)
     context_dict['mix_nickname'] = mix.nickname
     context_dict['mix_description'] = mix.description
     context_dict['mix_color'] = mix.color
-    context_dict['mix_states'] = mix.states.all()
+    context_dict['mix_states'] = mix.states
+    context_dict['state_options'] = State.objects.all()
+    context_dict['type_options'] = BirdType.objects.all()
     context = RequestContext(request)
 
     return render_to_response('mix_edit.html', context_dict, context)
@@ -94,17 +96,27 @@ def mix_settings_new(request):
     if request.method == "POST":
         mix.nickname = request.POST["nickname"]
         mix.description = request.POST["description"]
-        mix.color = "TGY"
+        mix.color = request.POST["color"]
         mix.user = request.user
         mix.save()
-    context_dict = {}
-    context_dict['mix_nickname'] = mix.nickname
-    context_dict['mix_description'] = mix.description
-    context_dict['mix_color'] = "TGY"
-    #context_dict['mix_states'] = mix.states.all()
-    context = RequestContext(request)
+        return redirect('index')
+    else:
+        context_dict = {}
+        context_dict['mix_color'] = "TGY"
+        context_dict['state_options'] = State.objects.all()
+        context_dict['type_options'] = BirdType.objects.all()
+        context = RequestContext(request)
+        return render_to_response('mix_edit.html', context_dict, context)
 
-    return render_to_response('mix_edit.html', context_dict, context)
+
+    # context_dict = {}
+    # context_dict['mix_nickname'] = mix.nickname
+    # context_dict['mix_description'] = mix.description
+    # context_dict['mix_color'] = "TGY"
+    # #context_dict['mix_states'] = mix.states.all()
+    # context = RequestContext(request)
+    #
+    # return render_to_response('mix_edit.html', context_dict, context)
 
 @login_required
 def bird_detail(request, bird_name_slug):

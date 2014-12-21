@@ -205,23 +205,16 @@ h4 {
     font-size:20px;
     font-weight:normal;
 }
-
+label, legend {
+    font-weight: bold;
+    margin:0;
+    padding:0
+}
 #bird-detail, #drill, #edit, #favorites, #mix-detail-info, #settings, #login  {
     margin:30px;
 }
-.checkbox-lg {
-    padding: 10px 0;
-}
-.checkbox-lg input[type="checkbox"] {
-    width: 30px;
-    height: 30px;
-    margin:0 0 0 -40px;
-    padding:0;
-}
-.checkbox-lg label {
-    font-size: 20px;
-    padding:0 0 0 40px !important
-}
+
+
 
 /******************** Home ********************/
 a.mix-icon {

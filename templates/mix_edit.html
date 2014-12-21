@@ -30,102 +30,39 @@ Mix{% endblock %}
         </div>
         <div class="form-group">
             <label>Color</label> <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Choose a color for the icon on the home page. You can change this whenever you want."><span class="glyphicon glyphicon-info-sign"></span></a>
-            <select class="form-control input-lg" id="color-options">
-              <option value="OLV" id="OLV" name="OLV">Olive</option>
-              <option value="YEL" id="YEL" name="YEL">Yellow</option>
-              <option value="LTB" id="LTB" name="LTB">Light Brown</option>
-              <option value="DKB" id="DKB" name="DKB">Dark Brown</option>
-              <option value="RUS" id="RUS" name="RUS">Rust</option>
-              <option value="DGY" id="DGY" name="DGY">Dark Grey</option>
+            <select class="form-control input-lg" id="color-options" name="color">
+              <option value="OLV" id="OLV">Olive</option>
+              <option value="YEL" id="YEL">Yellow</option>
+              <option value="LTB" id="LTB">Light Brown</option>
+              <option value="DKB" id="DKB">Dark Brown</option>
+              <option value="RUS" id="RUS">Rust</option>
+              <option value="DGY" id="DGY">Dark Grey</option>
            </select>
         </div>
 
         <hr>
         <div class="form-group">
-            <label>States</label> <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Choose your home state to learn birds in your area. Cover a bigger geographic area by adding bordering states. You can change this later if you want to add or delete states. Or you can make different mixes for different states."><span class="glyphicon glyphicon-info-sign"></span></a>
-            <p><a href="#" onclick="toggle_visibility('state-buttons'); return false;" ><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Filter by states</a></p>
-            <ul id="state-buttons">
-                <li><a role="button" class="btn btn-default ">CA</a></li>
-                <li><a role="button" class="btn btn-default ">OR</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">OR</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">OR</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">OR</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">OR</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">OR</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">OR</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">OR</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">OR</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">OR</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">OR</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">OR</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">OR</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">OR</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">OR</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">OR</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">OR</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">OR</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">OR</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-                <li><a role="button" class="btn btn-default ">OR</a></li>
-                <li><a role="button" class="btn btn-default ">WA</a></li>
-            </ul>
-
+            <fieldset name="state">
+            <legend>States <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Choose your home state to learn birds in your area. Cover a bigger geographic area by adding bordering states. You can change this later if you want to add or delete states. Or you can make different mixes for different states."><span class="glyphicon glyphicon-info-sign"></span></a></legend>
+            <a href="#" onclick="toggle_visibility('state-buttons'); return false;" ><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Filter by states</a>
+            <div id="state-buttons">
+                {% for state in state_options %}
+                <div class="checkbox checkbox-lg"><label><input type="checkbox"> {{ state }}</label></div>
+                {% endfor %}
+            </div>
+        </fieldset>
         </div>
         <hr>
         <div class="form-group">
-            <label>Bird Types</label> <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Narrow your mix by choosing one or more bird types. You can change this later if you want to add or delete bird types."><span class="glyphicon glyphicon-info-sign"></span></a>
-            <p><a href="#" onclick="toggle_visibility('type-categories'); return false;" ><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Filter by bird types</a></p>
+            <fieldset name="bird_type">
+            <legend>Bird Types <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Narrow your mix by choosing one or more bird types. You can change this later if you want to add or delete bird types."><span class="glyphicon glyphicon-info-sign"></span></a></legend>
+            <a href="#" onclick="toggle_visibility('type-categories'); return false;" ><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Filter by bird types</a>
             <div id="type-categories">
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> Sparrows, Grossbeacks & Buntings</label></div>
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> Diving Birds</label></div>
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> Sparrows, Grossbeacks & Buntings</label></div>
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> Diving Birds</label></div>
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> Sparrows, Grossbeacks & Buntings</label></div>
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> Diving Birds</label></div>
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> Sparrows, Grossbeacks & Buntings</label></div>
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> Diving Birds</label></div>
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> Sparrows, Grossbeacks & Buntings</label></div>
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> Diving Birds</label></div>
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> Sparrows, Grossbeacks & Buntings</label></div>
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> Diving Birds</label></div>
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> Sparrows, Grossbeacks & Buntings</label></div>
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> Diving Birds</label></div>
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> Sparrows, Grossbeacks & Buntings</label></div>
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> Diving Birds</label></div>
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> Sparrows, Grossbeacks & Buntings</label></div>
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> Diving Birds</label></div>
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> Sparrows, Grossbeacks & Buntings</label></div>
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> Diving Birds</label></div>
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> Sparrows, Grossbeacks & Buntings</label></div>
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> Diving Birds</label></div>
+                {% for type in type_options %}
+                <div class="checkbox checkbox-lg"><label><input type="checkbox"> {{ type }}</label></div>
+                {% endfor %}
             </div>
+        </fieldset>
         </div>
        <hr>
 
