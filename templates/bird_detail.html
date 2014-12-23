@@ -11,12 +11,13 @@
     <audio controls>
         <source src="{% static bird_call %}" type="audio/mpeg" />
     </audio>
-    <form role="form">
+    <form role="form" method="post">
+        {% csrf_token %}
         <div class="checkbox checkbox-lg">
-            <label><input type="checkbox" {{ favorite }}> Save as Favorite</label> <a href="#" title="You can drill and quiz from your Favorites mix."><span class="glyphicon glyphicon-info-sign"></span></a>
+            <label><input onclick="this.form.submit();" type="checkbox" name="favorite" {{ favorite }}> Save as Favorite</label> <a href="#" title="You can drill and quiz from your Favorites mix."><span class="glyphicon glyphicon-info-sign"></span></a>
         </div>
         <div class="checkbox checkbox-lg">
-            <label><input type="checkbox" {{ excluded }}> Exclude from drills</label> <a href="#" title="Checking this won't delete this bird from your mixes -- it will just disappear from drill questions. You can bring it back anytime."><span class="glyphicon glyphicon-info-sign"></span></a>
+            <label><input onclick="this.form.submit();" type="checkbox" name="excluded" {{ excluded }}> Exclude from drills</label> <a href="#" title="Checking this won't delete this bird from your mixes -- it will just disappear from drill questions. You can bring it back anytime."><span class="glyphicon glyphicon-info-sign"></span></a>
         </div>
     </form>
     <ul>
@@ -37,15 +38,16 @@
         <li><span class="glyphicon glyphicon-folder-open bullet" aria-hidden="true"></span><strong>Bird mixes with this bird</strong>
             <ul>
                 {% if parent_mixes %}
-                <li>"parent_mixes" TRUE</li>
+                    {% for mix in parent_mixes %}
+                    <li><a href="/mix_detail/{{ mix.slug }}"><strong>{{ mix.nickname}},</strong> {{ mix.description }}</a></li>
+                    {% endfor %}
                 {% else %}
-                <li>"parent_mixes" FALSE</li>
+                <li>This bird isn't in an any of your mixes. You can add it to your Favorites mix by making it a favorite.</li>
                 {% endif %}
-                <!--<li><a href="#"><strong>COB:</strong> Coastal Birds</a></li>
-                <li><a href="#"><strong>PNW:</strong> Washington and Oregon</a></li>-->
             </ul>
         </li>
     </ul>
+
 
 
 

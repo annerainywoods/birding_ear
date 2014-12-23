@@ -16,8 +16,6 @@ MIX NEW
 - colors for this screen should be theme grey, but color for new mix should be olive
 
 BIRD DETAIL
-- need to find mixes with specific bird
-- fix check box style on firefox (and other browsers?)
 - Save user's in put for favorite and excluded
 
 HOME

@@ -59,12 +59,15 @@ class UserBird(models.Model): #needs user
 
     def parent_mixes(self):
         bird = self
+        user = self.user
         parent_mixes = []
-        for m in Mix.objects.all():
-            for b in m.bird_list:
+        for m in Mix.objects.filter(user=user):
+            for b in m.bird_list():
                 if b == bird:
                     parent_mixes.append({
-                        "mix": m.nickname
+                        "nickname": m.nickname,
+                        "slug": m.slug,
+                        "description": m.description
                     })
         return parent_mixes
 
@@ -109,7 +112,6 @@ class Mix(models.Model):  # needs user
         else:
             bird_list = len(UserBird.objects.filter(user=user).filter(bird_pile__in='L'))
         return bird_list
-
 
     def bird_list(self):
         mix = self
@@ -184,7 +186,6 @@ class Drill(models.Model):  # needs user
         ('REL', 'Related')
     )
     mix = models.OneToOneField('Mix', verbose_name="mix for drill")
-#    fav_mix = models.OneToOneField('FavMix', verbose_name="fav mix for drill")
     listen_only = models.BooleanField("listen only", default=False)
     frequency_new = models.SmallIntegerField("% new birds", max_length=1, choices=FREQUENCY_NEW, default=3)
     frequency_learned = models.SmallIntegerField("% learned birds", max_length=1, choices=FREQUENCY_LEARNED, default=2)
