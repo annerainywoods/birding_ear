@@ -46,8 +46,12 @@ Mix{% endblock %}
             <legend>States <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Choose your home state to learn birds in your area. Cover a bigger geographic area by adding bordering states. You can change this later if you want to add or delete states. Or you can make different mixes for different states."><span class="glyphicon glyphicon-info-sign"></span></a></legend>
             <a href="#" onclick="toggle_visibility('state-buttons'); return false;" ><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Filter by states</a>
             <div id="state-buttons">
-                {% for state in state_options %}
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> {{ state }}</label></div>
+                {% for state in state_list %}
+                    {% if state.selected %}
+                    <div class="checkbox checkbox-lg"><label><input type="checkbox" checked name="states" value="{{ state }}" > {{ state }}</label></div>
+                    {% else %}
+                    <div class="checkbox checkbox-lg"><label><input type="checkbox" name="states" value="{{ state }}" > {{ state }}</label></div>
+                    {% endif %}
                 {% endfor %}
             </div>
         </fieldset>
@@ -58,8 +62,12 @@ Mix{% endblock %}
             <legend>Bird Types <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Narrow your mix by choosing one or more bird types. You can change this later if you want to add or delete bird types."><span class="glyphicon glyphicon-info-sign"></span></a></legend>
             <a href="#" onclick="toggle_visibility('type-categories'); return false;" ><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Filter by bird types</a>
             <div id="type-categories">
-                {% for type in type_options %}
-                <div class="checkbox checkbox-lg"><label><input type="checkbox"> {{ type }}</label></div>
+                {% for bird_type in bird_type_list %}
+                    {% if bird_type.selected %}
+                    <div class="checkbox checkbox-lg"><label><input type="checkbox" checked name="bird_types" value="{{ bird_type }}" > {{ bird_type }}</label></div>
+                    {% else %}
+                    <div class="checkbox checkbox-lg"><label><input type="checkbox" name="bird_types" value="{{ bird_type }}" > {{ bird_type }}</label></div>
+                    {% endif %}
                 {% endfor %}
             </div>
         </fieldset>
@@ -67,6 +75,7 @@ Mix{% endblock %}
        <hr>
 
     <input type="submit" class="btn btn-default btn-lg colored-btn" value="SAVE">
+        [ <a href="#">Delete</a> ]
     </form>
 
 

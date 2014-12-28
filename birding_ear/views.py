@@ -4,7 +4,6 @@ from django.shortcuts import render_to_response, render
 from .models import Bird, State, BirdType, UserBird, Mix, Drill
 from json import dumps, loads
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.models import User
 from django.contrib import auth
 from django.shortcuts import redirect
 from django.template import RequestContext
@@ -83,17 +82,27 @@ def mix_settings_edit(request, mix_nickname_slug):
         mix.nickname = request.POST["nickname"]
         mix.description = request.POST["description"]
         mix.color = request.POST["color"]
+        #mix.states = request.POST["states"]
         mix.user = request.user
         mix.save()
         mix_nickname_slug = mix.slug
         return redirect('/mix_detail/' + mix_nickname_slug)
     else:
+        bird_type_list = BirdType.objects.all()
+        mix_bird_types = mix.bird_types.all()
+        state_list = State.objects.all()
+        mix_states = mix.states.all()
+        for bird_type in bird_type_list:
+            if bird_type in mix_bird_types:
+                bird_type.selected = True
+        for state in state_list:
+            if state in mix_states:
+                state.selected = True
+        context_dict['bird_type_list'] = bird_type_list
+        context_dict['state_list'] = state_list
         context_dict['mix_nickname'] = mix.nickname
         context_dict['mix_description'] = mix.description
         context_dict['mix_color'] = mix.color
-        context_dict['mix_states'] = mix.states
-        context_dict['state_options'] = State.objects.all()
-        context_dict['type_options'] = BirdType.objects.all()
         context_dict['slug'] = mix.slug
 
         context = RequestContext(request)
@@ -104,48 +113,63 @@ def mix_settings_edit(request, mix_nickname_slug):
 def mix_settings_new(request):
     mix = Mix()
     if request.method == "POST":
+        mix.user = request.user
         mix.nickname = request.POST["nickname"]
         mix.description = request.POST["description"]
         mix.color = request.POST["color"]
-        mix.user = request.user
+        mix.save()
+        mix.states = request.POST.getlist('states')
+        mix.bird_types = request.POST.getlist('bird_types')
         mix.save()
         mix_nickname_slug = mix.slug
         return redirect('/mix_detail/' + mix_nickname_slug)
     else:
         context_dict = {}
         context_dict['mix_color'] = "TGY"
-        context_dict['state_options'] = State.objects.all()
-        context_dict['type_options'] = BirdType.objects.all()
+        context_dict['state_list'] = State.objects.all()
+        context_dict['bird_type_list'] = BirdType.objects.all()
         context = RequestContext(request)
         return render_to_response('mix_edit.html', context_dict, context)
 
-
-    # context_dict = {}
-    # context_dict['mix_nickname'] = mix.nickname
-    # context_dict['mix_description'] = mix.description
-    # context_dict['mix_color'] = "TGY"
-    # #context_dict['mix_states'] = mix.states.all()
-    # context = RequestContext(request)
-    #
-    # return render_to_response('mix_edit.html', context_dict, context)
 
 @login_required
 def bird_detail(request, bird_name_slug):
     context_dict = {}
     bird = UserBird.objects.filter(user=request.user).get(bird__slug=bird_name_slug)
+    if request.method == "POST":
+        if "favorite" in request.POST:
+            bird.favorite = True
+        else:
+            bird.favorite = False
+        if "excluded" in request.POST:
+            bird.excluded = True
+        else:
+            bird.excluded = False
+        bird.save()
     context_dict['bird_name'] = bird.bird.name
     context_dict['bird_call'] = bird.bird.bird_call
     context_dict['bird_type'] = bird.bird.bird_type
     if bird.favorite:
-        context_dict['favorite'] = "checked=checked"
-    if bird.favorite:
-        context_dict['excluded'] = "checked=checked"
+        context_dict['favorite'] = "checked"
+    else:
+        context_dict['favorite'] = ""
+    if bird.excluded:
+        context_dict['excluded'] = "checked"
+    else:
+        context_dict['excluded'] = " "
     context_dict['bird_pile'] = bird.bird_pile
     context_dict['parent_mixes'] = bird.parent_mixes
     context = RequestContext(request)
 
     return render_to_response('bird_detail.html', context_dict, context)
 
+
+@login_required
+def favorites(request):
+    favorites_list = UserBird.objects.filter(user=request.user).filter(favorite=True)
+    context_dict = {'favorites': favorites_list}
+    context = RequestContext(request)
+    return render_to_response('favorites.html', context_dict, context)
 
 @csrf_exempt
 def ajax(request):

@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     url(r'^register?$', 'birding_ear.views.register', name="register"),
     url(r'^login?$', 'birding_ear.views.login', name="login"),
     url(r'^logout?$', 'birding_ear.views.logout_view', name="logout"),
+    url(r'^favorites?$', 'birding_ear.views.favorites', name="favorites"),
     url(r'^ajax/', views.ajax, name="ajax"),
     (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
         'document_root': settings.MEDIA_ROOT}),

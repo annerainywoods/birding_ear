@@ -14,10 +14,16 @@
     <form role="form" method="post">
         {% csrf_token %}
         <div class="checkbox checkbox-lg">
-            <label><input onclick="this.form.submit();" type="checkbox" name="favorite" {{ favorite }}> Save as Favorite</label> <a href="#" title="You can drill and quiz from your Favorites mix."><span class="glyphicon glyphicon-info-sign"></span></a>
+            <label>
+                <input type="checkbox" name="favorite" onclick="this.form.submit();" {{ favorite }} > Save as Favorite
+            </label>
+            <a href="#" title="You can drill and quiz from your Favorites mix."><span class="glyphicon glyphicon-info-sign"></span></a>
         </div>
         <div class="checkbox checkbox-lg">
-            <label><input onclick="this.form.submit();" type="checkbox" name="excluded" {{ excluded }}> Exclude from drills</label> <a href="#" title="Checking this won't delete this bird from your mixes -- it will just disappear from drill questions. You can bring it back anytime."><span class="glyphicon glyphicon-info-sign"></span></a>
+            <label>
+                <input type="checkbox" name="excluded" onclick="this.form.submit();" {{ excluded }} > Exclude from drills
+            </label>
+            <a href="#" title="Checking this won't delete this bird from your mixes -- it will just disappear from drill questions. You can bring it back anytime."><span class="glyphicon glyphicon-info-sign"></span></a>
         </div>
     </form>
     <ul>
@@ -52,5 +58,5 @@
 
 
 
-    </div><!--drill-->
+    </div><!--bird-detail-->
 {% endblock maincontent %}

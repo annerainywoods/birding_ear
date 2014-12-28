@@ -43,7 +43,7 @@
           <li role="presentation"><a href="/logout">Logout, {{ user.get_username }}</a></li>
           <li role="presentation"><a href="/">My Bird Mixes</a></li>
           <li role="presentation"><a href="#">Search Birds</a></li>
-          <li role="presentation"><a href="#">Favorites</a></li>
+          <li role="presentation"><a href="/favorites">Favorites</a></li>
           <li role="presentation"><a href="#">Quiz History</a></li>
           <li role="presentation"><a href="#">Settings</a></li>
         </ul>
@@ -57,7 +57,7 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{% static "/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
     <script language="JavaScript">
         $(function () {
             $('[data-toggle="popover"]').popover()

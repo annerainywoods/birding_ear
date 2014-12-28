@@ -1,22 +1,21 @@
 '''
 
+
+
 LOGOUT
 - login screen this redirects to does not accept login
 
 MIX EDIT
-- add functionality for states and types (post and get)
-- get popovers functional for find other plugin
+- add functionality for states and types (post)
+- make only one popover open at time
 - make mix nickname link back to mix detail
 - add DELETE as an option
-- nickname blank=FALSE null=FALSE
+- form validation
+- toggle grey checkboxes white on change
 
-
-MIX NEW
-- needs to redirect to mix detail upon submit
-- colors for this screen should be theme grey, but color for new mix should be olive
-
-BIRD DETAIL
-- Save user's in put for favorite and excluded
+FAVORITES
+- add compilation of audio
+- add unfavorite links
 
 HOME
 - if learned == total, give mix the trophy class

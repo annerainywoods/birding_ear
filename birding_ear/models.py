@@ -39,7 +39,7 @@ class UserBird(models.Model): #needs user
         ('L', 'Learned'),
         ('M', 'Missed')
     )
-    bird = models.ForeignKey('Bird', verbose_name="static bird data")
+    bird = models.ForeignKey('Bird', verbose_name="static bird data", blank=False, null=False)
     bird_pile = models.CharField("bird pile", max_length=1, choices=BIRD_PILE, default='N')
     favorite = models.BooleanField("saved as favorite", default=False)
     excluded = models.BooleanField("excluded from drill", default=False)
@@ -131,18 +131,7 @@ class Mix(models.Model):  # needs user
         return self.user.username + "-" + self.nickname
 
 
-# class FavMix(model.Model):  # needs user
-#     COLOR = ('THM', 'Theme Grey')
-#     NICKNAME = "FAV"
-#     DESCRIPTION = "Favorites"
-#     favorites = models.ForeignKey('UserBird')
-#     user = models.ForeignKey(User)
-#
-#     def __unicode__(self):
-#         return self.id
-
-
-class Drill(models.Model):  # needs user
+class Drill(models.Model):
     FREQUENCY_NEW = (
         (0, 'None'),
         (1, 'Very low'),
@@ -197,7 +186,7 @@ class Drill(models.Model):  # needs user
     user = models.ForeignKey(User)
 
     def __unicode__(self):
-        return self.mix.nickname
+        return self.user.username + "-" + self.mix.nickname
 
 
 # class Quiz(models.Model):  # needs user
