@@ -4,12 +4,12 @@ from django.template.defaultfilters import slugify
 
 
 class Bird(models.Model):
-    name = models.CharField("common name", max_length=50, primary_key=True)
+    name = models.CharField("common name", max_length=50)
     narration = models.CharField("narrated name", max_length=255)
     bird_call = models.CharField("bird call", max_length=255)
     states = models.ManyToManyField('State', verbose_name="states", blank=True, null=True)
     bird_type = models.ForeignKey('BirdType', verbose_name="type of bird", blank=True, null=True)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField()
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -92,10 +92,10 @@ class Mix(models.Model):  # needs user
     bird_types = models.ManyToManyField('BirdType', blank=True, null=True, verbose_name="bird type filters")
     color = models.CharField("color", max_length=3, choices=COLOR, default='OLV')
     user = models.ForeignKey(User)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField()
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.nickname)
+        self.slug = slugify(self.id)
         super(Mix, self).save(*args, **kwargs)
 
 
@@ -174,7 +174,6 @@ class Drill(models.Model):
         ('RAN', 'Random'),
         ('REL', 'Related')
     )
-    mix = models.OneToOneField('Mix', verbose_name="mix for drill")
     listen_only = models.BooleanField("listen only", default=False)
     frequency_new = models.SmallIntegerField("% new birds", max_length=1, choices=FREQUENCY_NEW, default=3)
     frequency_learned = models.SmallIntegerField("% learned birds", max_length=1, choices=FREQUENCY_LEARNED, default=2)
@@ -186,7 +185,7 @@ class Drill(models.Model):
     user = models.ForeignKey(User)
 
     def __unicode__(self):
-        return self.user.username + "-" + self.mix.nickname
+        return self.user.username
 
 
 # class Quiz(models.Model):  # needs user

@@ -20,6 +20,9 @@ def register(request):
             ub.bird = b
             ub.user = user
             ub.save()
+        drill = Drill()
+        drill.user = user
+        drill.save()
     return render(request, 'register.html')
 
 
@@ -59,10 +62,10 @@ def index(request):
 
 
 @login_required
-def mix_detail(request, mix_nickname_slug):
+def mix_detail(request, mix_id_slug):
     context_dict = {}
-    mix = Mix.objects.get(slug=mix_nickname_slug)
-    context_dict['mix_slug'] = mix_nickname_slug
+    mix = Mix.objects.filter(user=request.user).get(slug=mix_id_slug)
+    context_dict['mix_slug'] = mix_id_slug
     context_dict['mix_nickname'] = mix.nickname
     context_dict['mix_description'] = mix.description
     context_dict['mix_color'] = mix.color
@@ -75,18 +78,19 @@ def mix_detail(request, mix_nickname_slug):
 
 
 @login_required
-def mix_settings_edit(request, mix_nickname_slug):
+def mix_settings_edit(request, mix_id_slug):
     context_dict = {}
-    mix = Mix.objects.get(slug=mix_nickname_slug)
+    mix = Mix.objects.filter(user=request.user).get(slug=mix_id_slug)
     if request.method == "POST":
         mix.nickname = request.POST["nickname"]
         mix.description = request.POST["description"]
         mix.color = request.POST["color"]
-        #mix.states = request.POST["states"]
+        mix.states = request.POST.getlist('states')
+        mix.bird_types = request.POST.getlist('bird_types')
         mix.user = request.user
         mix.save()
-        mix_nickname_slug = mix.slug
-        return redirect('/mix_detail/' + mix_nickname_slug)
+        mix_id_slug = mix.slug
+        return redirect('/mix_detail/' + mix_id_slug)
     else:
         bird_type_list = BirdType.objects.all()
         mix_bird_types = mix.bird_types.all()
@@ -121,8 +125,8 @@ def mix_settings_new(request):
         mix.states = request.POST.getlist('states')
         mix.bird_types = request.POST.getlist('bird_types')
         mix.save()
-        mix_nickname_slug = mix.slug
-        return redirect('/mix_detail/' + mix_nickname_slug)
+        mix_id_slug = mix.slug
+        return redirect('/mix_detail/' + mix_id_slug)
     else:
         context_dict = {}
         context_dict['mix_color'] = "TGY"
@@ -170,6 +174,37 @@ def favorites(request):
     context_dict = {'favorites': favorites_list}
     context = RequestContext(request)
     return render_to_response('favorites.html', context_dict, context)
+
+
+@login_required
+def settings(request):
+    context_dict = {}
+    drill_setting = Drill.objects.filter(user=request.user)
+    print drill_setting
+    if request.method == "POST":
+        drill_setting.listen_only = request.POST["listen_only"]
+        drill_setting.frequency_new = request.POST["frequency_new"]
+        drill_setting.frequency_learned = request.POST["frequency_learned"]
+        drill_setting.frequency_missed = request.POST["frequency_missed"]
+        drill_setting.batch_size = request.POST["batch_size"]
+        drill_setting.next_batch = request.POST["next_batch"]
+        drill_setting.challenge_level = request.POST["challenge_level"]
+        drill_setting.drill_order = request.POST["drill_order"]
+        drill_setting.user = request.user
+        drill_setting.save()
+    else:
+        context_dict['listen_only'] = drill_setting.listen_only
+        context_dict['frequency_new'] = drill_setting.frequency_new
+        context_dict['frequency_learned'] = drill_setting.frequency_learned
+        context_dict['frequency_missed'] = drill_setting.frequency_missed
+        context_dict['batch_size'] = drill_setting.batch_size
+        context_dict['next_batch'] = drill_setting.next_batch
+        context_dict['challenge_level'] = drill_setting.challenge_level
+        context_dict['drill_order'] = drill_setting.drill_order
+
+        context = RequestContext(request)
+        return render_to_response('settings.html', context_dict, context)
+
 
 @csrf_exempt
 def ajax(request):

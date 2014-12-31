@@ -48,9 +48,9 @@ Mix{% endblock %}
             <div id="state-buttons">
                 {% for state in state_list %}
                     {% if state.selected %}
-                    <div class="checkbox checkbox-lg"><label><input type="checkbox" checked name="states" value="{{ state }}" > {{ state }}</label></div>
+                    <div class="checkbox checkbox-lg"><label><input type="checkbox" checked name="states" value="{{ state.id }}" > {{ state }}</label></div>
                     {% else %}
-                    <div class="checkbox checkbox-lg"><label><input type="checkbox" name="states" value="{{ state }}" > {{ state }}</label></div>
+                    <div class="checkbox checkbox-lg"><label><input type="checkbox" name="states" value="{{ state.id }}" > {{ state }}</label></div>
                     {% endif %}
                 {% endfor %}
             </div>
@@ -64,9 +64,9 @@ Mix{% endblock %}
             <div id="type-categories">
                 {% for bird_type in bird_type_list %}
                     {% if bird_type.selected %}
-                    <div class="checkbox checkbox-lg"><label><input type="checkbox" checked name="bird_types" value="{{ bird_type }}" > {{ bird_type }}</label></div>
+                    <div class="checkbox checkbox-lg"><label><input type="checkbox" checked name="bird_types" value="{{ bird_type.id }}" > {{ bird_type }}</label></div>
                     {% else %}
-                    <div class="checkbox checkbox-lg"><label><input type="checkbox" name="bird_types" value="{{ bird_type }}" > {{ bird_type }}</label></div>
+                    <div class="checkbox checkbox-lg"><label><input type="checkbox" name="bird_types" value="{{ bird_type.id }}" > {{ bird_type }}</label></div>
                     {% endif %}
                 {% endfor %}
             </div>

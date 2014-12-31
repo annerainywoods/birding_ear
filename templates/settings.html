@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load staticfiles%}
+
+{% block title %}Settings{% endblock %}
+
+{% block body %}<body>{% endblock %}
+
+{% block maincontent %}
+    <h1>Settings</h1>
+    <div id="settings">
+    <form role="form">
+        <h4>Bird Frequency in Drills <a href="#" title="Adjust how often new, learned and missed birds come up in the drill questions. Does not apply to listen-only mode."><span class="glyphicon glyphicon-info-sign"></span></a></h4>
+        <div class="form-group">
+            <label class="control-label">New Birds</label>
+            <div>
+                <select class="form-control input-lg">
+                  <option>Very High</option>
+                  <option>High</option>
+                  <option selected>Medium</option>
+                  <option>Low</option>
+                  <option>Very Low</option>
+                  <option>None</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Learned Birds</label>
+            <div>
+                <select class="form-control input-lg">
+                  <option>Very High</option>
+                  <option>High</option>
+                  <option>Medium</option>
+                  <option>Low</option>
+                  <option selected>Very Low</option>
+                  <option>None</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Missed Birds</label>
+            <div>
+                <select class="form-control input-lg">
+                  <option>Very High</option>
+                  <option selected>High</option>
+                  <option>Medium</option>
+                  <option>Low</option>
+                  <option>Very Low</option>
+                  <option>None</option>
+                </select>
+            </div>
+        </div>
+        <hr>
+        <h4>Drill Batches <a href="#" title="Break a large bird mix into smaller batches. When you've learned most of the birds in the batch, the remaining missed birds will carry over into the next batch. Does not apply to listen-only mode."><span class="glyphicon glyphicon-info-sign"></span></a></h4>
+        <div class="form-group">
+            <label class="control-label">Birds per batch</label>
+            <div>
+                <select class="form-control input-lg">
+                  <option>10</option>
+                  <option>20</option>
+                  <option selected>30</option>
+                  <option>40</option>
+                  <option>50</option>
+                  <option>All</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Start new batch at</label>
+            <div>
+                <select class="form-control input-lg">
+                  <option>50% learned</option>
+                  <option>60% learned</option>
+                  <option>70% learned</option>
+                  <option selected>80% learned</option>
+                  <option>90% learned</option>
+                  <option>100% learned</option>
+                </select>
+            </div>
+        </div>
+        <hr>
+        <h4>Drill Challenge Level <a href="#" title="Make the drill questions more challenging by skipping right to the bird sound, without hearing the name of it first. Or group similar birds together, making it tougher to identify each bird."><span class="glyphicon glyphicon-info-sign"></span></a></h4>
+        <div class="checkbox checkbox-lg">
+            <label style="display:inline"><input type="checkbox"> Hear the bird sound without the bird name</label>
+        </div>
+        <div class="checkbox checkbox-lg">
+            <label style="display:inline"><input type="checkbox"> Group related birds in batch whenever possible</label>
+        </div>
+        <hr>
+
+    </form>
+    </div><!--settings-->
+
+    <script type="text/javascript">
+    <!--
+    function myFunction() {
+        document.getElementById("{{ mix_color }}").selected = true;
+    }
+        /*http://www.w3schools.com/jsref/prop_option_selected.asp
+        http://stackoverflow.com/questions/4590311/set-option-selected-attribute-from-dynamic-created-option
+
+         */
+    //-->
+    </script>
+{% endblock maincontent %}
