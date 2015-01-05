@@ -19,17 +19,17 @@
         <h4>{{ mix.description }}</h4>
         </a><!--end mix-icon-->
     {% endfor %}
-    {% else %}
-            <!--<strong>There are no mixes present.</strong>-->
     {% endif %}
-    <a href="#" title="Go to Favorites" class="mix-icon">
+    {% if fav_total %}
+    <a href="favorites" title="Go to Favorites" class="mix-icon">
         <ul class="TGY">
-            <li class="mix_learned">6</li>
-            <li class="mix_total">7</li>
+            <li class="mix_learned">{{fav_learned.count}}</li>
+            <li class="mix_total">{{ fav_total.count }}</li>
             <li class="mix_abbr">FAV</li>
         </ul>
         <h4>Favorites</h4>
     </a><!--end mix-icon-->
+    {% endif %}
     <a href="/mix_settings_new" title="Add a new bird mix" class="mix-icon add-new">
         <ul class="TGY">
             <li class="verdana-plus">+</li>

@@ -5,7 +5,7 @@
     Favorites
 {% endblock %}
 
-{% block body %}<body class="TGY">{% endblock %}
+{% block body %}<body class="TGY"  onload="myFunction()">{% endblock %}
 
 {% block maincontent %}
     <h1>Favorites <a href="#" title="Add two or more favorites and you'll automatically get a Favorites mix that you can drill and quiz on."><span class="glyphicon glyphicon-info-sign"></span></a></h1>
@@ -13,17 +13,37 @@
       <a href="#" class="btn btn-default" role="button">DRILL</a>
       <a href="#" class="btn btn-default" role="button">QUIZ</a>
     </div>
-    <div id="favorites">
+    <div id="favorites" class="detail-info">
     <form role="form" method="post">
     {% csrf_token %}
-    <dl>
-    {% for favorite in favorites %}
-        <dt><a href="/bird_detail/{{ favorite.bird.slug }}" >{{ favorite.bird.name }} <span class='glyphicon glyphicon-heart'></span></a></dt>
-        <dd><a href="#" onclick="this.form.submit();">Unfavorite</a></dd>
-    {% endfor %}
-    </dl>
+    {% if fav_total %}
+        {% for favorite in fav_total %}
+        <div>
+            <a class="{{ favorite.html_classes }} bird_name" href="/bird_detail/{{ favorite.bird.slug }}" >{{ favorite.bird.name }}</a>
+            <a class="unfavorite" href="#" onclick="this.form.submit();">Unfavorite</a>
+            <audio controls>
+                <source src="{{ favorite.bird.bird_call }}" type="audio/mpeg" />
+            </audio>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>You haven't marked any birds as favorites yet.  </p>
+    {% endif %}
     </form>
-
+    <ul>
+        <li><span class="glyphicon glyphicon-check bullet" aria-hidden="true"></span><strong>{{ fav_learned.count }} out of {{fav_total.count}} birds learned</strong> <a href="#" title="When you get a bird right in a drill or quiz, then it gets the status of 'learned'. If you miss the bird in a future drill or quiz, it will go back to 'unlearned'."><span class="glyphicon glyphicon-info-sign"></span></a></li>
+    </ul>
     </div><!--favorites-->
+    <script>
+        function myFunction() {
+            var learnedSpan = " <span class='glyphicon glyphicon-check'></span>";
+            var learned = document.getElementsByClassName("learned");
+            for (var i = 0; i < learned.length; i++) {
+                var content = "";
+                content = learned[i].innerHTML;
+                learned[i].innerHTML = content + learnedSpan;
+            }
+        }
 
+    </script>
 {% endblock maincontent %}

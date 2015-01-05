@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 
-
+#the unchanging bird info, like name and bird call
 class Bird(models.Model):
     name = models.CharField("common name", max_length=50)
     narration = models.CharField("narrated name", max_length=255)
@@ -19,6 +19,7 @@ class Bird(models.Model):
         return self.name
 
 
+#list of U.S. states. Used by Bird and Mix
 class State(models.Model):
     name = models.CharField("U.S.State", max_length=3)
 
@@ -26,6 +27,7 @@ class State(models.Model):
         return self.name
 
 
+#list of 22 categories of birds (owls, hawks, etc). Used by Bird and Mix
 class BirdType(models.Model):
     name = models.CharField(max_length=100)
 
@@ -33,7 +35,8 @@ class BirdType(models.Model):
         return self.name
 
 
-class UserBird(models.Model): #needs user
+#UserBird is created when user registers. It extends Bird.
+class UserBird(models.Model):
     BIRD_PILE = (
         ('N', 'New'),
         ('L', 'Learned'),
@@ -45,18 +48,20 @@ class UserBird(models.Model): #needs user
     excluded = models.BooleanField("excluded from drill", default=False)
     user = models.ForeignKey(User)
 
+#the classes are needed for the list of bird links in the mix_detail template
     def html_classes(self):
         bird = self
-        if bird.favorite & bird.excluded:
-            html_classes = "favorite excluded"
-        elif bird.favorite:
-            html_classes = "favorite"
-        elif bird.excluded:
-            html_classes = "excluded"
+        if bird.bird_pile == 'L':
+            html_classes = "learned"
         else:
-            html_classes = "default"
+            html_classes = "unlearned"
+        if bird.favorite:
+            html_classes = html_classes + " favorite"
+        if bird.excluded:
+            html_classes = html_classes + " excluded"
         return html_classes
 
+#the parent mixes are needed for the list of mixes in the bird_detail template
     def parent_mixes(self):
         bird = self
         user = self.user
@@ -76,7 +81,8 @@ class UserBird(models.Model): #needs user
         return self.user.username + "-" + self.bird.name
 
 
-class Mix(models.Model):  # needs user
+#User chooses states and bird types for a mix, program finds matching birds
+class Mix(models.Model):
     COLOR = (
         ('OLV', 'Olive'),
         ('YEL', 'Yellow'),
@@ -99,6 +105,7 @@ class Mix(models.Model):  # needs user
         super(Mix, self).save(*args, **kwargs)
 
 
+#returns "learned" birds matching the mix settings
     def num_learned(self):
         mix = self
         user = self.user
@@ -113,6 +120,7 @@ class Mix(models.Model):  # needs user
             bird_list = len(UserBird.objects.filter(user=user).filter(bird_pile__in='L'))
         return bird_list
 
+#returns all birds matching the mix settings
     def bird_list(self):
         mix = self
         user = self.user
@@ -131,6 +139,7 @@ class Mix(models.Model):  # needs user
         return self.user.username + "-" + self.nickname
 
 
+#user settings for drills
 class Drill(models.Model):
     FREQUENCY_NEW = (
         (0, 'None'),
@@ -174,13 +183,19 @@ class Drill(models.Model):
         ('RAN', 'Random'),
         ('REL', 'Related')
     )
+    #turn off the multiple choice option for hands-free use
     listen_only = models.BooleanField("listen only", default=False)
+    #set what percentage of drill questions should be new, learned or missed
     frequency_new = models.SmallIntegerField("% new birds", max_length=1, choices=FREQUENCY_NEW, default=3)
     frequency_learned = models.SmallIntegerField("% learned birds", max_length=1, choices=FREQUENCY_LEARNED, default=2)
     frequency_missed = models.SmallIntegerField("% missed birds", max_length=1, choices=FREQUENCY_MISSED, default=5)
+    #set how many birds should be drilled on at once
     batch_size = models.SmallIntegerField("number of birds per batch", max_length=2, choices=BATCH_SIZE, default=30)
+    #set what percent of "misses" should create a new batch
     next_batch = models.SmallIntegerField("start new batch at", max_length=2, choices=NEXT_BATCH, default=80)
+    #turn off the audio for all three answer options, and only hear the bird to identify
     challenge_level = models.BooleanField("hear bird sound without its name", default=False)
+    #drill on similar birds in the same batch, or randomize batches
     drill_order = models.CharField("drill order", max_length=3, choices=DRILL_ORDER, default="RAN")
     user = models.ForeignKey(User)
 

@@ -135,15 +135,17 @@ div#menu {
     background-color:#485661;
     color:white
 }
-.favorite {
 
+a.excluded, a.excluded:hover {
+    font-style:italic;
 }
-.excluded {
-    text-decoration:line-through;
+
+a.unlearned:hover,
+a.learned:hover,
+a.favorite:hover {
+    text-decoration:none;
 }
-.excluded:hover {
-    text-decoration:line-through underline;
-}
+
 hr {
     background:#ccc;
     border:0;
@@ -172,6 +174,7 @@ h1 {
     font-size:40px;
     margin:0;
     padding: 10px 0 10px 30px;
+    min-height: 42px;
 }
 h1 span {
     display:block;
@@ -210,10 +213,12 @@ label, legend {
     margin:0;
     padding:0
 }
-#bird-detail, #drill, #edit, #favorites, #mix-detail-info, #settings, #login  {
+#bird-detail, #drill, #edit, #favorites, #settings, #login  {
     margin:30px;
 }
-
+#mix-detail-info {
+    margin: 0 30px 0 30px;
+}
 
 
 /******************** Home ********************/
@@ -372,19 +377,26 @@ a.mix-icon:hover {
 
 /********************* Favorites*************************/
 
-
-#favorites dt {
-    display:inline-block;
-    width:70%;
-    border-bottom: 1px solid #ccc;
-    margin:10px 0 5px 0;
+#favorites {
+    position:relative
 }
-#favorites dd {
-    display:inline-block;
-    width:27%;
-    border-bottom: 1px solid #ccc;
+#favorites div {
+    height:100px
 }
-
+#favorites a.bird_name {
+    position:absolute;
+    display:inline-block;
+    left:0;
+}
+#favorites a.unfavorite {
+    position:absolute;
+    display:inline-block;
+    font-size:14px;
+    right:0;
+}
+#favorites audio {
+    margin:30px 0 0 0;
+}
 /********************* Settings*************************/
 
 #settings form label {

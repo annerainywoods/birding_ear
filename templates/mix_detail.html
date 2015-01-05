@@ -3,7 +3,7 @@
 
 {% block title %}{{ mix_nickname }} Mix{% endblock %}
 
-{% block body %}<body class="{{ mix_color }}">{% endblock %}
+{% block body %}<body class="{{ mix_color }}" onload="myFunction()">{% endblock %}
 
 {% block maincontent %}
       <h1>{{ mix_nickname }} <span>{{ mix_description }}</span></h1>
@@ -16,7 +16,7 @@
     <div id="mix-detail-info" class="detail-info">
 
     <ul>
-        <li><span class="glyphicon glyphicon-headphones bullet" aria-hidden="true"></span><strong>{{ num_learned }} out of {{bird_list.count}} birds learned</strong> <a href="#" title="When you get a bird right in a drill or quiz, then it gets the status of 'learned'. If you miss the bird in a future drill or quiz, it will go back to 'unlearned'."><span class="glyphicon glyphicon-info-sign"></span></a></li>
+        <li><span class="glyphicon glyphicon-check bullet" aria-hidden="true"></span><strong>{{ num_learned }} out of {{bird_list.count}} birds learned </strong> <a href="#" title="When you get a bird right in a drill or quiz, then it gets the status of 'learned'. If you miss the bird in a future drill or quiz, it will go back to 'unlearned'."><span class="glyphicon glyphicon-info-sign"></span></a></li>
         <li><span class="glyphicon glyphicon-map-marker bullet" aria-hidden="true"></span><strong>States</strong>
 
             <ul class="inline-list">
@@ -40,11 +40,11 @@
             {% endif %}
             </ul>
         </li>
-        <li><span class="glyphicon glyphicon-folder-open bullet" aria-hidden="true"></span><strong>Birds in the mix</strong>  <a href="#" title="Birds with hearts are in your favorites list. Crossed out birds have been excluded from drills. You can update both these settings by clicking on the bird's name."><span class="glyphicon glyphicon-info-sign"></span></a>
+        <li><span class="glyphicon glyphicon-folder-open bullet" aria-hidden="true"></span><strong>Birds in the mix</strong>  <a href="#" title="These birds have been filtered by the states and bird types you selected. You can always edit these settings to make your bird mix bigger or smaller."><span class="glyphicon glyphicon-info-sign"></span></a>
             <ul>
             {% if bird_list %}
                 {% for bird in bird_list %}
-                <li><a href="/bird_detail/{{ bird.bird.slug }}" class="{{ bird.html_classes }}">{{ bird.bird.name }} </a></li>
+                <li><a href="/bird_detail/{{ bird.bird.slug }}" class="{{ bird.html_classes }}"> {{ bird.bird.name }} </a></li>
                 {% endfor %}
             {% else %}
                 <li>No birds match your selected states and bird types. <a href="/mix_settings/{{ mix_slug }}">Change settings</a></li>
@@ -54,14 +54,23 @@
     </ul>
     </div><!--mix-detail-info-->
     <script>
-        /* look for class where string contains "favorite"*/
-       /*  add <span class="glyphicon glyphicon-heart"></span> to end of a*/
-        var favoriteSpan = " <span class='glyphicon glyphicon-heart'></span>";
-        var favorites = document.getElementsByClassName("favorite");
-        for (var i = 0; i < favorites.length; i++) {
-            var content = ""
-            content = favorites[i].innerHTML;
-            favorites[i].innerHTML = content + favoriteSpan;
+        function myFunction() {
+            var favoriteSpan = "<span class='glyphicon glyphicon-heart' title='favorite'></span>";
+            var learnedSpan = " <span class='glyphicon glyphicon-check' title='learned'></span>";
+            /* look for class where string contains "favorite"*/
+            /*  add the heart icon to end of a*/
+            var favorites = document.getElementsByClassName("favorite");
+            for (var i = 0; i < favorites.length; i++) {
+                var content = "";
+                content = favorites[i].innerHTML;
+                favorites[i].innerHTML = content + favoriteSpan;
+            }
+            var learned = document.getElementsByClassName("learned");
+            for (var i = 0; i < learned.length; i++) {
+                var content = "";
+                content = learned[i].innerHTML;
+                learned[i].innerHTML = content + learnedSpan;
+            }
         }
 
     </script>

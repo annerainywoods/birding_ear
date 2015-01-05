@@ -54,7 +54,9 @@ def logout_view(request):
 def index(request):
     print request.user
     mix_list = Mix.objects.filter(user=request.user)
-    context_dict = {'mixes': mix_list}
+    fav_learned = UserBird.objects.filter(user=request.user).filter(favorite=True).filter(bird_pile='L')
+    fav_total = UserBird.objects.filter(user=request.user).filter(favorite=True)
+    context_dict = {'mixes': mix_list, 'fav_learned': fav_learned, 'fav_total': fav_total}
     context = RequestContext(request)
 
     # Render the response and send it back!
@@ -96,9 +98,11 @@ def mix_settings_edit(request, mix_id_slug):
         mix_bird_types = mix.bird_types.all()
         state_list = State.objects.all()
         mix_states = mix.states.all()
+        #shows selected bird_types checked
         for bird_type in bird_type_list:
             if bird_type in mix_bird_types:
                 bird_type.selected = True
+        #shows selected states checked
         for state in state_list:
             if state in mix_states:
                 state.selected = True
@@ -141,10 +145,12 @@ def bird_detail(request, bird_name_slug):
     context_dict = {}
     bird = UserBird.objects.filter(user=request.user).get(bird__slug=bird_name_slug)
     if request.method == "POST":
+        #updates if "favorite" is checked
         if "favorite" in request.POST:
             bird.favorite = True
         else:
             bird.favorite = False
+        #updates if "excluded" is checked
         if "excluded" in request.POST:
             bird.excluded = True
         else:
@@ -170,8 +176,9 @@ def bird_detail(request, bird_name_slug):
 
 @login_required
 def favorites(request):
-    favorites_list = UserBird.objects.filter(user=request.user).filter(favorite=True)
-    context_dict = {'favorites': favorites_list}
+    fav_learned = UserBird.objects.filter(user=request.user).filter(favorite=True).filter(bird_pile='L')
+    fav_total = UserBird.objects.filter(user=request.user).filter(favorite=True)
+    context_dict = {'fav_learned': fav_learned, 'fav_total': fav_total}
     context = RequestContext(request)
     return render_to_response('favorites.html', context_dict, context)
 

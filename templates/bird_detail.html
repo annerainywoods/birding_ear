@@ -27,15 +27,12 @@
         </div>
     </form>
     <ul>
-        <li><span class="glyphicon glyphicon-headphones bullet" aria-hidden="true"></span><strong>
-            {% if bird_pile == "L" %}
-            I have learned it!
-            {% else %}
-            I haven't learned this one yet.
-            {% endif %}
-
-
-        </strong> <a href="#" title="When you get a bird right in a drill or quiz, then it gets the status of 'learned'. If you miss the bird in a future drill or quiz, it will go back to 'unlearned'."><span class="glyphicon glyphicon-info-sign"></span></a></li>
+        {% if bird_pile == "L" %}
+        <li><span class="glyphicon glyphicon-check bullet" aria-hidden="true"></span><strong>I have learned it!</strong>
+        {% else %}
+        <li><span class="glyphicon glyphicon-unchecked bullet" aria-hidden="true"></span><strong>I haven't learned this one yet.</strong>
+        {% endif %}
+        <a href="#" title="When you get a bird right in a drill or quiz, then it gets the status of 'learned'. If you miss the bird in a future drill or quiz, it will go back to 'unlearned'."><span class="glyphicon glyphicon-info-sign"></span></a></li>
         <li><span class="glyphicon glyphicon-filter bullet" aria-hidden="true"></span><strong>Type of bird</strong>
             <ul>
                 <li>{{ bird_type }}</li>
