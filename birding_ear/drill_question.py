@@ -1,4 +1,9 @@
-
+#DrillQuestion(mix.id)
+#method: checkAnswer(selected_option)
+#attributes: mix_id, bird_list, question_audio, option1, option2, option2
+#bird_list is userbirds, which have bird_pile
+#options are userbirds, which have narration, call, name
+#constants: FREQUENCY_NEW, FREQUENCY_LEARNED, FREQUENCY_MISSED
 
 
 '''

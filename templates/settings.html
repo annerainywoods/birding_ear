@@ -3,49 +3,50 @@
 
 {% block title %}Settings{% endblock %}
 
-{% block body %}<body>{% endblock %}
+{% block body %}<body onload="myFunction()" class="TGY">{% endblock %}
 
 {% block maincontent %}
     <h1>Settings</h1>
     <div id="settings">
-    <form role="form">
+    <form role="form" method="POST">
+        {% csrf_token %}
         <h4>Bird Frequency in Drills <a href="#" title="Adjust how often new, learned and missed birds come up in the drill questions. Does not apply to listen-only mode."><span class="glyphicon glyphicon-info-sign"></span></a></h4>
         <div class="form-group">
             <label class="control-label">New Birds</label>
             <div>
-                <select class="form-control input-lg">
-                  <option>Very High</option>
-                  <option>High</option>
-                  <option selected>Medium</option>
-                  <option>Low</option>
-                  <option>Very Low</option>
-                  <option>None</option>
+                <select class="form-control input-lg" name="frequency_new">
+                  <option value="5" id="fn_5">Very High</option>
+                  <option value="4" id="fn_4">High</option>
+                  <option value="3" id="fn_3">Medium</option>
+                  <option value="2" id="fn_2">Low</option>
+                  <option value="1" id="fn_1">Very Low</option>
+                  <option value="0" id="fn_0">None</option>
                 </select>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label">Learned Birds</label>
             <div>
-                <select class="form-control input-lg">
-                  <option>Very High</option>
-                  <option>High</option>
-                  <option>Medium</option>
-                  <option>Low</option>
-                  <option selected>Very Low</option>
-                  <option>None</option>
+                <select class="form-control input-lg" name="frequency_learned">
+                  <option value="5" id="fl_5">Very High</option>
+                  <option value="4" id="fl_4">High</option>
+                  <option value="3" id="fl_3">Medium</option>
+                  <option value="2" id="fl_2">Low</option>
+                  <option value="1" id="fl_1">Very Low</option>
+                  <option value="0" id="fl_0">None</option>
                 </select>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label">Missed Birds</label>
             <div>
-                <select class="form-control input-lg">
-                  <option>Very High</option>
-                  <option selected>High</option>
-                  <option>Medium</option>
-                  <option>Low</option>
-                  <option>Very Low</option>
-                  <option>None</option>
+                <select class="form-control input-lg" name="frequency_missed">
+                  <option value="5" id="fm_5">Very High</option>
+                  <option value="4" id="fm_4">High</option>
+                  <option value="3" id="fm_3">Medium</option>
+                  <option value="2" id="fm_2">Low</option>
+                  <option value="1" id="fm_1">Very Low</option>
+                  <option value="0" id="fm_0">None</option>
                 </select>
             </div>
         </div>
@@ -54,51 +55,50 @@
         <div class="form-group">
             <label class="control-label">Birds per batch</label>
             <div>
-                <select class="form-control input-lg">
-                  <option>10</option>
-                  <option>20</option>
-                  <option selected>30</option>
-                  <option>40</option>
-                  <option>50</option>
-                  <option>All</option>
+                <select class="form-control input-lg" name="batch_size">
+                  <option value="10" id="bs_10">10</option>
+                  <option value="20" id="bs_20">20</option>
+                  <option value="30" id="bs_30">30</option>
+                  <option value="40" id="bs_40">40</option>
+                  <option value="50" id="bs_50">50</option>
                 </select>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label">Start new batch at</label>
             <div>
-                <select class="form-control input-lg">
-                  <option>50% learned</option>
-                  <option>60% learned</option>
-                  <option>70% learned</option>
-                  <option selected>80% learned</option>
-                  <option>90% learned</option>
-                  <option>100% learned</option>
+                <select class="form-control input-lg" name="next_batch">
+                  <option value="60" id="nb_60">60% learned</option>
+                  <option value="70" id="nb_70">70% learned</option>
+                  <option value="80" id="nb_80">80% learned</option>
+                  <option value="90" id="nb_90">90% learned</option>
+                  <option value="100" id="nb_100">100% learned</option>
                 </select>
             </div>
         </div>
         <hr>
         <h4>Drill Challenge Level <a href="#" title="Make the drill questions more challenging by skipping right to the bird sound, without hearing the name of it first. Or group similar birds together, making it tougher to identify each bird."><span class="glyphicon glyphicon-info-sign"></span></a></h4>
         <div class="checkbox checkbox-lg">
-            <label style="display:inline"><input type="checkbox"> Hear the bird sound without the bird name</label>
+            <label style="width:100%"><input type="checkbox" name="challenge_level" {{ challenge_level }}> Skip audio for answer options</label>
         </div>
         <div class="checkbox checkbox-lg">
-            <label style="display:inline"><input type="checkbox"> Group related birds in batch whenever possible</label>
+            <label style="width:100%"><input type="checkbox" name="drill_order" {{ drill_order }}> Group related birds together</label>
         </div>
         <hr>
-
+        <input type="submit" class="btn btn-default btn-lg colored-btn" value="SAVE">
+        <input type="Reset" class="btn btn-default btn-lg " value="Reset">
     </form>
     </div><!--settings-->
 
     <script type="text/javascript">
     <!--
     function myFunction() {
-        document.getElementById("{{ mix_color }}").selected = true;
+        document.getElementById("fn_" + {{ frequency_new }}).selected = true;
+        document.getElementById("fl_" + {{ frequency_learned }}).selected = true;
+        document.getElementById("fm_" + {{ frequency_missed }}).selected = true;
+        document.getElementById("bs_" + {{ batch_size }}).selected = true;
+        document.getElementById("nb_" + {{ next_batch }}).selected = true;
     }
-        /*http://www.w3schools.com/jsref/prop_option_selected.asp
-        http://stackoverflow.com/questions/4590311/set-option-selected-attribute-from-dynamic-created-option
-
-         */
     //-->
     </script>
 {% endblock maincontent %}

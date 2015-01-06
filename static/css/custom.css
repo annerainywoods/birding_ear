@@ -180,8 +180,8 @@ h1 span {
     display:block;
     font-size:24px;
 }
-h1 a span.glyphicon {
-    color:white
+h1 a.btn {
+    margin:0px 10px 10px 10px;
 }
 h2 {
     font-family: Arvo, Verdana, sans-serif;
@@ -359,7 +359,7 @@ a.mix-icon:hover {
     text-align:center;
 }
 .drill-btns {
-    margin: 10px 0 60px 0;
+    margin: 10px 0 10px 0;
 }
 .drill-btns button {
     height:60px;
@@ -402,7 +402,7 @@ a.mix-icon:hover {
 #settings form label {
     display:inline-block;
     font-weight:normal;
-    width:180px;
+    width:200px;
 }
 #settings form div div {
     display:inline-block;

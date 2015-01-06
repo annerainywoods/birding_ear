@@ -13,7 +13,7 @@ Mix{% endblock %}
 
 {% block maincontent %}
     {% if mix_nickname %}
-    <h1>{{ mix_nickname }}</h1>
+    <h1>Edit <a class="btn btn-default" href="/mix_detail/{{ mix_slug }}" role="button">{{ mix_nickname }}</a></h1>
     {% else %}
     <h1>Add New Mix</h1>
     {% endif %}
@@ -75,7 +75,12 @@ Mix{% endblock %}
        <hr>
 
     <input type="submit" class="btn btn-default btn-lg colored-btn" value="SAVE">
-        [ <a href="#">Delete</a> ]
+    {% if mix_nickname %}
+    <input type="submit" class="btn btn-default btn-lg" value="Delete">
+    <a class="btn btn-default btn-lg" href="/mix_detail/{{ mix_slug }}" role="button">Cancel</a>
+    {% else%}
+    <a class="btn btn-default btn-lg" href="/" role="button">Cancel</a>
+    {% endif %}
     </form>
 
 
@@ -86,10 +91,6 @@ Mix{% endblock %}
     function myFunction() {
         document.getElementById("{{ mix_color }}").selected = true;
     }
-        /*http://www.w3schools.com/jsref/prop_option_selected.asp
-        http://stackoverflow.com/questions/4590311/set-option-selected-attribute-from-dynamic-created-option
-
-         */
     //-->
     </script>
 {% endblock maincontent %}

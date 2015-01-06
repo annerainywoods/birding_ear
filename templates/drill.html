@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load staticfiles%}
+
+{% block title %}{{ mix_nickname }} Drill{% endblock %}
+
+{% block body %}<body class="{{ mix_color }}" onload="myFunction()">{% endblock %}
+
+{% block maincontent %}
+      <h1>Drill <a class="btn btn-default" href="/mix_detail/{{ mix_slug }}" role="button">{{ mix_nickname }}</a></h1>
+
+    <div id="drill">
+    <audio controls>
+        <source src="/static/media/call_common_loon.mp3" type="audio/mpeg" />
+    </audio>
+    <p>What was that last call?</p>
+    <form role="form" method="post" class="drill-btns">
+    {% csrf_token %}
+        <button class="btn btn-default btn-lg btn-block" role="button">Western Grebe</button>
+        <button class="btn btn-default btn-lg btn-block" role="button">Common Loon</button>
+        <button class="btn btn-default btn-lg btn-block" role="button">Great Blue Heron</button>
+    <br>
+    <div class="checkbox checkbox-lg">
+        <label><input type="checkbox" name="listen_only"> Listen-only mode</label> <a href="#" title="Listen-only mode will disable the answer options and autoplay the bird sounds. BirdingEar can't track your learned birds in this mode, so drill settings that involve tracking won't be applied."><span class="glyphicon glyphicon-info-sign"></span></a>
+    </div>
+    </form>
+    <a class="btn btn-default colored-btn"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back to the {{ mix_nickname }} bird mix</a>
+
+    </div><!--drill-->
+    <script>
+        function myFunction() {
+
+        }
+
+    </script>
+{% endblock maincontent %}

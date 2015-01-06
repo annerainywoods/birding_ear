@@ -190,11 +190,11 @@ class Drill(models.Model):
     frequency_learned = models.SmallIntegerField("% learned birds", max_length=1, choices=FREQUENCY_LEARNED, default=2)
     frequency_missed = models.SmallIntegerField("% missed birds", max_length=1, choices=FREQUENCY_MISSED, default=5)
     #set how many birds should be drilled on at once
-    batch_size = models.SmallIntegerField("number of birds per batch", max_length=2, choices=BATCH_SIZE, default=30)
+    batch_size = models.SmallIntegerField("number of birds per batch", max_length=3, choices=BATCH_SIZE, default=30)
     #set what percent of "misses" should create a new batch
-    next_batch = models.SmallIntegerField("start new batch at", max_length=2, choices=NEXT_BATCH, default=80)
+    next_batch = models.SmallIntegerField("start new batch at", max_length=3, choices=NEXT_BATCH, default=80)
     #turn off the audio for all three answer options, and only hear the bird to identify
-    challenge_level = models.BooleanField("hear bird sound without its name", default=False)
+    challenge_level = models.BooleanField("skip audio for answer options", default=False)
     #drill on similar birds in the same batch, or randomize batches
     drill_order = models.CharField("drill order", max_length=3, choices=DRILL_ORDER, default="RAN")
     user = models.ForeignKey(User)

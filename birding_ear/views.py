@@ -1,6 +1,5 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, render
-# Import the Category model
 from .models import Bird, State, BirdType, UserBird, Mix, Drill
 from json import dumps, loads
 from django.views.decorators.csrf import csrf_exempt
@@ -10,16 +9,19 @@ from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+#from birding_ear.drill_question import DrillQuestion
 
 
 def register(request):
     if request.method == "POST":
         user = User.objects.create_user(request.POST["username"], None, request.POST["password"])
+        #extend the bird model
         for b in Bird.objects.all():
             ub = UserBird()
             ub.bird = b
             ub.user = user
             ub.save()
+        #create drill settings
         drill = Drill()
         drill.user = user
         drill.save()
@@ -111,7 +113,7 @@ def mix_settings_edit(request, mix_id_slug):
         context_dict['mix_nickname'] = mix.nickname
         context_dict['mix_description'] = mix.description
         context_dict['mix_color'] = mix.color
-        context_dict['slug'] = mix.slug
+        context_dict['mix_slug'] = mix.slug
 
         context = RequestContext(request)
         return render_to_response('mix_edit.html', context_dict, context)
@@ -186,32 +188,63 @@ def favorites(request):
 @login_required
 def settings(request):
     context_dict = {}
-    drill_setting = Drill.objects.filter(user=request.user)
-    print drill_setting
+    drill_setting = Drill.objects.get(user=request.user)
     if request.method == "POST":
-        drill_setting.listen_only = request.POST["listen_only"]
         drill_setting.frequency_new = request.POST["frequency_new"]
         drill_setting.frequency_learned = request.POST["frequency_learned"]
         drill_setting.frequency_missed = request.POST["frequency_missed"]
         drill_setting.batch_size = request.POST["batch_size"]
         drill_setting.next_batch = request.POST["next_batch"]
-        drill_setting.challenge_level = request.POST["challenge_level"]
-        drill_setting.drill_order = request.POST["drill_order"]
+        #updates if "Skip audio for answer options" is checked
+        if "challenge_level" in request.POST:
+            drill_setting.challenge_level = True
+        else:
+            drill_setting.challenge_level = False
+        #updates if "Group related birds together" is checked
+        if "drill_order" in request.POST:
+            drill_setting.challenge_level = "REL"
+        else:
+            drill_setting.challenge_level = "RAN"
         drill_setting.user = request.user
         drill_setting.save()
     else:
-        context_dict['listen_only'] = drill_setting.listen_only
         context_dict['frequency_new'] = drill_setting.frequency_new
         context_dict['frequency_learned'] = drill_setting.frequency_learned
         context_dict['frequency_missed'] = drill_setting.frequency_missed
         context_dict['batch_size'] = drill_setting.batch_size
         context_dict['next_batch'] = drill_setting.next_batch
-        context_dict['challenge_level'] = drill_setting.challenge_level
-        context_dict['drill_order'] = drill_setting.drill_order
+        #Shows checked if "Skip audio for answer options" is selected
+        if drill_setting.challenge_level:
+            context_dict['challenge_level'] = "checked"
+        else:
+            context_dict['challenge_level'] = ""
+        #Shows checked if "Group related birds together" is selected
+        if drill_setting.drill_order == "REL":
+            context_dict['drill_order'] = "checked"
+        else:
+            context_dict['drill_order'] = ""
+    context = RequestContext(request)
+    return render_to_response('settings.html', context_dict, context)
 
-        context = RequestContext(request)
-        return render_to_response('settings.html', context_dict, context)
-
+@csrf_exempt
+def drill(request, mix_id_slug):
+    #if request.method == "POST":
+        #checkAnswer(selected_option)
+        #load new drill page
+    context_dict = {}
+    #get birds and details for the relevant mix
+    mix = Mix.objects.filter(user=request.user).get(slug=mix_id_slug)
+    context_dict['mix_slug'] = mix_id_slug
+    context_dict['mix_nickname'] = mix.nickname
+    context_dict['mix_color'] = mix.color
+    #get drill question, audio, answer options
+    #question = DrillQuestion(mix.id)
+    #context_dict['question_audio'] = question.question_audio
+    #context_dict['option1'] = question.option1
+    #context_dict['option2'] = question.option2
+    #context_dict['option3'] = question.option3
+    context = RequestContext(request)
+    return render_to_response('drill.html', context_dict, context)
 
 @csrf_exempt
 def ajax(request):

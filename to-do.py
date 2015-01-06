@@ -1,6 +1,7 @@
 '''
 
-
+SETTINGS
+- add listen-only to drill settings
 
 
 LOGOUT
