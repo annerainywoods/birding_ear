@@ -13,7 +13,7 @@ Mix{% endblock %}
 
 {% block maincontent %}
     {% if mix_nickname %}
-    <h1>Edit <a class="btn btn-default" href="/mix_detail/{{ mix_slug }}" role="button">{{ mix_nickname }}</a></h1>
+    <h1><a class="btn btn-default" href="/mix_detail/{{ mix_slug }}" role="button"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> {{ mix_nickname }}</a> Edit</h1>
     {% else %}
     <h1>Add New Mix</h1>
     {% endif %}

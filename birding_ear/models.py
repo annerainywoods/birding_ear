@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 
+
 #the unchanging bird info, like name and bird call
 class Bird(models.Model):
     name = models.CharField("common name", max_length=50)

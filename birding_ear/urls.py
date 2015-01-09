@@ -23,9 +23,11 @@ urlpatterns = patterns('',
     url(r'^favorites?$', 'birding_ear.views.favorites', name="favorites"),
     url(r'^settings?$', 'birding_ear.views.settings', name="settings"),
     url(r'^drill/(?P<mix_id_slug>[\w\-]+)/$', 'birding_ear.views.drill'),
+    url(r'^mix_drill_birds/(?P<mix_id_slug>[\w\-]+)/$', views.mix_drill_birds, name="mix_drill_birds"),
     url(r'^ajax/', views.ajax, name="ajax"),
     (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
         'document_root': settings.MEDIA_ROOT}),
-    url(r'^dom$', views.dom, name="dom")
+    url(r'^dom$', views.dom, name="dom"),
+
 
 )

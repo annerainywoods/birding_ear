@@ -9,7 +9,6 @@ from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-#from birding_ear.drill_question import DrillQuestion
 
 
 def register(request):
@@ -226,31 +225,51 @@ def settings(request):
     context = RequestContext(request)
     return render_to_response('settings.html', context_dict, context)
 
+
 @csrf_exempt
 def drill(request, mix_id_slug):
     #if request.method == "POST":
-        #checkAnswer(selected_option)
-        #load new drill page
+        #checkAnswer()
     context_dict = {}
     #get birds and details for the relevant mix
     mix = Mix.objects.filter(user=request.user).get(slug=mix_id_slug)
     context_dict['mix_slug'] = mix_id_slug
     context_dict['mix_nickname'] = mix.nickname
     context_dict['mix_color'] = mix.color
-    #get drill question, audio, answer options
-    #question = DrillQuestion(mix.id)
-    #context_dict['question_audio'] = question.question_audio
-    #context_dict['option1'] = question.option1
-    #context_dict['option2'] = question.option2
-    #context_dict['option3'] = question.option3
+    drill_setting = Drill.objects.get(user=request.user)
+    context_dict['frequency_new'] = drill_setting.frequency_new
+    context_dict['frequency_learned'] = drill_setting.frequency_learned
+    context_dict['frequency_missed'] = drill_setting.frequency_missed
     context = RequestContext(request)
     return render_to_response('drill.html', context_dict, context)
+
+
+@csrf_exempt
+def mix_drill_birds(request, mix_id_slug):
+    if request.method == "POST":
+        bird = Bird()
+        bird.name = request.POST["name"]
+        bird.save()
+    mix = Mix.objects.filter(user=request.user).get(slug=mix_id_slug)
+    birds_ajax = list(mix.bird_list())
+    birds_ajax_list = []
+    for b in birds_ajax:
+        birds_ajax_list.append({
+            "bird_pile": b.bird_pile,
+            "bird_narration": b.bird.narration,
+            "bird_call": b.bird.bird_call,
+            "name": b.bird.name,
+            "excluded": b.excluded,
+            "id": b.id
+        })
+
+    return HttpResponse(dumps(birds_ajax_list), content_type="application/json")
+
 
 @csrf_exempt
 def ajax(request):
     if request.method == "POST":
         bird = Bird()
-        #bird.user = User.objects.all()[0]
         bird.name = request.POST["name"]
         bird.save()
 
@@ -270,6 +289,3 @@ def dom(request):
     return render(request, 'dom.html')
 
 
-
-#def hello(request):
-#    return HttpResponse("Hello world")

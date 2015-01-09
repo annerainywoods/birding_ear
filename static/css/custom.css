@@ -176,12 +176,14 @@ h1 {
     padding: 10px 0 10px 30px;
     min-height: 42px;
 }
-h1 span {
+h1 span.description {
     display:block;
     font-size:24px;
 }
 h1 a.btn {
-    margin:0px 10px 10px 10px;
+    margin:0px 0px 10px 0px;
+    padding:5px;
+    font-family: Verdana, sans-serif;
 }
 h2 {
     font-family: Arvo, Verdana, sans-serif;
@@ -366,11 +368,11 @@ a.mix-icon:hover {
     margin:10px 0;
     padding:10px 0 0 30px;
     font-size: 24px;
-    background-color: #333;
+    background-color: #4b6071;
     color:white
 }
 .drill-btns button:hover {
-    background-color: #494949;
+    background-color: #506e86;
     color:white
 }
 

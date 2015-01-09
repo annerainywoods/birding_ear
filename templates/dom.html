@@ -6,34 +6,6 @@
     <script>
         var request = new XMLHttpRequest();
 
-
-        function simple_draw(data) {
-            var list = document.getElementById("list");
-            data.forEach(function (item) {
-                list.innerHTML += item["name"];
-            });
-        }
-
-        function element_draw(data) {
-            var list = document.getElementById("list");
-            data.forEach(function (item) {
-                var li = document.createElement("li");
-                li.innerHTML = item["name"] + ", " + item["number"];
-                list.appendChild(li);
-            });
-        }
-
-        function classic_for_element_draw(data) {
-            var list = document.getElementById("list");
-            for (var index = 0; index < data.length; index++) {
-                var item = data[index];
-                var li = document.createElement("li");
-                li.innerHTML = item["name"] + ", " + item["number"];
-                list.appendChild(li);
-            }
-        }
-
-
         function draw(data) {
             var list = document.getElementById("list");
             var template = document.getElementById("template");
@@ -56,9 +28,6 @@
             if ((request.readyState == 4) && (request.status == 200)) {
                 var data = JSON.parse(request.responseText);
                 draw(data);
-                //simple_draw(data);
-                //element_draw(data);
-                //classic_for_element_draw(data);
             }
         }
 
