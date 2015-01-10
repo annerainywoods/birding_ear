@@ -24,6 +24,7 @@
         }
 
         function validateMix(data) {
+            // make sure mix has at least 3 birds
             if (data.length < 3) {
                 console.log("less than 3");
                 return false;
@@ -32,32 +33,140 @@
             }
         }
 
-        function getFrequencies() {
-            var frequency_new = document.getElementById("frequency_new").innerHTML;
-            var frequency_learned = document.getElementById("frequency_learned").innerHTML;
-            var frequency_missed = document.getElementById("frequency_missed").innerHTML;
+        function getFrequencyPercentages() {
             // add frequencies together and divide each by the sum to get percentage
-
+            // for each bird pile. Frequencies are set by user in "settings'
+            var frequency_new = Number(document.getElementById("frequency_new").innerHTML);
+            var frequency_learned = Number(document.getElementById("frequency_learned").innerHTML);
+            var frequency_missed = Number(document.getElementById("frequency_missed").innerHTML);
+            var sum = frequency_new + frequency_learned + frequency_missed;
+            var percentages = [];
+                percentages['new'] = (frequency_new/sum);
+                percentages['learned'] = (frequency_learned/sum);
+                percentages['missed'] = (frequency_missed/sum);
+            return percentages;
         }
 
+        function sortBirdPiles(data) {
+            // get list of user birds from mix and separate into new/learned/missed lists (delete "excluded)
+            var bird_pile_New = [];
+            var bird_pile_Learned = [];
+            var bird_pile_Missed = [];
+            data.forEach(function (item) {
+                switch(item["bird_pile"]) {
+                    case "N":
+                        //if not excluded, add to New list
+                        if (item["excluded"] == false) {
+                            bird_pile_New.push(item);
+                        }
+                        break;
+                    case "L":
+                        if (item["excluded"] == false) {
+                            bird_pile_Learned.push(item);
+                        }
+                        break;
+                    case "M":
+                        if (item["excluded"] == false) {
+                            bird_pile_Missed.push(item);
+                        }
+                        break;
+                }
+            });
+            var sortedBirdList = [];
+                sortedBirdList['new'] = bird_pile_New;
+                sortedBirdList['learned'] = bird_pile_Learned;
+                sortedBirdList['missed'] = bird_pile_Missed;
+            return sortedBirdList;
+        }
 
-        function drawQuestion(data) {
-            //   validateMix() // validate mix has at least 3 birds
-            if (validateMix(data)) {
-                console.log("mix validates");
+        function chooseBirdPile(bird_pile_frequencies) {
+            //get random number
+            var selector = Math.random();
+            var question_bird_pile;
+            //console.log(selector);
+            if (selector < bird_pile_frequencies['new']) {
+                question_bird_pile = "N";
+            } else if (selector < bird_pile_frequencies['learned'] + bird_pile_frequencies['new']) {
+                question_bird_pile = "L";
             } else {
-                console.log("mix fails validation")
+                question_bird_pile = "M";
             }
-            var frequencyArray = getFrequencies(); // how do I return 3 values?
-            //   getFrequencies() // get settings from Drill model
-            //   sortBirdList() // get list of user birds from mix and separate into new/learned/missed lists (delete "excluded)
-            // *** repeat functions below after feedback is given **** //
-            //   chooseBirdPile() // use random number to decide which bird pile to pull from (new/learned/missed)
-            //   selectBird() // get random bird from bird_list where bird_pile = ___
+            return question_bird_pile;
+        }
+
+        function selectBird(bird_pile_lists, question_bird_pile, bird_pile_frequencies) {
+            var question_bird;
+            var random_bird;
+            switch (question_bird_pile) {
+                case "N":
+                    if (bird_pile_lists['new'].length != 0) {
+                        random_bird = Math.floor(Math.random() * (bird_pile_lists['new'].length - 0)) + 0;
+                        question_bird = bird_pile_lists['new'][random_bird];
+                    } else {
+                        //if bird_pile doesn't have any birds, choose another bird_pile
+                        //chooseBirdPile(bird_pile_frequencies);
+                        console.log('bird pile empty');
+                    }
+                    break;
+                case "L":
+                    if (bird_pile_lists['learned'].length != 0) {
+                        random_bird = Math.floor(Math.random() * (bird_pile_lists['learned'].length - 0)) + 0;
+                        question_bird = bird_pile_lists['learned'][random_bird];
+                    } else {
+                        console.log('bird pile empty');
+                    }
+                    break;
+                case "M":
+                    if (bird_pile_lists['missed'].length != 0) {
+                        random_bird = Math.floor(Math.random() * (bird_pile_lists['missed'].length - 0)) + 0;
+                        question_bird = bird_pile_lists['missed'][random_bird];
+                    } else {
+                        console.log('bird pile empty');
+                    }
+                    break;
+            }
+            console.log(random_bird);
+            return question_bird;
+        }
+
+        function makeNewQuestion(bird_pile_frequencies, bird_pile_lists) {
+            //use random number to decide which bird pile to pull from (new/learned/missed)
+            var question_bird_pile = chooseBirdPile(bird_pile_frequencies);
+            //console.log(question_bird_pile);
+            // get random bird from bird_list where bird_pile = quesi
+            var question_bird = selectBird(bird_pile_lists, question_bird_pile, bird_pile_frequencies);
+            console.log(question_bird);
             //   selectDistractors() // get 2 random birds from bird list that aren't the selected Bird
             //   randomizeOptions() // combine selected bird and distractors into one list, then scramble order
             //   compilateAudio() // concatenate the audio for the birds in the question, same order multiple choice
             //   playBird() // audio should auto play when page loads
+
+        }
+
+        function drawQuestion(data) {
+            // validate mix has at least 3 birds
+            if (validateMix(data)) {
+                //console.log("mix validates");
+                // calculate the percent for each birdpile
+                var bird_pile_frequencies = getFrequencyPercentages();
+                //console.log(bird_pile_frequencies['new']);
+                //console.log(bird_pile_frequencies['learned']);
+                //console.log(bird_pile_frequencies['missed']);
+
+                // get separate birds into new/learned/missed lists
+                var bird_pile_lists = sortBirdPiles(data);
+                //console.log(bird_pile_lists['new'].length);
+                //console.log(bird_pile_lists['learned'].length);
+                //console.log(bird_pile_lists['missed'].length);
+
+                //pick bird and 2 distractors, creates audio hint
+                makeNewQuestion(bird_pile_frequencies, bird_pile_lists);
+            } else {
+                console.log("mix fails validation");
+                document.getElementById("fail-validation").innerHTML = "Sorry you need more birds";
+
+            }
+
             //   ONCLICK check(Answer) check answer, give feedback, and move bird into new bird_pile and update JSON object.
             //   TIMEOUT drawMultipleChoice() repeat Choose BirdPile(), etc
         }
@@ -71,7 +180,7 @@
             }
         }
 
-        function fetch(mix_slug) {
+        function fetch() {
             var mix_slug = document.getElementById("mix_slug").innerHTML;
             request.onload = undefined;
             request.onreadystatechange = onRequestChange;
@@ -147,6 +256,7 @@
       <h1><a class="btn btn-default" href="/mix_detail/{{ mix_slug }}" role="button"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> {{ mix_nickname }}</a> Drill</h1>
 
     <div id="drill">
+    <div id="fail-validation"></div>
     <strong>Which bird is this?</strong>
     <audio controls>
         <source src="/static/media/call_common_loon.mp3" type="audio/mpeg" />

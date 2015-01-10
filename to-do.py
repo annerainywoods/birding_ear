@@ -1,12 +1,13 @@
 '''
 
 DRILL
-- fix mix slug where it is hard coded on line 34
+- how do I choose another bird pile if the selected one is empty?
 
 SETTINGS
 - add listen-only to drill settings
 - make SAVE work
 - make RESET work
+- form validation for frequency; all be NONE
 
 LOGOUT
 - login screen this redirects to does not accept login
