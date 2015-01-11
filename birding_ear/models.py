@@ -143,7 +143,6 @@ class Mix(models.Model):
 #user settings for drills
 class Drill(models.Model):
     FREQUENCY_NEW = (
-        (0, 'None'),
         (1, 'Very low'),
         (2, 'Low'),
         (3, 'Medium'),
@@ -151,7 +150,6 @@ class Drill(models.Model):
         (5, 'Very high')
     )
     FREQUENCY_MISSED = (
-        (0, 'None'),
         (1, 'Very low'),
         (2, 'Low'),
         (3, 'Medium'),
@@ -159,7 +157,6 @@ class Drill(models.Model):
         (5, 'Very high')
     )
     FREQUENCY_LEARNED = (
-        (0, 'None'),
         (1, 'Very low'),
         (2, 'Low'),
         (3, 'Medium'),
@@ -189,7 +186,7 @@ class Drill(models.Model):
     #set what percentage of drill questions should be new, learned or missed
     frequency_new = models.SmallIntegerField("% new birds", max_length=1, choices=FREQUENCY_NEW, default=3)
     frequency_learned = models.SmallIntegerField("% learned birds", max_length=1, choices=FREQUENCY_LEARNED, default=2)
-    frequency_missed = models.SmallIntegerField("% missed birds", max_length=1, choices=FREQUENCY_MISSED, default=5)
+    frequency_missed = models.SmallIntegerField("% missed birds", max_length=1, choices=FREQUENCY_MISSED, default=4)
     #set how many birds should be drilled on at once
     batch_size = models.SmallIntegerField("number of birds per batch", max_length=3, choices=BATCH_SIZE, default=30)
     #set what percent of "misses" should create a new batch

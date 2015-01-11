@@ -1,13 +1,13 @@
 '''
 
 DRILL
-- how do I choose another bird pile if the selected one is empty?
+-
 
 SETTINGS
 - add listen-only to drill settings
 - make SAVE work
 - make RESET work
-- form validation for frequency; all be NONE
+- remove "Skip audio for answer options"
 
 LOGOUT
 - login screen this redirects to does not accept login
