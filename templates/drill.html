@@ -3,11 +3,12 @@
 
 {% block title %}{{ mix_nickname }} Drill{% endblock %}
 {% block script %}
-<script>
+    <script>
 
         //minimum birds for mix, and for learned birdpile before a learned bird is selected.
         var LEARNED_MIN = 5; // can't be more than MIX_MIN
         var MIX_MIN = 5; // can't be less than LEARNED_MIN
+        //TODO var NUM_DISTRACTORS = 2; // can't be more than MIX_MIN + 1
 
         var request = new XMLHttpRequest();
 
@@ -82,7 +83,7 @@
                         bird_pile_Missed.push(item);
                         break;
                     default:
-                        console.log(item["bird_pile"] + " Bird without bird_pile in function SortBirdPiles")
+                        console.log(item["bird_pile"] + ": Bird without bird_pile in function SortBirdPiles")
                 }
             });
             var sortedBirdList = [];
@@ -100,20 +101,24 @@
             if ( bird_pile_frequencies['new'].length != 0) {
                 if (selector < bird_pile_frequencies['new']) {
                     question_bird_pile = "N";
-                } else if (selector < bird_pile_frequencies['learned'] + bird_pile_frequencies['new']) {
+                }
+                else if (selector < bird_pile_frequencies['learned'] + bird_pile_frequencies['new']) {
                     question_bird_pile = "L";
-                } else {
+                }
+                else {
                     question_bird_pile = "M";
                 }
-            } else {
+            }
+            else {
             // if there aren't any birds in the 'New' bird pile, divide frequency for New in half and
             // and add to the frequencies of 'Learned' and 'Missed'
-            // TODO test
-                var zero_new_offset = bird_pile_frequencies['new']/2;
-                if (selector < (bird_pile_frequencies['learned'] + zero_new_offset)) {
+            // TODO test case with no NEW birds
+                var offset = bird_pile_frequencies['new'] * .5;
+                if (selector < (bird_pile_frequencies['learned'] + offset)) {
                     question_bird_pile = "L";
                     console.log('With offset, learned frequency is ' + bird_pile_frequencies['learned'] + new_offset)
-                } else {
+                }
+                else {
                     question_bird_pile = "M";
                 }
             }
@@ -130,7 +135,8 @@
                     if (bird_pile_lists['new'].length != 0) {
                         random_bird = Math.floor(Math.random() * (bird_pile_lists['new'].length - 0)) + 0;
                         question_bird = bird_pile_lists['new'][random_bird];
-                    } else {
+                    }
+                    else {
                         console.log('N bird pile is empty');
                         return false;
                     }
@@ -139,7 +145,8 @@
                     if (bird_pile_lists['learned'].length >= LEARNED_MIN) {
                         random_bird = Math.floor(Math.random() * (bird_pile_lists['learned'].length - 0)) + 0;
                         question_bird = bird_pile_lists['learned'][random_bird];
-                    } else {
+                    }
+                    else {
                         console.log('L bird pile is >= ' + LEARNED_MIN);
                         return false;
                     }
@@ -148,11 +155,14 @@
                     if (bird_pile_lists['missed'].length != 0) {
                         random_bird = Math.floor(Math.random() * (bird_pile_lists['missed'].length - 0)) + 0;
                         question_bird = bird_pile_lists['missed'][random_bird];
-                    } else {
+                    }
+                    else {
                         console.log('M bird is pile empty');
                         return false;
                     }
                     break;
+                default:
+                    console.log("question_bird_pile doesn't match N, L, or M");
             }
             //console.log(random_bird);
             return question_bird;
@@ -162,6 +172,7 @@
             var distractors = [];
             var selector;
             // choose a random bird. check that it isn't the question bird
+            // TODO remove repetition, use NUM_DISTRACTORS
             do {
                 selector = Math.floor(Math.random() * (drill_birds.length - 0)) + 0;
                 distractors[0] = drill_birds[selector];
@@ -176,6 +187,29 @@
             return distractors;
         }
 
+        function randomizeOptions(distractors, question_bird) {
+            //combine birds into one array
+            var answerOptions = distractors;
+            answerOptions.push(question_bird);
+            //TODO randomize answer options
+            return answerOptions;
+        }
+
+        function updateButtons(answerOptions) {
+            for (var i = 0; i < answerOptions.length; i++) {
+                document.getElementById("option" + i).innerHTML = answerOptions[i].name;
+                document.getElementById("option" + i).value = answerOptions[i].id;
+            }
+        }
+
+        function playBird(question_bird) {
+            var call = document.getElementById("question_bird_audio");
+            call.src = question_bird.bird_call;
+            //call.play();
+            console.log(question_bird.bird_call);
+            //TODO get correct bird to autoplay, http://stackoverflow.com/questions/12631420/play-a-sound-on-page-load-using-javascript
+        }
+
         function makeNewQuestion(bird_pile_frequencies, bird_pile_lists, drill_birds) {
             do {
                 //use random number to decide which bird pile to pull from (new/learned/missed)
@@ -184,13 +218,19 @@
                 // get random bird from the question bird pile
                 var question_bird = selectBird(bird_pile_lists, question_bird_pile);
                 // if question bird returns false the bird pile was empty. Loop back to selecting the bird pile
-            } while (question_bird==false);
+            } while (question_bird == false);
             console.log("question bird is "  + question_bird.name);
             // get 2 random birds from bird list that aren't the selected Bird
             var distractors = selectDistractors(question_bird, drill_birds);
-            //   randomizeOptions() // combine selected bird and distractors into one list, then scramble order
-            //   compilateAudio() // concatenate the audio for the birds in the question, same order multiple choice
-            //   playBird() // audio should auto play when page loads
+            // combine selected bird and distractors into one list, then scramble order
+            var answerOptions = randomizeOptions(distractors, question_bird);
+            // add the answer options to the HTML
+            updateButtons(answerOptions);
+            //TODO  concatenate the audio for the birds in the question, same order multiple choice
+            //http://www.lastrose.com/html5-audio-video-playlist/
+            //compilateAudio(answerOptions);
+            // update bird call and play audio
+            playBird(question_bird);
 
         }
 
@@ -217,11 +257,9 @@
                 makeNewQuestion(bird_pile_frequencies, bird_pile_lists, drill_birds);
             }
             // if mix doesn't validate, stop and show error
-            else
-            {
+            else {
                 console.log("mix fails validation");
                 document.getElementById("fail-validation").innerHTML = "You need at least " + MIX_MIN + " birds available for a drill.";
-
             }
 
             //   ONCLICK check(Answer) check answer, give feedback, and move bird into new bird_pile and update JSON object.
@@ -232,7 +270,7 @@
             //console.log(request.readyState, request.status);
             if ((request.readyState == 4) && (request.status == 200)) {
                 var data = JSON.parse(request.responseText);
-                draw(data);
+                //draw(data);
                 drawQuestion(data);
             }
         }
@@ -241,9 +279,9 @@
             var mix_slug = document.getElementById("mix_slug").innerHTML;
             request.onload = undefined;
             request.onreadystatechange = onRequestChange;
-            var slug = "/mix_drill_birds/" + mix_slug + "/";
-            //console.log(slug);
-            request.open("GET", slug, true);
+            var url = "/mix_drill_birds/" + mix_slug + "/";
+            //console.log(url);
+            request.open("GET", url, true);
             request.send();
         }
         function load() {
@@ -286,6 +324,7 @@
 {% block body %}<body class="{{ mix_color }}">{% endblock %}
 
 {% block maincontent %}
+<!--
 <form  id="f1" action="/ajax/" method="post" onsubmit="return captureSubmit()" >
     <input name="name">
     <input type="submit" value="submit">
@@ -303,8 +342,8 @@
     </li>
 </ul>
 
-<!--end domstuff-->
-    <div id="js-variable">
+-->
+    <div class="js-variable">
       <div id="mix_slug">{{ mix_slug }}</div>
       <div id="frequency_new">{{ frequency_new }}</div>
       <div id="frequency_learned">{{ frequency_learned }}</div>
@@ -315,18 +354,18 @@
     <div id="drill">
     <div id="fail-validation"></div>
     <strong>Which bird is this?</strong>
-    <audio controls>
+    <audio id="question_bird_audio" controls autoplay src="">
         <source src="/static/media/call_common_loon.mp3" type="audio/mpeg" />
     </audio>
     <form role="form" method="post" class="drill-btns">
     {% csrf_token %}
-        <button class="btn btn-default btn-lg btn-block" role="button" id="option1">Western Grebe</button>
-        <button class="btn btn-default btn-lg btn-block" role="button" id="option2">Common Loon</button>
-        <button class="btn btn-default btn-lg btn-block" role="button" id="option3">Great Blue Heron</button>
+        <button class="btn btn-default btn-lg btn-block" role="button" id="option0" value=""></button>
+        <button class="btn btn-default btn-lg btn-block" role="button" id="option1" value=""></button>
+        <button class="btn btn-default btn-lg btn-block" role="button" id="option2" value=""></button>
     <div>
         <p id="test"></p>
     Hint: Listen to all three
-    <audio controls>
+    <audio controls >
         <source src="/static/media/call_common_loon.mp3" type="audio/mpeg" />
     </audio>
     </div>
