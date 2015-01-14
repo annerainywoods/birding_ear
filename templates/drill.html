@@ -4,11 +4,15 @@
 {% block title %}{{ mix_nickname }} Drill{% endblock %}
 {% block script %}
     <script>
-
-        //minimum birds for mix, and for learned birdpile before a learned bird is selected.
-        var LEARNED_MIN = 5; // can't be more than MIX_MIN
-        var MIX_MIN = 5; // can't be less than LEARNED_MIN
-        //TODO var NUM_DISTRACTORS = 2; // can't be more than MIX_MIN + 1
+        // Looks in another bird pile if the "Learned" has hasn't met the minimum (LEARNED_MIN).
+        // Gets stuck if all the birds are in the "Learned" pile, but there are less than the LEARNED MIN
+        // So mix minimum (DRILL_MIN) can't be smaller than LEARNED MIX
+        // Gets stuck if there are more answer options than birds in the drill
+        //TODO test and make sure logic isn't off by one
+        //TODO make a function to check values don't conflict
+        var LEARNED_MIN = 5; // can't be bigger than DRILL_MIN (tested 4 birds doesn't pass, 5 does)
+        var DRILL_MIN = 5; // can't be smaller than LEARNED_MIN.
+        var NUM_ANSWER_OPTIONS = 3; // can't be bigger than MIN_MIX
 
         var request = new XMLHttpRequest();
 
@@ -42,8 +46,8 @@
         }
 
         // make sure mix has minimum birds for selection from the learned bird pile
-        function validateMix(drill_birds) {
-            if (drill_birds.length <= MIX_MIN) {
+        function validateDrill(drill_birds) {
+            if (drill_birds.length <= DRILL_MIN) {
                 console.log("less than minimum birds");
                 return false;
             } else {
@@ -112,7 +116,7 @@
             else {
             // if there aren't any birds in the 'New' bird pile, divide frequency for New in half and
             // and add to the frequencies of 'Learned' and 'Missed'
-            // TODO test case with no NEW birds
+            // TODO Is this necessary?
                 var offset = bird_pile_frequencies['new'] * .5;
                 if (selector < (bird_pile_frequencies['learned'] + offset)) {
                     question_bird_pile = "L";
@@ -127,52 +131,65 @@
 
         // find the matching bird pile and randomly select a bird from it.
         function selectBird(bird_pile_lists, question_bird_pile) {
-            var question_bird;
+            var question_bird = '0';
             var random_bird;
+            var i = 0;
             console.log('Looking for a bird in ' + question_bird_pile);
-            switch (question_bird_pile) {
-                case "N":
-                    if (bird_pile_lists['new'].length != 0) {
-                        random_bird = Math.floor(Math.random() * (bird_pile_lists['new'].length - 0)) + 0;
-                        question_bird = bird_pile_lists['new'][random_bird];
-                    }
-                    else {
-                        console.log('N bird pile is empty');
-                        return false;
-                    }
-                    break;
-                case "L":
-                    if (bird_pile_lists['learned'].length >= LEARNED_MIN) {
-                        random_bird = Math.floor(Math.random() * (bird_pile_lists['learned'].length - 0)) + 0;
-                        question_bird = bird_pile_lists['learned'][random_bird];
-                    }
-                    else {
-                        console.log('L bird pile is >= ' + LEARNED_MIN);
-                        return false;
-                    }
-                    break;
-                case "M":
-                    if (bird_pile_lists['missed'].length != 0) {
-                        random_bird = Math.floor(Math.random() * (bird_pile_lists['missed'].length - 0)) + 0;
-                        question_bird = bird_pile_lists['missed'][random_bird];
-                    }
-                    else {
-                        console.log('M bird is pile empty');
-                        return false;
-                    }
-                    break;
-                default:
-                    console.log("question_bird_pile doesn't match N, L, or M");
-            }
-            //console.log(random_bird);
-            return question_bird;
+            do {
+                switch (question_bird_pile) {
+                    case "M":
+                        //check that bird pile isn't empty before choosing random bird
+                        if (bird_pile_lists['missed'].length != 0) {
+                            random_bird = Math.floor(Math.random() * (bird_pile_lists['missed'].length - 0)) + 0;
+                            question_bird = bird_pile_lists['missed'][random_bird];
+                            console.log('Found bird in M');
+                            return question_bird;
+                        }
+                        else {
+                            // If the bird pile is empty, try the next case
+                            console.log('M bird is pile empty, looking for a bird in N');
+                            question_bird_pile = 'N'
+                        }
+                    case "N":
+                        //check that bird pile isn't empty before choosing random bird
+                        if (bird_pile_lists['new'].length != 0) {
+                            random_bird = Math.floor(Math.random() * (bird_pile_lists['new'].length - 0)) + 0;
+                            question_bird = bird_pile_lists['new'][random_bird];
+                            console.log('Found bird in N');
+                            return question_bird;
+                        }
+                        else {
+                            // If the bird pile is empty, try the next case
+                            console.log('N bird pile is empty, looking for bird in L');
+                            question_bird_pile = 'L';
+                        }
+                    case "L":
+                        //check that bird pile isn't empty before choosing random bird
+                        if (bird_pile_lists['learned'].length >= LEARNED_MIN) {
+                            random_bird = Math.floor(Math.random() * (bird_pile_lists['learned'].length - 0)) + 0;
+                            question_bird = bird_pile_lists['learned'][random_bird];
+                            console.log("Found bird in L. Number of birds in pile=" + bird_pile_lists['learned'].length + ", minimum=" + LEARNED_MIN);
+                            return question_bird;
+                        }
+                        else {
+                            // If the bird pile is empty, try the next case
+                            console.log('L bird pile is >= ' + LEARNED_MIN + ", starting switch again");
+                            question_bird_pile = 'M';
+                        }
+                }
+                i++;
+            } while(i < 10); // counter is to ensure infinite loop will not occur due to unforeseen circumstance.
+            console.log("exited without finding bird");
+
         }
 
         function selectDistractors(question_bird, drill_birds) {
             var distractors = [];
             var selector;
             // choose a random bird. check that it isn't the question bird
-            // TODO remove repetition, use NUM_DISTRACTORS
+            // TODO build array for answer options and then walk thru checking there are no dups.
+            //TODO NUM_ANSWER_OPTIONS is variable for distractors + answer
+            // TODO Remove the randomize function after that's done, and just call Shuffle from this function
             do {
                 selector = Math.floor(Math.random() * (drill_birds.length - 0)) + 0;
                 distractors[0] = drill_birds[selector];
@@ -183,15 +200,27 @@
                 selector = Math.floor(Math.random() * (drill_birds.length - 0)) + 0;
                 distractors[1] = drill_birds[selector];
                 console.log("distractor 1 is " + distractors[1].name);
-            } while (distractors[1] == question_bird && distractors[1] == distractors[0]);
+            } while (distractors[1] == question_bird || distractors[1] == distractors[0]);
             return distractors;
+        }
+
+        function shuffle(array) {
+            var currentIndex = array.length, temporaryValue, randomIndex;
+            while (0 !== currentIndex) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+            return array;
         }
 
         function randomizeOptions(distractors, question_bird) {
             //combine birds into one array
             var answerOptions = distractors;
             answerOptions.push(question_bird);
-            //TODO randomize answer options
+            shuffle(answerOptions);
             return answerOptions;
         }
 
@@ -211,14 +240,13 @@
         }
 
         function makeNewQuestion(bird_pile_frequencies, bird_pile_lists, drill_birds) {
-            do {
-                //use random number to decide which bird pile to pull from (new/learned/missed)
-                var question_bird_pile = chooseBirdPile(bird_pile_frequencies);
-                //console.log(question_bird_pile);
-                // get random bird from the question bird pile
-                var question_bird = selectBird(bird_pile_lists, question_bird_pile);
-                // if question bird returns false the bird pile was empty. Loop back to selecting the bird pile
-            } while (question_bird == false);
+
+            //use random number to decide which bird pile to pull from (new/learned/missed)
+            var question_bird_pile = chooseBirdPile(bird_pile_frequencies);
+            //console.log(question_bird_pile);
+            // get random bird from the question bird pile
+            var question_bird = selectBird(bird_pile_lists, question_bird_pile);
+            // if question bird returns false the bird pile was empty. Loop back to selecting the bird pile
             console.log("question bird is "  + question_bird.name);
             // get 2 random birds from bird list that aren't the selected Bird
             var distractors = selectDistractors(question_bird, drill_birds);
@@ -226,21 +254,19 @@
             var answerOptions = randomizeOptions(distractors, question_bird);
             // add the answer options to the HTML
             updateButtons(answerOptions);
-            //TODO  concatenate the audio for the birds in the question, same order multiple choice
-            //http://www.lastrose.com/html5-audio-video-playlist/
-            //compilateAudio(answerOptions);
+            //TODO: update "Learned" on screen
             // update bird call and play audio
             playBird(question_bird);
-
         }
 
         function drawQuestion(data) {
-            // if mix validates, continue with drill
+            // remove the user's selected "excluded" birds from the mix
             var drill_birds = removeExcluded(data);
-            if (validateMix(drill_birds)) {
+            // print the number of birds for the mix onscreen
+            document.getElementById("drill_total_span").innerHTML = drill_birds.length;
+            // if mix validates, continue with drill
+            if (validateDrill(drill_birds)) {
                 //console.log("mix validates");
-                // remove the "excluded" birds from the mix
-
                 // calculate the percent for each birdpile
                 var bird_pile_frequencies = getFrequencyPercentages();
                 //console.log('M frequency = ' + bird_pile_frequencies['missed']);
@@ -259,7 +285,8 @@
             // if mix doesn't validate, stop and show error
             else {
                 console.log("mix fails validation");
-                document.getElementById("fail-validation").innerHTML = "You need at least " + MIX_MIN + " birds available for a drill.";
+                document.getElementById("fail-validation").innerHTML = "You need at least " + DRILL_MIN + " birds available for a drill.";
+                //TODO make question disappear with fail validation appears
             }
 
             //   ONCLICK check(Answer) check answer, give feedback, and move bird into new bird_pile and update JSON object.
@@ -341,7 +368,6 @@
         <br>
     </li>
 </ul>
-
 -->
     <div class="js-variable">
       <div id="mix_slug">{{ mix_slug }}</div>
@@ -351,29 +377,32 @@
     </div>
       <h1><a class="btn btn-default" href="/mix_detail/{{ mix_slug }}" role="button"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> {{ mix_nickname }}</a> Drill</h1>
 
+        <h2>Which bird is this?</h2>
     <div id="drill">
-    <div id="fail-validation"></div>
-    <strong>Which bird is this?</strong>
-    <audio id="question_bird_audio" controls autoplay src="">
-        <source src="/static/media/call_common_loon.mp3" type="audio/mpeg" />
-    </audio>
-    <form role="form" method="post" class="drill-btns">
-    {% csrf_token %}
-        <button class="btn btn-default btn-lg btn-block" role="button" id="option0" value=""></button>
-        <button class="btn btn-default btn-lg btn-block" role="button" id="option1" value=""></button>
-        <button class="btn btn-default btn-lg btn-block" role="button" id="option2" value=""></button>
-    <div>
-        <p id="test"></p>
-    Hint: Listen to all three
-    <audio controls >
-        <source src="/static/media/call_common_loon.mp3" type="audio/mpeg" />
-    </audio>
-    </div>
+        <div id="fail-validation"></div>
+        <audio id="question_bird_audio" controls autoplay src="">
+            <source src="/static/media/call_common_loon.mp3" type="audio/mpeg" />
+        </audio>
+        <form role="form" method="post" class="drill-btns">
+        {% csrf_token %}
+            <button class="btn btn-default btn-lg btn-block" role="button" id="option0" value=""></button>
+            <button class="btn btn-default btn-lg btn-block" role="button" id="option1" value=""></button>
+            <button class="btn btn-default btn-lg btn-block" role="button" id="option2" value=""></button>
+
+       <div class="detail-info">
+            <ul>
+                <li><span class="glyphicon glyphicon-check bullet" aria-hidden="true"></span><strong><span id="learned_birds_span">0</span> out of <span id="drill_total_span">0</span> birds learned </strong> <a href="#" title="When you get a bird right in a drill or quiz, then it gets the status of 'learned'. If you miss the bird in a future drill or quiz, it will go back to 'unlearned'."><span class="glyphicon glyphicon-info-sign"></span></a></li>
+            </ul>
+        </div>
+            <br />
+            <br />
         <hr>
-    <div class="checkbox checkbox-lg">
-        <label><input type="checkbox" name="listen_only"> Listen-only mode</label> <a href="#" title="Listen-only mode will disable the answer options and autoplay the bird sounds. BirdingEar can't track your learned birds in this mode, so drill settings that involve tracking won't be applied."><span class="glyphicon glyphicon-info-sign"></span></a>
-    </div>
-    </form>
+            <div class="checkbox checkbox-lg">
+                <label><input type="checkbox" name="listen_only"> Listen-only mode</label> <a href="#" title="Listen-only mode will disable the answer options and autoplay the bird sounds. BirdingEar can't track your learned birds in this mode, so drill settings that involve tracking won't be applied."><span class="glyphicon glyphicon-info-sign"></span></a>
+            </div>
+        </form>
+
+
     <a href="/mix_detail/{{ mix_slug }}" class="btn btn-default colored-btn"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back to the {{ mix_nickname }} bird mix</a>
 
     </div><!--drill-->

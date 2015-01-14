@@ -218,10 +218,10 @@ label, legend {
 .js-variable {
     display:none;
 }
-#bird-detail, #drill, #edit, #favorites, #settings, #login  {
+#bird-detail, #edit, #favorites, #settings, #login  {
     margin:30px;
 }
-#mix-detail-info {
+#mix-detail-info, #drill {
     margin: 0 30px 0 30px;
 }
 
@@ -360,7 +360,7 @@ a.mix-icon:hover {
 /*************** Drill*************/
 
 #drill p {
-    margin: 0 0 40px 0;
+    margin: 0;
     text-align:center;
 }
 .drill-btns {
