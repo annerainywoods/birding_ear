@@ -93,11 +93,20 @@ AWOODS.DRILL =  function() {
         }
 
         //make buttons for multiple choice, specific values are added in later
-        //function makeButtons() {
-            //<button class="btn btn-default btn-lg btn-block" role="button" id="option0" value=""></button>
-
-
-        //}
+        function makeButtons() {
+            var buttonId;
+            var buttonToAdd;
+            var parentDiv = document.getElementById("buttons");
+            for (var i = 0; i < NUM_ANSWER_OPTIONS; i++) {
+                buttonId = "option" + i;
+                buttonToAdd = document.createElement("button");
+                buttonToAdd.setAttribute("id", buttonId);
+                buttonToAdd.setAttribute("class", "btn btn-default btn-lg btn-block");
+                buttonToAdd.setAttribute("role", "button");
+                buttonToAdd.setAttribute("value", "");
+                parentDiv.appendChild(buttonToAdd);
+            }
+        }
 
         //select which bird pile the question bird will be pulled from.
         function chooseBirdPile(bird_pile_frequencies, bird_pile_new) {
@@ -187,25 +196,26 @@ AWOODS.DRILL =  function() {
 
         }
 
-        function selectDistractors(question_bird, drill_birds) {
-            var distractors = [];
+        function selectAnswerOptions(question_bird, possible_birds) {
             var selector;
             // choose a random bird. check that it isn't the question bird
-            // TODO build array for answer options and then walk thru checking there are no dups.
-            //TODO NUM_ANSWER_OPTIONS is variable for distractors + answer
-            // TODO Remove the randomize function after that's done, and just call Shuffle from this function
-            do {
-                selector = Math.floor(Math.random() * (drill_birds.length - 0)) + 0;
-                distractors[0] = drill_birds[selector];
-                console.log("distractor 0 is " + distractors[0].name);
-            } while (distractors[0] == question_bird);
-            // choose a random bird. check that it isn't the question bird or the previous bird
-            do {
-                selector = Math.floor(Math.random() * (drill_birds.length - 0)) + 0;
-                distractors[1] = drill_birds[selector];
-                console.log("distractor 1 is " + distractors[1].name);
-            } while (distractors[1] == question_bird || distractors[1] == distractors[0]);
-            return distractors;
+            console.log("question bird is "  + question_bird.name);
+            var answerOptions = [];
+            //add question bird to the answer options
+            answerOptions.push(question_bird);
+            //remove question bird from the remaining possible birds
+            var question_index  = possible_birds.indexOf(question_bird);
+            if(question_index != -1) {
+                possible_birds.splice(question_index, 1);
+            }
+            for (var i = 1; i < NUM_ANSWER_OPTIONS; i++) {
+                selector = Math.floor(Math.random() * (possible_birds.length - 0)) + 0;
+                answerOptions[i] = possible_birds[selector];
+                possible_birds.splice(selector, 1);
+                console.log("distractor bird " + i + " is "  + answerOptions[i].name);
+            }
+            shuffle(answerOptions);
+            return answerOptions;
         }
 
         function shuffle(array) {
@@ -220,14 +230,6 @@ AWOODS.DRILL =  function() {
             return array;
         }
 
-        function randomizeOptions(distractors, question_bird) {
-            //combine birds into one array
-            var answerOptions = distractors;
-            answerOptions.push(question_bird);
-            shuffle(answerOptions);
-            return answerOptions;
-        }
-
         function updateButtons(answerOptions) {
             for (var i = 0; i < answerOptions.length; i++) {
                 document.getElementById("option" + i).innerHTML = answerOptions[i].name;
@@ -238,17 +240,13 @@ AWOODS.DRILL =  function() {
         function playBird(question_bird) {
             var call = document.getElementById("question_bird_audio");
             call.src = question_bird.bird_call;
-            //call.play();
             console.log(question_bird.bird_call);
-            //TODO get correct bird to autoplay, http://stackoverflow.com/questions/12631420/play-a-sound-on-page-load-using-javascript
         }
 
         function makeNewQuestion(bird_pile_frequencies, bird_pile_lists, drill_birds) {
             var question_bird_pile = chooseBirdPile(bird_pile_frequencies, bird_pile_lists["new"]);
             var question_bird = selectBird(bird_pile_lists, question_bird_pile);
-            console.log("question bird is "  + question_bird.name);
-            var distractors = selectDistractors(question_bird, drill_birds);
-            var answerOptions = randomizeOptions(distractors, question_bird);
+            var answerOptions = selectAnswerOptions(question_bird, drill_birds);
             updateButtons(answerOptions);
             //TODO: update "Learned" on screen
             // update bird call and play audio
@@ -263,14 +261,12 @@ AWOODS.DRILL =  function() {
             if (validateDrill(drill_birds)) {
                 var bird_pile_frequencies = getFrequencyPercentages();
                 var bird_pile_lists = sortBirdPiles(drill_birds);
-                //TODO Make the correct number of buttons
-                //makeButtons();
+                makeButtons();
                 makeNewQuestion(bird_pile_frequencies, bird_pile_lists, drill_birds);
             }
             else {
                 console.log("Drill fails validation");
                 document.getElementById("fail-validation").innerHTML = "You need at least " + DRILL_MIN + " birds available for a drill.";
-                //TODO make question disappear with fail validation appears
             }
 
             //   ONCLICK check(Answer) check answer, give feedback, and move bird into new bird_pile and update JSON object.
