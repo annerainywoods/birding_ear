@@ -3,7 +3,7 @@
 
 {% block title %}{{ mix_nickname }} Drill{% endblock %}
 {% block script %}
-    <script src="{% static 'js/drill_question.js' %}" type="text/javascript"></script>
+
     <style>
         .template {
             display: none;
@@ -66,4 +66,5 @@
     <a href="/mix_detail/{{ mix_slug }}" class="btn btn-default colored-btn"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back to the {{ mix_nickname }} bird mix</a>
 
     </div><!--drill-->
+    <script src="{% static 'js/drill_question.js' %}" type="text/javascript"></script>
 {% endblock maincontent %}

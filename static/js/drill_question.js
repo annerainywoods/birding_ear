@@ -3,6 +3,7 @@ AWOODS.DRILL =  function() {
         var LEARNED_MIN = 5; // Learned bird pile has a minimum before app will draw from it
         var DRILL_MIN = 5; // Number of birds in the drill can't be smaller than this
         var NUM_ANSWER_OPTIONS = 3; // Number of answer options in the multiple choice
+        var MILLISECONDS_FOR_PAUSE = 1000; // After the question bird plays there is a pause before answer is given
 
         var request = new XMLHttpRequest();
 
@@ -36,20 +37,23 @@ AWOODS.DRILL =  function() {
 
         function validateDrill(drill_birds) {
             if (drill_birds.length <= DRILL_MIN) {
-                console.log("Not enough birds to meet the drill minimum");
+                console.log("Not enough birds to meet the drill minimum (" + DRILL_MIN + ")");
                 return false;
             }
             if (DRILL_MIN < LEARNED_MIN) {
-                console.log(DRILL_MIN);
-                console.log(LEARNED_MIN);
-                console.log("Can't have fewer birds in the DRILL minimum than the LEARNED minimum");
+                console.log("Can't have fewer birds in the DRILL minimum (" + DRILL_MIN + ") than the LEARNED minimum (" + LEARNED_MIN + ")");
                 return false;
             }
             if (DRILL_MIN < NUM_ANSWER_OPTIONS) {
-                console.log("Can't have fewer birds in the DRILL minimum than the number of answer options");
+                console.log("Can't have fewer birds in the DRILL minimum (" + DRILL_MIN + ") than the number of answer options(" + NUM_ANSWER_OPTIONS + ")");
                 return false;
             }
             return true;
+        }
+
+        // show the number of birds for the drill
+        function showTotalBirds(array) {
+            document.getElementById("drill_total_span").innerHTML = array.length;
         }
 
         // Frequencies are set by user in "settings". Gets the setting for each birdpile and calculates percent.
@@ -108,13 +112,18 @@ AWOODS.DRILL =  function() {
             }
         }
 
+        //check if New birdpile is empty or not
+        function verifyNewBirdPile(array) {
+            return (array.length > 0);
+        }
+
         //select which bird pile the question bird will be pulled from.
-        function chooseBirdPile(bird_pile_frequencies, bird_pile_new) {
+        function chooseBirdPile(bird_pile_frequencies, new_has_birds) {
             var selector = Math.random();
             var question_bird_pile;
             var percent_new = bird_pile_frequencies['new'];
             var percent_learned = bird_pile_frequencies['learned'];
-            if ( bird_pile_new.length != 0) {
+            if ( new_has_birds) {
                 if (selector < percent_new) {
                     question_bird_pile = "N";
                 }
@@ -187,7 +196,8 @@ AWOODS.DRILL =  function() {
                             return question_bird;
                         }
                         else {
-                            console.log('L bird pile is >= ' + LEARNED_MIN + ", starting switch again");
+                            console.log('L bird pile is <= ' + LEARNED_MIN + ", starting switch again");
+                            question_bird_pile = "M";
                         }
                 }
                 i++;
@@ -198,16 +208,13 @@ AWOODS.DRILL =  function() {
 
         function selectAnswerOptions(question_bird, possible_birds) {
             var selector;
-            // choose a random bird. check that it isn't the question bird
             console.log("question bird is "  + question_bird.name);
             var answerOptions = [];
             //add question bird to the answer options
             answerOptions.push(question_bird);
             //remove question bird from the remaining possible birds
-            var question_index  = possible_birds.indexOf(question_bird);
-            if(question_index != -1) {
-                possible_birds.splice(question_index, 1);
-            }
+            var question_bird_index = possible_birds.indexOf(question_bird);
+            possible_birds.splice(question_bird_index, 1);
             for (var i = 1; i < NUM_ANSWER_OPTIONS; i++) {
                 selector = Math.floor(Math.random() * (possible_birds.length - 0)) + 0;
                 answerOptions[i] = possible_birds[selector];
@@ -237,28 +244,75 @@ AWOODS.DRILL =  function() {
             }
         }
 
+        // show the number of learned birds for the drill
+        function showLearnedBirds(array) {
+            document.getElementById("learned_birds_span").innerHTML = array.length;
+        }
+
+        // update bird call and play audio
         function playBird(question_bird) {
             var call = document.getElementById("question_bird_audio");
             call.src = question_bird.bird_call;
             console.log(question_bird.bird_call);
         }
 
+        //when user clicks a button, app should check their answer and start new question
+        function createButtonListeners(answer, bird_pile_frequencies, bird_pile_lists, drill_birds) {
+            for (var i = 0; i < NUM_ANSWER_OPTIONS; i++) {
+                var buttonId = "option" + i;
+                var button = document.getElementById(buttonId);
+                button.addEventListener("click", console.log("button created"));
+                //TODO finish button listener
+            }
+        }
+
+        function playAnswer() {
+            alert("hello");
+        }
+
+        //when player stops, app should check their answer and start new question
+        function createAudioListener() {
+            var player = document.getElementById("question_bird_audio");
+            player.onended=function(){
+                return true;
+            };
+            //player.onended = playAnswer;
+            //TODO figure out how to pass an argument
+            //player.addEventListener("ended", playAnswer);
+//            player.onended=function(){
+//                var answer_audio = new Audio(answer.bird_narration);
+//                setTimeout(function(){ answer_audio.play(); }, MILLISECONDS_FOR_PAUSE);
+//                //TODO update bird piles
+//                //TODO create next question
+//                //makeNewQuestion(bird_pile_frequencies, bird_pile_lists, drill_birds);
+//                //TODO put in break
+//            };
+        }
+
         function makeNewQuestion(bird_pile_frequencies, bird_pile_lists, drill_birds) {
-            var question_bird_pile = chooseBirdPile(bird_pile_frequencies, bird_pile_lists["new"]);
+            var new_has_birds = verifyNewBirdPile(bird_pile_lists["new"]);
+            var question_bird_pile = chooseBirdPile(bird_pile_frequencies, new_has_birds);
             var question_bird = selectBird(bird_pile_lists, question_bird_pile);
-            var answerOptions = selectAnswerOptions(question_bird, drill_birds);
-            updateButtons(answerOptions);
-            //TODO: update "Learned" on screen
-            // update bird call and play audio
+            var answer_options = selectAnswerOptions(question_bird, drill_birds);
+            updateButtons(answer_options);
+            showLearnedBirds(bird_pile_lists["learned"]);
             playBird(question_bird);
+            // if (player stops) {play feedback, update birdpiles, start new question}
+            // if (button pushed) {get button id, check for answer, update bird piles, start new question}
+            var player_ended = createAudioListener();
+            console.log("player_ended is " + player_ended)
+            if (player_ended) {
+                alert("hello");
+            }
+
+            createButtonListeners(question_bird, bird_pile_frequencies, bird_pile_lists, drill_birds);
         }
 
         function drawQuestion(data) {
             var drill_birds = removeExcluded(data);
-            // show the number of birds for the drill
-            document.getElementById("drill_total_span").innerHTML = drill_birds.length;
-            // if mix validates, continue with drill
-            if (validateDrill(drill_birds)) {
+            var drill_validates = validateDrill(drill_birds);
+            if (drill_validates) {
+                showTotalBirds(drill_birds);
                 var bird_pile_frequencies = getFrequencyPercentages();
                 var bird_pile_lists = sortBirdPiles(drill_birds);
                 makeButtons();
@@ -321,4 +375,5 @@ AWOODS.DRILL =  function() {
             //CANCEL FORM SUBMISSION; must be returned in onsubmit below.
             return false;
         }
+
 }(); //IIFE
