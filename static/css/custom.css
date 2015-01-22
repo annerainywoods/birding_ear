@@ -378,7 +378,10 @@ a.mix-icon:hover {
     background-color: #506e86;
     color:white
 }
+.drill-btns button:disabled {
+    background-color:#999999;
 
+}
 
 /********************* Favorites*************************/
 
