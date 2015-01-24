@@ -5,6 +5,11 @@ AWOODS.DRILL =  function() {
         var NUM_ANSWER_OPTIONS = 3; // Number of answer options in the multiple choice
         var MILLISECONDS_FOR_ANSWER = 1000; // After the bird call plays this is the pause before answer is given
         var MILLISECONDS_FOR_NEXT = 6000; // After the bird call plays this is the pause before next question loads
+        var QUESTION_BIRD; // the correct answer for the drill
+        var BIRD_PILE_FREQUENCIES; // a user-set percentage controls how often the question bird is pulled from Learned, Missed or New.
+        var BIRD_PILE_LISTS; // The birds for the drill are divided into three lists: Learned, Missed or New.
+        var DRILL_BIRDS; // The list of birds for the drill (mix birds minus and user-set "excluded" birds)
+
         //TODO add color info
 
         var request = new XMLHttpRequest();
@@ -278,26 +283,28 @@ AWOODS.DRILL =  function() {
             var question_bird_index;
             if (question_missed) {
                 if (birdpile === "N") {
-                    //add bird to Missed
+                    //change birdpile on bird object
+                    question_bird.bird_pile = "M";
+                    //add bird to Missed list
                     bird_pile_lists['missed'].push(question_bird);
-                    //remove bird from New
+                    //remove bird from New list
                     question_bird_index = bird_pile_lists['new'].indexOf(question_bird);
                     bird_pile_lists['new'].splice(question_bird_index, 1);
                     console.log( "Learned:" + bird_pile_lists['learned'].length + ", Missed:" + bird_pile_lists['missed'].length + ", New:" + bird_pile_lists['new'].length );
-                    //change birdpile on bird object
-                    question_bird.bird_pile = "M";
+
                     //TODO updateJASONbirdPile(question_bird, "M");
 
                 }
                 else if (birdpile === "L") {
-                    //add bird to Missed
+                    //change birdpile on bird object
+                    question_bird.bird_pile = "M";
+                    //add bird to Missed list
                     bird_pile_lists['missed'].push(question_bird);
-                    //remove bird from Learned
+                    //remove bird from Learned list
                     question_bird_index = bird_pile_lists['learned'].indexOf(question_bird);
                     bird_pile_lists['learned'].splice(question_bird_index, 1);
                     console.log( "Learned:" + bird_pile_lists['learned'].length + ", Missed:" + bird_pile_lists['missed'].length + ", New:" + bird_pile_lists['new'].length );
-                    //change birdpile on bird object
-                    question_bird.bird_pile = "M";
+
                     //TODO updateJASONbirdPile(question_bird, "M");
                 }
                 else {
