@@ -14,7 +14,7 @@ AWOODS.DRILL =  function() {
         var BIRD_PILE_FREQUENCIES = []; // a user-set percentage controls how often the question bird is pulled from Learned, Missed or New.
         var BIRD_PILE_LISTS = []; // The birds for the drill are divided into three lists: Learned, Missed or New.
         var DRILL_BIRDS; // The list of birds for the drill (mix birds minus and user-set "excluded birds)
-        var IS_LISTEN_ONLY; // user can turn off the scoring by selecting this mode
+        var IS_LISTEN_ONLY = false; // user can turn off the scoring by selecting this mode
 
         var request = new XMLHttpRequest();
 
@@ -121,6 +121,25 @@ AWOODS.DRILL =  function() {
             }
         }
 
+        // Listen-only mode is a user setting which toggles the scoring on and off.
+        function checkMode() {
+            var checkbox = document.getElementById("listen_only");
+            checkbox.addEventListener("change", function() {
+                if (IS_LISTEN_ONLY) {
+                    IS_LISTEN_ONLY = false;
+                    enableButtons();
+                    document.getElementById("listen_only_warning").style.display = "none";
+                    console.log("Listen only is " + false);
+                }
+                else {
+                    IS_LISTEN_ONLY = true;
+                    disableButtons();
+                    document.getElementById("listen_only_warning").style.display = "block";
+                    console.log("Listen only is " + true);
+                }
+            })
+        }
+
         //check if New birdpile is empty or not
         function verifyNewBirdPile() {
             return (BIRD_PILE_LISTS["new"].length > 0);
@@ -164,6 +183,13 @@ AWOODS.DRILL =  function() {
         function selectBird(question_bird_pile) {
             QUESTION_BIRD = '0';
             var random_bird;
+            //if user is in listen only mode ignore the question bird pile and pick a random bird
+            if (IS_LISTEN_ONLY) {
+                random_bird = Math.floor(Math.random() * (DRILL_BIRDS.length - 0)) + 0;
+                QUESTION_BIRD = DRILL_BIRDS[random_bird];
+                return QUESTION_BIRD;
+            }
+            // in regular mode, pick a bird from the question bird pile
             var i = 0;
             console.log('Looking for a bird in ' + question_bird_pile);
             do {
@@ -263,8 +289,11 @@ AWOODS.DRILL =  function() {
                 button.name = answerOptions[i].name;
                 button.value = answerOptions[i].id;
                 button.type = "button"; // change to "button" if we don't want submit
-                button.disabled = false;
-            }
+                if(!IS_LISTEN_ONLY){
+                    console.log("is listen only is " + IS_LISTEN_ONLY);
+                    button.disabled = false;
+                }
+                }
         }
 
         // show the number of learned birds for the drill
@@ -359,6 +388,14 @@ AWOODS.DRILL =  function() {
             }
         }
 
+       function enableButtons() {
+            for (var i = 0; i < NUM_ANSWER_OPTIONS; i++) {
+                var buttonId = "option" + i;
+                var button = document.getElementById(buttonId);
+                button.disabled = false;
+            }
+        }
+
         function highlightAnswer() {
             var name = QUESTION_BIRD.name;
             document.getElementsByName(name)[0].style.backgroundColor = HIGHLIGHT_ANSWER_BG;
@@ -401,15 +438,15 @@ AWOODS.DRILL =  function() {
         }
 
         function giveFeedback() {
-            //TODO if Listen only mode is on, disable buttons
-            var is_user_correct = false; // app will change this if user got right answer
+            var is_user_correct = false; // app will change this if user gets answer right
             //listen for bird call audio to end
             var player = document.getElementById("question_bird_audio");
             player.onended = function() {
                 playNarration();
                 disableButtons();
                 highlightAnswer();
-                updateBirdPiles(is_user_correct); //TODO don't do this for Listen Only mode
+                //Don't update the birdpiles if the user is in Listen Only mode
+                if (!IS_LISTEN_ONLY) {updateBirdPiles(is_user_correct);}
                 showLearnedBirds();
                 setTimeout(removeHighlightAnswer, MILLISECONDS_FOR_NEXT);
                 setTimeout(makeNewQuestion, MILLISECONDS_FOR_NEXT);
@@ -454,6 +491,7 @@ AWOODS.DRILL =  function() {
                 showTotalBirds();
                 showLearnedBirds();
                 makeButtons();
+                checkMode();
                 makeNewQuestion();
             }
             else {

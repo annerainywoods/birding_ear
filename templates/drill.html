@@ -50,21 +50,19 @@
         {% csrf_token %}
             <div id="buttons">
             </div><!--buttons-->
-       <div class="detail-info">
+        </form>
+        <div class="detail-info">
             <ul>
-                <li><span class="glyphicon glyphicon-check bullet" aria-hidden="true"></span><strong><span id="learned_birds_span">0</span> out of <span id="drill_total_span">0</span> birds learned </strong> <a href="#" title="When you get a bird right in a drill or quiz, then it gets the status of 'learned'. If you miss the bird in a future drill or quiz, it will go back to 'unlearned'."><span class="glyphicon glyphicon-info-sign"></span></a></li>
+                <li><span class="glyphicon glyphicon-check bullet" aria-hidden="true"></span><strong><span id="learned_birds_span">0</span> out of <span id="drill_total_span">0</span> birds learned </strong> <a href="#" title="When you get a bird right in a drill or quiz, then it gets the status of 'learned'. If you miss the bird in a future drill or quiz, it will go back to 'unlearned'."><span class="glyphicon glyphicon-info-sign"></span></a><span id="listen_only_warning">Uncheck Listen-only mode to track answers.</span></li>
             </ul>
         </div>
-            <br />
-            <br />
+
+
         <hr>
-            <div class="checkbox checkbox-lg">
-                <label><input type="checkbox" name="listen_only"> Listen-only mode</label> <a href="#" title="Listen-only mode will disable the answer options and autoplay the bird sounds. BirdingEar can't track your learned birds in this mode, so drill settings that involve tracking won't be applied."><span class="glyphicon glyphicon-info-sign"></span></a>
-            </div>
-        </form>
-
-
-    <a href="/mix_detail/{{ mix_slug }}" class="btn btn-default colored-btn"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back to the {{ mix_nickname }} bird mix</a>
+        <div class="checkbox checkbox-lg">
+            <label><input type="checkbox" name="listen_only" id="listen_only"> Listen-only mode</label> <a href="#" title="Listen-only mode will disable the answer options and autoplay the bird sounds. BirdingEar can't track your learned birds in this mode, so drill settings that involve tracking won't be applied."><span class="glyphicon glyphicon-info-sign"></span></a>
+        </div>
+        <a href="/mix_detail/{{ mix_slug }}" class="btn btn-default colored-btn"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back to the {{ mix_nickname }} bird mix</a>
 
     </div><!--drill-->
     <script src="{% static 'js/drill_question.js' %}" type="text/javascript"></script>

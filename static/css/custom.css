@@ -364,7 +364,7 @@ a.mix-icon:hover {
     text-align:center;
 }
 .drill-btns {
-    margin: 10px 0 10px 0;
+    margin: 20px 0 0 0;
 }
 .drill-btns button {
     height:60px;
@@ -387,7 +387,17 @@ a.mix-icon:hover {
     background-color:#ffffff;
     color:#888888;
     opacity:1;
+}
 
+#drill .detail-info {
+    margin: -20px 0 20px 0;
+}
+
+#listen_only_warning {
+    display:none;
+    font-size:14px;
+    text-align:left;
+    margin:-10px 0 0 60px;
 }
 
 /********************* Favorites*************************/
