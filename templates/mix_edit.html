@@ -21,11 +21,11 @@ Mix{% endblock %}
     <form role="form" method="POST">
         {% csrf_token %}
         <div class="form-group">
-            <label for="">Nickname</label> <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Think of a 1-3 letter nickname or abbreviation to call your bird mix. For example PNW would be a good nickname for a Pacific Northwest bird mix. You can always change this later."><span class="glyphicon glyphicon-info-sign"></span></a>
+            <label for="">3-Letter Name</label> <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Think of a 1-3 letter nickname or abbreviation to call your bird mix. For example PNW would be a good nickname for a Pacific Northwest bird mix. You can always change this later."><span class="glyphicon glyphicon-info-sign"></span></a>
             <input name="nickname" type="" class="form-control input-lg" id="" value="{{ mix_nickname }}" maxlength="3">
          </div>
         <div class="form-group">
-            <label for="">Short Description</label> <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Descriptions can be as long as you would like, but under 30 characters looks best. You can always change this later."><span class="glyphicon glyphicon-info-sign"></span></a>
+            <label for="">Description</label> <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Descriptions can be as long as you would like, but under 30 characters looks best. You can always change this later."><span class="glyphicon glyphicon-info-sign"></span></a>
             <input name="description" type="" class="form-control input-lg" id="" value="{{ mix_description }}">
         </div>
         <div class="form-group">
@@ -43,7 +43,7 @@ Mix{% endblock %}
         <hr>
         <div class="form-group">
             <fieldset name="state">
-            <legend>States <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Choose your home state to learn birds in your area. Cover a bigger geographic area by adding bordering states. You can change this later if you want to add or delete states. Or you can make different mixes for different states."><span class="glyphicon glyphicon-info-sign"></span></a></legend>
+            <legend>States <a href="#" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Choose your home state to learn birds in your area. Cover a bigger geographic area by adding bordering states. You can change this later if you want to add or delete states. Or you can make different mixes for different states."><span class="glyphicon glyphicon-info-sign"></span></a></legend>
             <a href="#" onclick="toggle_visibility('state-buttons'); return false;" ><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Filter by states</a>
             <div id="state-buttons">
                 {% for state in state_list %}

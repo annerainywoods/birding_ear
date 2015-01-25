@@ -45,7 +45,8 @@
         <audio id="question_bird_audio" controls autoplay src="">
             <source src="/static/media/call_common_loon.mp3" type="audio/mpeg" />
         </audio>
-        <form role="form" method="post" class="drill-btns">
+        <!--action="/mix_drill_birds/{{ mix_slug }}/"-->
+        <form role="form" method="post" class="drill-btns" onsubmit="return false">
         {% csrf_token %}
             <div id="buttons">
             </div><!--buttons-->

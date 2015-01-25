@@ -182,6 +182,7 @@ class Drill(models.Model):
         ('REL', 'Related')
     )
     #turn off the multiple choice option for hands-free use
+    #TODO remove this. listen_only will be a js variable
     listen_only = models.BooleanField("listen only", default=False)
     #set what percentage of drill questions should be new, learned or missed
     frequency_new = models.SmallIntegerField("% new birds", max_length=1, choices=FREQUENCY_NEW, default=3)

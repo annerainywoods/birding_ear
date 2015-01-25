@@ -378,8 +378,15 @@ a.mix-icon:hover {
     background-color: #506e86;
     color:white
 }
+.btn-default:focus {
+    background-color:#ffffff;
+    color:#080808;
+    opacity:1;
+}
 .drill-btns button:disabled {
-    background-color:#999999;
+    background-color:#ffffff;
+    color:#888888;
+    opacity:1;
 
 }
 

@@ -1,16 +1,20 @@
 var AWOODS = {};
 AWOODS.DRILL =  function() {
+        // CONSTANTS
         var LEARNED_MIN = 5; // Learned bird pile has a minimum before app will draw from it
         var DRILL_MIN = 5; // Number of birds in the drill can't be smaller than this
         var NUM_ANSWER_OPTIONS = 3; // Number of answer options in the multiple choice
-        var MILLISECONDS_FOR_ANSWER = 1000; // After the bird call plays this is the pause before answer is given
-        var MILLISECONDS_FOR_NEXT = 6000; // After the bird call plays this is the pause before next question loads
+        var MILLISECONDS_FOR_NEXT = 3000; // After the bird call plays this is the pause before next question loads
+        var HIGHLIGHT_ANSWER_BG = "#506e86"; // the correct answer changes color for user feedback
+        var HIGHLIGHT_ANSWER_TEXT ="#ffffff";
+        var HIGHLIGHT_BULLET = "#818506"; //The "learned" icon highlights for correct answers.
+
+        // GLOBALS
         var QUESTION_BIRD; // the correct answer for the drill
         var BIRD_PILE_FREQUENCIES = []; // a user-set percentage controls how often the question bird is pulled from Learned, Missed or New.
         var BIRD_PILE_LISTS = []; // The birds for the drill are divided into three lists: Learned, Missed or New.
         var DRILL_BIRDS; // The list of birds for the drill (mix birds minus and user-set "excluded birds)
-
-        //TODO add color info
+        var IS_LISTEN_ONLY; // user can turn off the scoring by selecting this mode
 
         var request = new XMLHttpRequest();
 
@@ -258,13 +262,13 @@ AWOODS.DRILL =  function() {
                 button.innerHTML = answerOptions[i].name;
                 button.name = answerOptions[i].name;
                 button.value = answerOptions[i].id;
+                button.type = "button"; // change to "button" if we don't want submit
                 button.disabled = false;
-                button.style.background = '#4b6071';
             }
         }
 
         // show the number of learned birds for the drill
-        function showLearnedBirds(y) {
+        function showLearnedBirds() {
             document.getElementById("learned_birds_span").innerHTML = BIRD_PILE_LISTS["learned"].length;
         }
 
@@ -280,14 +284,14 @@ AWOODS.DRILL =  function() {
             answer_audio.play();
         }
 
-        function updateBirdPiles(question_missed) {
+        function updateBirdPiles(is_user_correct) {
             // find birdpile for question bird
             var birdpile = QUESTION_BIRD.bird_pile;
             console.log("question bird pile: " + birdpile);
             console.log( "Beginning > Learned:" + BIRD_PILE_LISTS['learned'].length + ", Missed:" + BIRD_PILE_LISTS['missed'].length + ", New:" + BIRD_PILE_LISTS['new'].length );
 
             var question_bird_index;
-            if (question_missed) {
+            if (!is_user_correct) {
                 if (birdpile === "N") {
                     //change birdpile on bird object
                     QUESTION_BIRD.bird_pile = "M";
@@ -297,9 +301,7 @@ AWOODS.DRILL =  function() {
                     question_bird_index = BIRD_PILE_LISTS['new'].indexOf(QUESTION_BIRD);
                     BIRD_PILE_LISTS['new'].splice(question_bird_index, 1);
                     console.log( "Ending > Learned:" + BIRD_PILE_LISTS['learned'].length + ", Missed:" + BIRD_PILE_LISTS['missed'].length + ", New:" + BIRD_PILE_LISTS['new'].length );
-
-                    //TODO updateJASONbirdPile(question_bird, "M");
-
+                    //TODO updateJSONbirdPile(question_bird, "M");
                 }
                 else if (birdpile === "L") {
                     //change birdpile on bird object
@@ -311,21 +313,41 @@ AWOODS.DRILL =  function() {
                     BIRD_PILE_LISTS['learned'].splice(question_bird_index, 1);
                     console.log( "Ending > Learned:" + BIRD_PILE_LISTS['learned'].length + ", Missed:" + BIRD_PILE_LISTS['missed'].length + ", New:" + BIRD_PILE_LISTS['new'].length );
 
-                    //TODO updateJASONbirdPile(question_bird, "M");
+                    //TODO updateJSONbirdPile(question_bird, "M");
                 }
                 else {
                     console.log("question bird was already Missed, no change to birdpile");
                 }
             }
-            else { //TODO add logic for updated birdpiles
+            else if(is_user_correct) {
                 if (birdpile === "N") {
-                    //remove bird from New
-                    //add bird to Learned
+                    //change birdpile on bird object
+                    QUESTION_BIRD.bird_pile = "L";
+                    //add bird to Learned list
+                    BIRD_PILE_LISTS['learned'].push(QUESTION_BIRD);
+                    //remove bird from New list
+                    question_bird_index = BIRD_PILE_LISTS['new'].indexOf(QUESTION_BIRD);
+                    BIRD_PILE_LISTS['new'].splice(question_bird_index, 1);
+                    console.log( "Ending > Learned:" + BIRD_PILE_LISTS['learned'].length + ", Missed:" + BIRD_PILE_LISTS['missed'].length + ", New:" + BIRD_PILE_LISTS['new'].length );
+                    //TODO updateJSONbirdPile(question_bird, "L");
                 }
                 else if (birdpile === "M") {
-                    //remove bird from Missed
-                    //add bird to Learned
+                    //change birdpile on bird object
+                    QUESTION_BIRD.bird_pile = "L";
+                    //add bird to Learned list
+                    BIRD_PILE_LISTS['learned'].push(QUESTION_BIRD);
+                    //remove bird from Missed list
+                    question_bird_index = BIRD_PILE_LISTS['missed'].indexOf(QUESTION_BIRD);
+                    BIRD_PILE_LISTS['missed'].splice(question_bird_index, 1);
+                    console.log( "Ending > Learned:" + BIRD_PILE_LISTS['learned'].length + ", Missed:" + BIRD_PILE_LISTS['missed'].length + ", New:" + BIRD_PILE_LISTS['new'].length );
+                    //TODO updateJSONbirdPile(question_bird, "L");
                 }
+                else {
+                    console.log("question bird was already Learned, no change to birdpile");
+                }
+            }
+            else {
+                console.log("User's answer is neither correct or incorrect");
             }
         }
 
@@ -339,28 +361,77 @@ AWOODS.DRILL =  function() {
 
         function highlightAnswer() {
             var name = QUESTION_BIRD.name;
-            document.getElementsByName(name)[0].style.background = '#000000';
+            document.getElementsByName(name)[0].style.backgroundColor = HIGHLIGHT_ANSWER_BG;
+            document.getElementsByName(name)[0].style.color = HIGHLIGHT_ANSWER_TEXT;
+        }
+
+        function removeHighlightAnswer() {
+            var name = QUESTION_BIRD.name;
+            document.getElementsByName(name)[0].style.backgroundColor = '';
+            document.getElementsByName(name)[0].style.color = '';
+        }
+
+        function highlightBullet(is_user_correct) {
+            if (is_user_correct) {
+                document.getElementsByClassName("bullet")[0].style.backgroundColor = HIGHLIGHT_BULLET;
+            }
+        }
+
+        function removeHighlightBullet() {
+            document.getElementsByClassName("bullet")[0].style.backgroundColor = "";
+        }
+
+        function removeFocusUserButton(buttonClicked) {
+            document.getElementById(buttonClicked.id).blur();
+        }
+
+        // stop player when user has selected an answer
+        function pauseCall() {
+            var call = document.getElementById("question_bird_audio");
+            call.pause();
+        }
+
+        function checkUserAnswer(buttonClicked) {
+            console.log("button clicked is " + buttonClicked);
+            console.log("question bird is " + QUESTION_BIRD.id);
+            if (buttonClicked == QUESTION_BIRD.id) {
+                console.log("checkUserAnswer is working");
+                return true
+            }
         }
 
         function giveFeedback() {
-            var question_missed;
+            //TODO if Listen only mode is on, disable buttons
+            var is_user_correct = false; // app will change this if user got right answer
             //listen for bird call audio to end
             var player = document.getElementById("question_bird_audio");
-            player.onended=function() {
-                setTimeout(playNarration, MILLISECONDS_FOR_ANSWER);
-                setTimeout(disableButtons, MILLISECONDS_FOR_ANSWER);
-                setTimeout(highlightAnswer, MILLISECONDS_FOR_ANSWER);
-                question_missed = true;
-                updateBirdPiles(question_missed);
+            player.onended = function() {
+                playNarration();
+                disableButtons();
+                highlightAnswer();
+                updateBirdPiles(is_user_correct); //TODO don't do this for Listen Only mode
+                showLearnedBirds();
+                setTimeout(removeHighlightAnswer, MILLISECONDS_FOR_NEXT);
                 setTimeout(makeNewQuestion, MILLISECONDS_FOR_NEXT);
             };
             //listen for user to click button
             for (var i = 0; i < NUM_ANSWER_OPTIONS; i++) {
                 var buttonId = "option" + i;
                 var button = document.getElementById(buttonId);
-                button.addEventListener("click", console.log("button created"));
-                //TODO finish button listener
-                //TODO stop player
+                button.onclick = function() {
+                    pauseCall();
+                    disableButtons();
+                    highlightAnswer();
+                    playNarration();
+                    is_user_correct = checkUserAnswer(this.value);
+                    highlightBullet(is_user_correct);
+                    updateBirdPiles(is_user_correct);
+                    showLearnedBirds();
+                    setTimeout(removeHighlightAnswer, MILLISECONDS_FOR_NEXT);
+                    setTimeout(removeHighlightBullet, MILLISECONDS_FOR_NEXT);
+                    setTimeout(removeFocusUserButton, MILLISECONDS_FOR_NEXT, this);
+                    setTimeout(makeNewQuestion, MILLISECONDS_FOR_NEXT);
+                };
             }
         }
 
@@ -370,7 +441,6 @@ AWOODS.DRILL =  function() {
             selectBird(question_bird_pile);
             var answer_options = selectAnswerOptions();
             updateButtons(answer_options);
-            showLearnedBirds();
             playCall();
             giveFeedback();
         }
@@ -379,9 +449,10 @@ AWOODS.DRILL =  function() {
             removeExcluded(data);
             var drill_validates = validateDrill();
             if (drill_validates) {
-                showTotalBirds();
                 getFrequencyPercentages();
                 sortBirdPiles();
+                showTotalBirds();
+                showLearnedBirds();
                 makeButtons();
                 makeNewQuestion();
             }
@@ -389,9 +460,6 @@ AWOODS.DRILL =  function() {
                 console.log("Drill fails validation");
                 document.getElementById("fail-validation").innerHTML = "You need at least " + DRILL_MIN + " birds available for a drill.";
             }
-
-            //   ONCLICK check(Answer) check answer, give feedback, and move bird into new bird_pile and update JSON object.
-            //   TIMEOUT drawMultipleChoice() repeat Choose BirdPile(), etc
         }
 
         function onRequestChange() {

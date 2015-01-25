@@ -246,10 +246,10 @@ def drill(request, mix_id_slug):
 
 @csrf_exempt
 def mix_drill_birds(request, mix_id_slug):
-    if request.method == "POST":
-        bird = Bird()
-        bird.name = request.POST["name"]
-        bird.save()
+    #if request.method == "POST":
+    #    bird = Bird()
+    #   bird.name = request.POST["name"]
+     #   bird.save()
     mix = Mix.objects.filter(user=request.user).get(slug=mix_id_slug)
     birds_ajax = list(mix.bird_list())
     birds_ajax_list = []
