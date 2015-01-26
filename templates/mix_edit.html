@@ -75,7 +75,7 @@ Mix{% endblock %}
        <hr>
 
     <input type="submit" class="btn btn-default btn-lg colored-btn" value="SAVE">
-    {% if mix_nickname %}
+    {% if mix_nickname %} <!--TODO what if user hasn't entered nickname. check for id instead-->
     <input type="submit" class="btn btn-default btn-lg" value="Delete">
     <a class="btn btn-default btn-lg" href="/mix_detail/{{ mix_slug }}" role="button">Cancel</a>
     {% else%}
@@ -89,7 +89,9 @@ Mix{% endblock %}
     <script type="text/javascript">
     <!--
     function myFunction() {
+        if ("{{ mix_color }}" != "TGY"){
         document.getElementById("{{ mix_color }}").selected = true;
+        }
     }
     //-->
     </script>

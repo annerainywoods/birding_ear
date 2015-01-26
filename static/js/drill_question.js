@@ -47,7 +47,8 @@ AWOODS.DRILL =  function() {
 
         function validateDrill() {
             if (DRILL_BIRDS.length < DRILL_MIN) {
-                console.log(DRILL_BIRDS.length + "Not enough birds to meet the drill minimum (" + DRILL_MIN + ")");
+                console.log(DRILL_BIRDS.length + " is not enough birds to meet the drill minimum (" + DRILL_MIN + ").");
+                document.getElementById("question_bird_audio").style.display = "none";
                 return false;
             }
             if (DRILL_MIN < LEARNED_MIN) {
@@ -114,7 +115,7 @@ AWOODS.DRILL =  function() {
                 buttonId = "option" + i;
                 buttonToAdd = document.createElement("button");
                 buttonToAdd.setAttribute("id", buttonId);
-                buttonToAdd.setAttribute("class", "btn btn-default btn-lg btn-block");
+                buttonToAdd.setAttribute("class", "btn btn-lg btn-block");
                 buttonToAdd.setAttribute("role", "button");
                 buttonToAdd.setAttribute("value", "");
                 parentDiv.appendChild(buttonToAdd);
@@ -151,7 +152,7 @@ AWOODS.DRILL =  function() {
             var question_bird_pile;
             var percent_new = BIRD_PILE_FREQUENCIES['new'];
             var percent_learned = BIRD_PILE_FREQUENCIES['learned'];
-            if ( new_has_birds) {
+            if (new_has_birds) {
                 if (selector < percent_new) {
                     question_bird_pile = "N";
                 }
@@ -246,11 +247,11 @@ AWOODS.DRILL =  function() {
             var answerOptions = [];
 
             //make list of birds available for the multiple choice options
-            for (var i = 0; i < DRILL_BIRDS.length; i++) {
+            for (var i = 0; i < DRILL_BIRDS.length; i++) { //TODO replace with "used" marker?
                 birds_available.push(DRILL_BIRDS[i]);
             }
             //randomize the order of the birds so different birds are selected for each drill question
-            shuffle(birds_available);
+            shuffle(birds_available); //TODO replace with "used" marker?
             // pop off the last bird and use it as a distractor, unless it's the question bird
             // start the index at 1 instead of 0 so we can add in the question bird later
             var k = 1;
@@ -259,7 +260,7 @@ AWOODS.DRILL =  function() {
                 try_bird = birds_available.pop();
                 if (try_bird !== QUESTION_BIRD) {
                     answerOptions.push(try_bird);
-                    k++
+                    k++;
                 }
             }
             //add the question bird to the answer options
@@ -290,7 +291,6 @@ AWOODS.DRILL =  function() {
                 button.value = answerOptions[i].id;
                 button.type = "button"; // change to "button" if we don't want submit
                 if(!IS_LISTEN_ONLY){
-                    console.log("is listen only is " + IS_LISTEN_ONLY);
                     button.disabled = false;
                 }
                 }
@@ -313,14 +313,14 @@ AWOODS.DRILL =  function() {
             answer_audio.play();
         }
 
-        function updateBirdPiles(is_user_correct) {
+        function updateBirdPiles(user_is_correct) {
             // find birdpile for question bird
             var birdpile = QUESTION_BIRD.bird_pile;
             console.log("question bird pile: " + birdpile);
             console.log( "Beginning > Learned:" + BIRD_PILE_LISTS['learned'].length + ", Missed:" + BIRD_PILE_LISTS['missed'].length + ", New:" + BIRD_PILE_LISTS['new'].length );
 
             var question_bird_index;
-            if (!is_user_correct) {
+            if (!user_is_correct) {
                 if (birdpile === "N") {
                     //change birdpile on bird object
                     QUESTION_BIRD.bird_pile = "M";
@@ -348,7 +348,7 @@ AWOODS.DRILL =  function() {
                     console.log("question bird was already Missed, no change to birdpile");
                 }
             }
-            else if(is_user_correct) {
+            else if(user_is_correct) {
                 if (birdpile === "N") {
                     //change birdpile on bird object
                     QUESTION_BIRD.bird_pile = "L";
@@ -408,8 +408,8 @@ AWOODS.DRILL =  function() {
             document.getElementsByName(name)[0].style.color = '';
         }
 
-        function highlightBullet(is_user_correct) {
-            if (is_user_correct) {
+        function highlightBullet(user_is_correct) {
+            if (user_is_correct) {
                 document.getElementsByClassName("bullet")[0].style.backgroundColor = HIGHLIGHT_BULLET;
             }
         }
@@ -438,7 +438,7 @@ AWOODS.DRILL =  function() {
         }
 
         function giveFeedback() {
-            var is_user_correct = false; // app will change this if user gets answer right
+            var user_is_correct = false; // app will change this if user gets answer right
             //listen for bird call audio to end
             var player = document.getElementById("question_bird_audio");
             player.onended = function() {
@@ -446,7 +446,7 @@ AWOODS.DRILL =  function() {
                 disableButtons();
                 highlightAnswer();
                 //Don't update the birdpiles if the user is in Listen Only mode
-                if (!IS_LISTEN_ONLY) {updateBirdPiles(is_user_correct);}
+                if (!IS_LISTEN_ONLY) {updateBirdPiles(user_is_correct);}
                 showLearnedBirds();
                 setTimeout(removeHighlightAnswer, MILLISECONDS_FOR_NEXT);
                 setTimeout(makeNewQuestion, MILLISECONDS_FOR_NEXT);
@@ -460,9 +460,9 @@ AWOODS.DRILL =  function() {
                     disableButtons();
                     highlightAnswer();
                     playNarration();
-                    is_user_correct = checkUserAnswer(this.value);
-                    highlightBullet(is_user_correct);
-                    updateBirdPiles(is_user_correct);
+                    user_is_correct = checkUserAnswer(this.value);
+                    highlightBullet(user_is_correct);
+                    updateBirdPiles(user_is_correct);
                     showLearnedBirds();
                     setTimeout(removeHighlightAnswer, MILLISECONDS_FOR_NEXT);
                     setTimeout(removeHighlightBullet, MILLISECONDS_FOR_NEXT);
@@ -496,7 +496,7 @@ AWOODS.DRILL =  function() {
             }
             else {
                 console.log("Drill fails validation");
-                document.getElementById("fail-validation").innerHTML = "You need at least " + DRILL_MIN + " birds available for a drill.";
+                document.getElementById("fail-validation").innerHTML = "You need at least " + DRILL_MIN + " birds available for a drill. You can edit your mix settings to include more birds, or change individual birds set as 'excluded' back to normal.";
             }
         }
 

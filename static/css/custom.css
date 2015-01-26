@@ -221,7 +221,7 @@ label, legend {
 #bird-detail, #edit, #favorites, #settings, #login  {
     margin:30px;
 }
-#mix-detail-info, #drill {
+#mix-detail-info, #drill, #quiz {
     margin: 0 30px 0 30px;
 }
 
@@ -378,7 +378,7 @@ a.mix-icon:hover {
     background-color: #506e86;
     color:white
 }
-.btn-default:focus {
+.drill-btns button:focus {
     background-color:#ffffff;
     color:#080808;
     opacity:1;
@@ -399,6 +399,17 @@ a.mix-icon:hover {
     text-align:left;
     margin:-10px 0 0 60px;
 }
+
+
+/********************* Quiz *************************/
+#quiz form {
+    margin:20px 0 0 0;
+}
+#quiz .glyphicon {
+    color:#337AB7;
+    font-size:20px;
+}
+
 
 /********************* Favorites*************************/
 

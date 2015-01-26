@@ -21,6 +21,8 @@ MIX EDIT
 - make DELETE work
 - form validation
 - toggle grey checkboxes white on change
+- fix console errors
+
 
 
 FAVORITES

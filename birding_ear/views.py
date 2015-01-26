@@ -243,6 +243,19 @@ def drill(request, mix_id_slug):
     context = RequestContext(request)
     return render_to_response('drill.html', context_dict, context)
 
+@csrf_exempt
+def quiz(request, mix_id_slug):
+    #if request.method == "POST":
+        #checkAnswer()
+    context_dict = {}
+    #get birds and details for the relevant mix
+    mix = Mix.objects.filter(user=request.user).get(slug=mix_id_slug)
+    context_dict['mix_slug'] = mix_id_slug
+    context_dict['mix_nickname'] = mix.nickname
+    context_dict['mix_color'] = mix.color
+    context_dict['bird_list'] = mix.bird_list
+    context = RequestContext(request)
+    return render_to_response('quiz.html', context_dict, context)
 
 @csrf_exempt
 def mix_drill_birds(request, mix_id_slug):
@@ -259,6 +272,7 @@ def mix_drill_birds(request, mix_id_slug):
             "bird_narration": b.bird.narration,
             "bird_call": b.bird.bird_call,
             "name": b.bird.name,
+           # "bird_type": b.bird.bird_type,
             "excluded": b.excluded,
             "id": b.id
         })

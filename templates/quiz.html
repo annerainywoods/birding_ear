@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load staticfiles%}
+
+{% block title %}{{ mix_nickname }} Quiz{% endblock %}
+{% block script %}{% endblock %}
+{% block body %}<body class="{{ mix_color }}">{% endblock %}
+
+{% block maincontent %}
+
+    <!--javascript gets these values from the HTML-->
+    <div class="js-variable">
+      <div id="mix_slug">{{ mix_slug }}</div>
+    </div>
+      <h1><a class="btn btn-default" href="/mix_detail/{{ mix_slug }}" role="button"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> {{ mix_nickname }}</a> Quiz</h1>
+
+        <h2>Bird <span id="question-number"></span> of <span id="question-total"></span></h2>
+    <div id="quiz">
+        <div id="fail-validation"></div>
+        <audio id="question_bird_audio" controls autoplay src="/static/media/call_common_loon.mp3"></audio>
+        <!--action="/mix_drill_birds/{{ mix_slug }}/"-->
+        <form role="form" method="post" onsubmit="return false" id="form">
+        {% csrf_token %}
+            <input type="text" class="form-control input-lg" placeholder="Enter the name of the bird"  ><br />
+            <div class="pull-right">
+            <button type="button" class="btn btn-default btn-lg">
+                <span class="glyphicon glyphicon-search" aria-hidden="true" ></span>
+            </button>
+            <input type="submit" class="btn btn-default btn-lg colored-btn" value="NEXT">
+                </div>
+         </form>
+    </div><!--quiz-->
+    <div id="quiz-results">
+
+
+    </div>
+    <script src="{% static 'js/quiz.js' %}" type="text/javascript"></script>
+{% endblock maincontent %}
