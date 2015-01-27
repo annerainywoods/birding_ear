@@ -12,15 +12,15 @@
       <div id="mix_slug">{{ mix_slug }}</div>
     </div>
       <h1><a class="btn btn-default" href="/mix_detail/{{ mix_slug }}" role="button"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> {{ mix_nickname }}</a> Quiz</h1>
+    <div id="quiz" class="clearfix">
+        <h3>Question <span id="question-number"></span> of <span id="question-total"></span></h3>
 
-        <h2>Bird <span id="question-number"></span> of <span id="question-total"></span></h2>
-    <div id="quiz">
         <div id="fail-validation"></div>
         <audio id="question_bird_audio" controls autoplay src="/static/media/call_common_loon.mp3"></audio>
         <!--action="/mix_drill_birds/{{ mix_slug }}/"-->
-        <form role="form" method="post" onsubmit="return false" id="form">
+        <form role="form" method="post" onsubmit="return captureSubmit()" id="form">
         {% csrf_token %}
-            <input type="text" class="form-control input-lg" placeholder="Enter the name of the bird"  ><br />
+            <input type="text" class="form-control input-lg" placeholder="Enter the name of the bird" id="birdname" ><br />
             <div class="pull-right">
             <button type="button" class="btn btn-default btn-lg">
                 <span class="glyphicon glyphicon-search" aria-hidden="true" ></span>
@@ -28,8 +28,21 @@
             <input type="submit" class="btn btn-default btn-lg colored-btn" value="NEXT">
                 </div>
          </form>
+
     </div><!--quiz-->
     <div id="quiz-results">
+        <h3 id="level">Expert Birder 90%</h3>
+        <p id="message">Wow! You have developed quite the birding ear.</p>
+        <div id="answers-btns">
+            <button type="button" class="btn btn-default btn-lg btn-block">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <span class="bird-name-wrong">Great Blue Heron</span><span class="feedback-wrong">Double-Crested Cormorant</span>
+            </button>
+
+            <button type="button" class="btn btn-default btn-lg btn-block">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> <span class="bird-name-right">Great Blue Heron</span><span class="feedback-right"></span>
+            </button>
+        </div>
+
 
 
     </div>

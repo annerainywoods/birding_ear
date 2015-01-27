@@ -194,9 +194,9 @@ h2 {
 h3 {
     font-family: Arvo, Verdana, sans-serif;
     font-weight: 400;
-    margin:0;
-    padding: 0 30px 0 30px;
-    font-size:24px;
+    margin: 30px 0 20px 0;
+    padding: 0;
+    font-size:26px;
 }
 h4 {
     margin:0 0 10px 0;
@@ -221,7 +221,7 @@ label, legend {
 #bird-detail, #edit, #favorites, #settings, #login  {
     margin:30px;
 }
-#mix-detail-info, #drill, #quiz {
+#mix-detail-info, #drill, #quiz, #quiz-results {
     margin: 0 30px 0 30px;
 }
 
@@ -379,13 +379,13 @@ a.mix-icon:hover {
     color:white
 }
 .drill-btns button:focus {
-    background-color:#ffffff;
-    color:#080808;
+    background-color:#888888;
+    color:#333333;
     opacity:1;
 }
 .drill-btns button:disabled {
-    background-color:#ffffff;
-    color:#888888;
+    background-color:#888888;
+    color:#333333;
     opacity:1;
 }
 
@@ -409,8 +409,26 @@ a.mix-icon:hover {
     color:#337AB7;
     font-size:20px;
 }
-
-
+#answers-btns button {
+    text-align: left
+}
+#answers-btns .glyphicon-remove {
+    color:#a44013;
+}
+#answers-btns .glyphicon-ok {
+    color:#818506;
+}
+#answers-btns .bird-name-wrong {
+    text-decoration:line-through;
+}
+#answers-btns .feedback-right{
+    padding-left:22px;
+    display:block;
+}
+#answers-btns .feedback-wrong{
+    padding-left:22px;
+    display:block;
+}
 /********************* Favorites*************************/
 
 #favorites {

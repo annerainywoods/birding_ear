@@ -272,7 +272,7 @@ def mix_drill_birds(request, mix_id_slug):
             "bird_narration": b.bird.narration,
             "bird_call": b.bird.bird_call,
             "name": b.bird.name,
-           # "bird_type": b.bird.bird_type,
+            "bird_type": b.bird.bird_type.name,
             "excluded": b.excluded,
             "id": b.id
         })

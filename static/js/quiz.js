@@ -13,7 +13,7 @@ AWOODS.QUIZ =  function() {
 
     //GLOBALS
     var QUIZ_BIRDS;
-    var INPUT_ARRAY = [];
+    var USER_ANSWERS = [];
     var QUESTION_LIST = [];
 
     var request = new XMLHttpRequest();
@@ -42,6 +42,11 @@ AWOODS.QUIZ =  function() {
         }
     }
 
+    function updateQuestionNum(index) {
+        document.getElementById("question-number").innerHTML = (index + 1).toString();
+        document.getElementById("question-total").innerHTML = NUM_QUESTIONS.toString();
+    }
+
     function addHintListener(index) {
         // Give user the bird type when the click the hint button
         var hint = document.getElementsByTagName("button")[0];
@@ -53,29 +58,44 @@ AWOODS.QUIZ =  function() {
         });
     }
 
-    function countQuestions(input) {
-        INPUT_ARRAY = INPUT_ARRAY.push(input);
-        if(INPUT_ARRAY.length < NUM_QUESTIONS) {
-            makeNewQuestion()
-        }
-        else {
-            showAnswers();
-        }
+    function validateInput() {
+        // TODO is user input letters? Only special char is a hyphen
+        return true;
+    }
+
+    function addToAnswers(input) {
+        USER_ANSWERS = USER_ANSWERS.push(input);
+    }
+
+    function showAnswers() {
+        console.log("show answers");
     }
 
     function makeNewQuestion() {
-        var input;
-        var index = INPUT_ARRAY.length;
-        document.getElementById("question-number").innerHTML = (index + 1).toString();
-        document.getElementById("question-total").innerHTML = NUM_QUESTIONS.toString();
+        console.log("make new question");
+        // use the number of members in the input array as the question index
+        var index = USER_ANSWERS.length;
+        console.log(index);
+        updateQuestionNum(index);
         addHintListener(index);
         //TODO update audio
-        var form = document.getElementById("form");
-        form.onsubmit = function() {
-            //TODO get input
-            countQuestions(input);
+        var input_validates = validateInput();// TODO write validateInput()
+        if(input_validates) {
+            var input = document.getElementById("birdname").value;
+            addToAnswers(input);
+            if(USER_ANSWERS.length < NUM_QUESTIONS) {
+                makeNewQuestion();
+            }
+            else {
+                showAnswers(); //TODO
+            }
         }
+    }
 
+    function captureSubmit() {
+        var input = document.getElementById("birdname").value;
+        validateInput(input);
+        return false;
     }
 
     function drawQuiz(data) {
