@@ -279,6 +279,16 @@ def mix_drill_birds(request, mix_id_slug):
 
     return HttpResponse(dumps(birds_ajax_list), content_type="application/json")
 
+@csrf_exempt
+def update_bird_detail(request):
+    if request.method == "POST":
+        b_id = request.POST["id"]
+        b_birdpile = request.POST["birdpile"]
+        bird = UserBird.objects.filter(user=request.user).get(bird__id=b_id)
+        bird.bird_pile = b_birdpile
+        bird.save()
+    return HttpResponse("{'status':'success'}", content_type="application/json")
+
 
 @csrf_exempt
 def ajax(request):
@@ -301,5 +311,3 @@ def dom(request):
         print request.POST
 
     return render(request, 'dom.html')
-
-

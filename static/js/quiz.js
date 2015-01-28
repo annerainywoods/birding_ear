@@ -92,11 +92,7 @@ AWOODS.QUIZ =  function() {
         }
     }
 
-    function captureSubmit() {
-        var input = document.getElementById("birdname").value;
-        validateInput(input);
-        return false;
-    }
+
 
     function drawQuiz(data) {
         var quiz_validates = validateQuiz(data);
@@ -136,3 +132,9 @@ AWOODS.QUIZ =  function() {
     window.addEventListener("load", load);
 
 }(); //IIFE
+
+function AWOODScaptureSubmit() {
+    var input = document.getElementById("birdname").value;
+    AWOODS.QUIZ.validateInput(input);
+    return false;
+}

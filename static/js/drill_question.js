@@ -293,7 +293,7 @@ AWOODS.DRILL =  function() {
                 if(!IS_LISTEN_ONLY){
                     button.disabled = false;
                 }
-                }
+            }
         }
 
         // show the number of learned birds for the drill
@@ -330,7 +330,7 @@ AWOODS.DRILL =  function() {
                     question_bird_index = BIRD_PILE_LISTS['new'].indexOf(QUESTION_BIRD);
                     BIRD_PILE_LISTS['new'].splice(question_bird_index, 1);
                     console.log( "Ending > Learned:" + BIRD_PILE_LISTS['learned'].length + ", Missed:" + BIRD_PILE_LISTS['missed'].length + ", New:" + BIRD_PILE_LISTS['new'].length );
-                    //TODO updateJSONbirdPile(question_bird, "M");
+                    captureBirdpile("M");
                 }
                 else if (birdpile === "L") {
                     //change birdpile on bird object
@@ -341,8 +341,7 @@ AWOODS.DRILL =  function() {
                     question_bird_index = BIRD_PILE_LISTS['learned'].indexOf(QUESTION_BIRD);
                     BIRD_PILE_LISTS['learned'].splice(question_bird_index, 1);
                     console.log( "Ending > Learned:" + BIRD_PILE_LISTS['learned'].length + ", Missed:" + BIRD_PILE_LISTS['missed'].length + ", New:" + BIRD_PILE_LISTS['new'].length );
-
-                    //TODO updateJSONbirdPile(question_bird, "M");
+                    captureBirdpile("M");
                 }
                 else {
                     console.log("question bird was already Missed, no change to birdpile");
@@ -358,7 +357,7 @@ AWOODS.DRILL =  function() {
                     question_bird_index = BIRD_PILE_LISTS['new'].indexOf(QUESTION_BIRD);
                     BIRD_PILE_LISTS['new'].splice(question_bird_index, 1);
                     console.log( "Ending > Learned:" + BIRD_PILE_LISTS['learned'].length + ", Missed:" + BIRD_PILE_LISTS['missed'].length + ", New:" + BIRD_PILE_LISTS['new'].length );
-                    //TODO updateJSONbirdPile(question_bird, "L");
+                    captureBirdpile("L");
                 }
                 else if (birdpile === "M") {
                     //change birdpile on bird object
@@ -369,7 +368,7 @@ AWOODS.DRILL =  function() {
                     question_bird_index = BIRD_PILE_LISTS['missed'].indexOf(QUESTION_BIRD);
                     BIRD_PILE_LISTS['missed'].splice(question_bird_index, 1);
                     console.log( "Ending > Learned:" + BIRD_PILE_LISTS['learned'].length + ", Missed:" + BIRD_PILE_LISTS['missed'].length + ", New:" + BIRD_PILE_LISTS['new'].length );
-                    //TODO updateJSONbirdPile(question_bird, "L");
+                    captureBirdpile("L");
                 }
                 else {
                     console.log("question bird was already Learned, no change to birdpile");
@@ -524,29 +523,25 @@ AWOODS.DRILL =  function() {
         window.addEventListener("load", load);
 
         function saveData(formData){
-            request.open("POST","/ajax/",true);
-            request.onload = fetch;
+            request.open("POST","/update_bird_detail/",true);
             request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
             request.send(formData);
         }
-        function captureSubmit(){
-            //Get inputs inside form and iterate over them.
-            var elementList = document.getElementById("f1").children;
-            formDataList = [];
-            //Creating something like this:
-            //title=spiderman&role=hero&color=red
-            for(var i=0; i < elementList.length; i++){
-                var element = elementList[i];
-                formDataList.push(
-                        encodeURIComponent(element.name)
-                        + "=" +
-                        encodeURIComponent(element.value)
-                );
-                console.log(element.name);
-            }
+
+        function captureBirdpile(birdpile) {
+            //build name value pairs for the POST url
+            var formDataList = [];
+            formDataList.push(
+                encodeURIComponent("id")
+                            + "=" +
+                encodeURIComponent(QUESTION_BIRD.id)
+            );
+            formDataList.push(
+                encodeURIComponent("birdpile")
+                            + "=" +
+                encodeURIComponent(birdpile)
+            );
             saveData(formDataList.join("&"));
-            //CANCEL FORM SUBMISSION; must be returned in onsubmit below.
-            return false;
         }
 
 }(); //IIFE
