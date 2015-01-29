@@ -11,14 +11,14 @@ MESSAGE[1] = "Excellent! Very impressive achievement.";
 MESSAGE[2] = "Wow! You have developed quite the birding ear.";
 
 //GLOBALS
-var QUIZ_BIRDS = [];
-var USER_ANSWERS = [];
-USER_ANSWERS = [];
-var QUESTION_LIST = [];
+var QUIZ_BIRDS;
+var USER_ANSWERS = {};
+var QUESTION_LIST = {};
 
 var request = new XMLHttpRequest();
 
 function validateQuiz(data) {
+    QUIZ_BIRDS = [];
     data.forEach(function (item) {
         QUIZ_BIRDS.push(item);
     });
@@ -28,30 +28,23 @@ function validateQuiz(data) {
     return true;
 }
 
-
-
-
 function buildQuestionList() {
     // pick questions randomly
-    var quiz_birds_proxy = [];
-    for (var i = 0; i < QUIZ_BIRDS.length; i++) {
-        quiz_birds_proxy.push(QUIZ_BIRDS[i]);
-    }
     var random_bird;
-
     for (var j = 0; j < NUM_QUESTIONS; j++) {
-        do {
+        //do {
             random_bird = Math.floor(Math.random() * (NUM_QUESTIONS - 0)) + 0;
-        } while (quiz_birds_proxy[random_bird].used === true);
+            console.log(QUIZ_BIRDS[random_bird]);
+        //} while (QUIZ_BIRDS[random_bird].used != undefined);
         //add the used property so we don't get duplicates
-        quiz_birds_proxy[random_bird].used = true;
-        QUESTION_LIST.push(quiz_birds_proxy[random_bird]);
+        QUIZ_BIRDS[random_bird].used = true;
+        console.log("buildQuestionList has QUESTION_LIST as " + typeof buildQuestionList());
+        QUESTION_LIST.push(QUIZ_BIRDS[random_bird]);
     }
 }
 
-
 function updateQuestionNum(index) {
-    document.getElementById("question-number").innerHTML = (index + 1).toString();
+    document.getElementById("question-number").innerHTML = index.toString();
     document.getElementById("question-total").innerHTML = NUM_QUESTIONS.toString();
 }
 
@@ -59,6 +52,7 @@ function addHintListener(index) {
     // Give user the bird type when the click the hint button
     var hint = document.getElementsByTagName("button")[0];
     var text = document.createTextNode(QUESTION_LIST[index].bird_type + " ");
+    console.log(QUESTION_LIST[index].bird_type);
     hint.addEventListener("click", function () {
         hint.appendChild(text);
         //TODO make icon dark grey
@@ -67,25 +61,23 @@ function addHintListener(index) {
 
 function validateInput(input) {
     //input is letters,
-
-    console.log("input is " + input);
     addToAnswers(input);
-    //console.log("USER_ANSWERS.length = " + USER_ANSWERS.length + " < " + " NUM_QUESTIONS is " + NUM_QUESTIONS);
+    console.log("validateInput has " + USER_ANSWERS);
     if (USER_ANSWERS.length < NUM_QUESTIONS) {
-        //clearn hint
         makeNewQuestion();
     }
     else {
-        showAnswers();
+        showAnswers()
     }
 }
 
 function addToAnswers(input) {
 
-console.log("84 user answers length is " + USER_ANSWERS.length);
-    USER_ANSWERS.push(input);
+    console.log("addToAnswers has " + USER_ANSWERS);
+    USER_ANSWERS = USER_ANSWERS.push(input);
 
-console.log("87 user answers length is " + USER_ANSWERS.length);
+    console.log("addToAnswers has " + USER_ANSWERS);
+
 }
 
 function showAnswers() {
@@ -94,8 +86,7 @@ function showAnswers() {
 
 function makeNewQuestion() {
     var index = USER_ANSWERS.length;
-    //console.log("index is " + index + ". And QUESTION_LIST.length is " + QUESTION_LIST.length);
-    if (index < QUESTION_LIST.length) {
+    if (USER_ANSWERS.length < QUESTION_LIST) {
         updateQuestionNum(index);
         addHintListener(index);
         //TODO update audio
@@ -142,5 +133,6 @@ window.addEventListener("load", load);
 function captureSubmit() {
     var input = document.getElementById("birdname").value;
     validateInput(input);
+    console.log(input);
     return false;
 }

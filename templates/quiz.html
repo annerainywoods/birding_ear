@@ -18,7 +18,7 @@
         <div id="fail-validation"></div>
         <audio id="question_bird_audio" controls autoplay src="/static/media/call_common_loon.mp3"></audio>
         <!--action="/mix_drill_birds/{{ mix_slug }}/"-->
-        <form role="form" method="post" onsubmit="return AWOODScaptureSubmit()" id="form">
+        <form role="form" method="post" onsubmit="return captureSubmit()" id="form">
         {% csrf_token %}
             <input type="text" class="form-control input-lg" placeholder="Enter the name of the bird" id="birdname" ><br />
             <div class="pull-right">
