@@ -3,12 +3,12 @@
 
 {% block title %}Settings{% endblock %}
 
-{% block body %}<body onload="myFunction()" class="TGY">{% endblock %}
+{% block body %}<body class="TGY">{% endblock %}
 
 {% block maincontent %}
     <h1>Settings</h1>
     <div id="settings">
-    <form role="form" method="POST">
+    <form role="form" method="POST" id="settings-form">
         {% csrf_token %}
         <h4>Bird Frequency in Drills <a href="#" title="Adjust how often new, learned and missed birds come up in the drill questions. Does not apply to listen-only mode."><span class="glyphicon glyphicon-info-sign"></span></a></h4>
         <div class="form-group">
@@ -47,7 +47,7 @@
                 </select>
             </div>
         </div>
-        <hr>
+        <!--<hr>
         <h4>Drill Batches <a href="#" title="Break a large bird mix into smaller batches. When you've learned most of the birds in the batch, the remaining missed birds will carry over into the next batch. Does not apply to listen-only mode."><span class="glyphicon glyphicon-info-sign"></span></a></h4>
         <div class="form-group">
             <label class="control-label">Birds per batch</label>
@@ -80,22 +80,35 @@
         </div>
         <div class="checkbox checkbox-lg">
             <label style="width:100%"><input type="checkbox" name="drill_order" {{ drill_order }}> Group related birds together</label>
-        </div>
+        </div>-->
+        <input type="hidden" name="action" id="action" value="save">
         <hr>
         <input type="submit" class="btn btn-default btn-lg colored-btn" value="SAVE">
-        <input type="Reset" class="btn btn-default btn-lg " value="Reset">
+        <input type="button" id="reset-btn" class="btn btn-default btn-lg " value="Reset">
     </form>
     </div><!--settings-->
 
     <script type="text/javascript">
     <!--
-    function myFunction() {
+
+    function showSelected() {
         document.getElementById("fn_" + {{ frequency_new }}).selected = true;
         document.getElementById("fl_" + {{ frequency_learned }}).selected = true;
         document.getElementById("fm_" + {{ frequency_missed }}).selected = true;
-        document.getElementById("bs_" + {{ batch_size }}).selected = true;
-        document.getElementById("nb_" + {{ next_batch }}).selected = true;
+        //document.getElementById("bs_" + {{ batch_size }}).selected = true;
+        //document.getElementById("nb_" + {{ next_batch }}).selected = true;
     }
+
+    function resetDefaults() {
+        var reset = document.getElementById("reset-btn");
+        reset.onclick = function () {
+            document.getElementById("action").value = "reset";
+            document.getElementById("settings-form").submit();
+        };
+    }
+    showSelected();
+    resetDefaults();
+
     //-->
     </script>
 {% endblock maincontent %}

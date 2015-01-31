@@ -72,7 +72,7 @@ def mix_detail(request, mix_id_slug):
     context_dict['mix_nickname'] = mix.nickname
     context_dict['mix_description'] = mix.description
     context_dict['mix_color'] = mix.color
-    context_dict['mix_states'] = mix.states.all()
+    context_dict['mix_states'] = mix.states.all().order_by("name")
     context_dict['mix_bird_types'] = mix.bird_types.all()
     context_dict['bird_list'] = mix.bird_list
     context_dict['num_learned'] = mix.num_learned
@@ -85,19 +85,22 @@ def mix_settings_edit(request, mix_id_slug):
     context_dict = {}
     mix = Mix.objects.filter(user=request.user).get(slug=mix_id_slug)
     if request.method == "POST":
-        mix.nickname = request.POST["nickname"]
-        mix.description = request.POST["description"]
-        mix.color = request.POST["color"]
-        mix.states = request.POST.getlist('states')
-        mix.bird_types = request.POST.getlist('bird_types')
-        mix.user = request.user
-        mix.save()
-        mix_id_slug = mix.slug
-        return redirect('/mix_detail/' + mix_id_slug)
+        if request.POST["action"] == "delete":
+            mix.delete()
+        else:
+            mix.nickname = request.POST["nickname"]
+            mix.description = request.POST["description"]
+            mix.color = request.POST["color"]
+            mix.states = request.POST.getlist('states')
+            mix.bird_types = request.POST.getlist('bird_types')
+            mix.user = request.user
+            mix.save()
+            mix_id_slug = mix.slug
+            return redirect('/mix_detail/' + mix_id_slug)
     else:
         bird_type_list = BirdType.objects.all()
         mix_bird_types = mix.bird_types.all()
-        state_list = State.objects.all()
+        state_list = State.objects.all().order_by("name")
         mix_states = mix.states.all()
         #shows selected bird_types checked
         for bird_type in bird_type_list:
@@ -113,9 +116,59 @@ def mix_settings_edit(request, mix_id_slug):
         context_dict['mix_description'] = mix.description
         context_dict['mix_color'] = mix.color
         context_dict['mix_slug'] = mix.slug
+        context_dict['mix_id'] = mix.id
 
         context = RequestContext(request)
         return render_to_response('mix_edit.html', context_dict, context)
+
+
+@login_required
+def settings(request):
+    context_dict = {}
+    drill_setting = Drill.objects.get(user=request.user)
+    if request.method == "POST":
+        if request.POST["action"] == "reset":
+            drill_setting.frequency_new = 3
+            drill_setting.frequency_learned = 4
+            drill_setting.frequency_missed = 2
+        else:
+            #if request.POST["action"] === "delete" ... drill_setting.user = request.user
+            #drill_setting.delete()
+            #else...
+            drill_setting.frequency_new = request.POST["frequency_new"]
+            drill_setting.frequency_learned = request.POST["frequency_learned"]
+            drill_setting.frequency_missed = request.POST["frequency_missed"]
+            # drill_setting.batch_size = request.POST["batch_size"]
+            # drill_setting.next_batch = request.POST["next_batch"]
+            # #updates if "Skip audio for answer options" is checked
+            # if "challenge_level" in request.POST:
+            #     drill_setting.challenge_level = True
+            # else:
+            #     drill_setting.challenge_level = False
+            # #updates if "Group related birds together" is checked
+            # if "drill_order" in request.POST:
+            #     drill_setting.challenge_level = "REL"
+            # else:
+            #     drill_setting.challenge_level = "RAN"
+            drill_setting.user = request.user
+            drill_setting.save()
+    context_dict['frequency_new'] = drill_setting.frequency_new
+    context_dict['frequency_learned'] = drill_setting.frequency_learned
+    context_dict['frequency_missed'] = drill_setting.frequency_missed
+        # context_dict['batch_size'] = drill_setting.batch_size
+        # context_dict['next_batch'] = drill_setting.next_batch
+        # #Shows checked if "Skip audio for answer options" is selected
+        # if drill_setting.challenge_level:
+        #     context_dict['challenge_level'] = "checked"
+        # else:
+        #     context_dict['challenge_level'] = ""
+        # #Shows checked if "Group related birds together" is selected
+        # if drill_setting.drill_order == "REL":
+        #     context_dict['drill_order'] = "checked"
+        # else:
+        #     context_dict['drill_order'] = ""
+    context = RequestContext(request)
+    return render_to_response('settings.html', context_dict, context)
 
 
 @login_required
@@ -139,7 +192,6 @@ def mix_settings_new(request):
         context_dict['bird_type_list'] = BirdType.objects.all()
         context = RequestContext(request)
         return render_to_response('mix_edit.html', context_dict, context)
-
 
 @login_required
 def bird_detail(request, bird_name_slug):
@@ -182,48 +234,6 @@ def favorites(request):
     context_dict = {'fav_learned': fav_learned, 'fav_total': fav_total}
     context = RequestContext(request)
     return render_to_response('favorites.html', context_dict, context)
-
-
-@login_required
-def settings(request):
-    context_dict = {}
-    drill_setting = Drill.objects.get(user=request.user)
-    if request.method == "POST":
-        drill_setting.frequency_new = request.POST["frequency_new"]
-        drill_setting.frequency_learned = request.POST["frequency_learned"]
-        drill_setting.frequency_missed = request.POST["frequency_missed"]
-        drill_setting.batch_size = request.POST["batch_size"]
-        drill_setting.next_batch = request.POST["next_batch"]
-        #updates if "Skip audio for answer options" is checked
-        if "challenge_level" in request.POST:
-            drill_setting.challenge_level = True
-        else:
-            drill_setting.challenge_level = False
-        #updates if "Group related birds together" is checked
-        if "drill_order" in request.POST:
-            drill_setting.challenge_level = "REL"
-        else:
-            drill_setting.challenge_level = "RAN"
-        drill_setting.user = request.user
-        drill_setting.save()
-    else:
-        context_dict['frequency_new'] = drill_setting.frequency_new
-        context_dict['frequency_learned'] = drill_setting.frequency_learned
-        context_dict['frequency_missed'] = drill_setting.frequency_missed
-        context_dict['batch_size'] = drill_setting.batch_size
-        context_dict['next_batch'] = drill_setting.next_batch
-        #Shows checked if "Skip audio for answer options" is selected
-        if drill_setting.challenge_level:
-            context_dict['challenge_level'] = "checked"
-        else:
-            context_dict['challenge_level'] = ""
-        #Shows checked if "Group related birds together" is selected
-        if drill_setting.drill_order == "REL":
-            context_dict['drill_order'] = "checked"
-        else:
-            context_dict['drill_order'] = ""
-    context = RequestContext(request)
-    return render_to_response('settings.html', context_dict, context)
 
 
 @csrf_exempt
@@ -287,7 +297,7 @@ def update_bird_detail(request):
         bird = UserBird.objects.filter(user=request.user).get(bird__id=b_id)
         bird.bird_pile = b_birdpile
         bird.save()
-    return HttpResponse("{'status':'success'}", content_type="application/json")
+    return HttpResponse('{"status":"success"}', content_type="application/json")
 
 
 @csrf_exempt

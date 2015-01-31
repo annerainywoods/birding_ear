@@ -523,6 +523,14 @@ AWOODS.DRILL =  function() {
         window.addEventListener("load", load);
 
         function saveData(formData){
+            request.onload = undefined;
+            request.onreadystatechange = function() {
+                if ((request.readyState == 4) && (request.status == 200)) {
+                    var data = JSON.parse(request.responseText);
+                    //draw(data);
+                    console.log(data);
+                }
+            };
             request.open("POST","/update_bird_detail/",true);
             request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
             request.send(formData);

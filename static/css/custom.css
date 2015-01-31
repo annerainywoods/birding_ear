@@ -19,6 +19,7 @@ body.OLV .colored-btn-group a.btn, body.lt-brown .colored-btn-group a.btn:hover 
 body.OLV h1, body.OLV h1:hover { background-color:#818506; color: white }
 body.OLV .colored-btn { background-color:#818506; color: white }
 body.OLV .colored-btn:hover { background-color:#929608; color: white }
+/*body.OLV .panel-heading  { background-color:#818506;}*/
 
 .mix-icon .LTB { background-color:#845d24;}
 .mix-icon .LTB:hover { background-color:#976926;}
@@ -55,6 +56,15 @@ body.TGY h1, body.TGY h1:hover { background-color:#4b6071; color: white }
 body.TGY .colored-btn { background-color:#4b6071; color: white }
 body.TGY .colored-btn:hover { background-color:#506e86; color: white }
 
+a {
+  color: #337ab7;
+  text-decoration: none;
+}
+a:hover,
+a:focus {
+  color: #23527c;
+  text-decoration: underline;
+}
 
 /*********** Common *********************/
 body {
@@ -207,7 +217,7 @@ h4 {
 .mix-icon h4 {
     margin:0;
     padding:3px 0 0 6px;
-    font-size:20px;
+    font-size:18px;
     font-weight:normal;
 }
 label, legend {
@@ -218,13 +228,12 @@ label, legend {
 .js-variable {
     display:none;
 }
-#bird-detail, #edit, #favorites, #settings, #login  {
+#bird-detail, #favorites, #settings, #login, #edit  {
     margin:30px;
 }
 #mix-detail-info, #drill, #quiz, #quiz-results {
     margin: 0 30px 0 30px;
 }
-
 
 /******************** Home ********************/
 a.mix-icon {
@@ -328,35 +337,59 @@ a.mix-icon:hover {
 }
 
 /************** Mix Edit ************/
+
+h4.panel-title a {
+    color: #337ab7;
+    font-size:21px;
+    font-weight:700;
+}
+
+h4.panel-title a:hover,
+h4.panel-title a:focus {
+    text-decoration: none;
+    color:#23527c;
+}
 #state-buttons {
     margin:0 -30px 0 0;
     padding:0;
-    display:none;
-}
-#state-buttons div.checkbox label {
-    display:block
 }
 #state-buttons div.checkbox {
-    width:70px;
+    width:60px;
+    height:43px;
     display:inline-block;
-    padding:0 5px 0 5px;
+    padding:0;
     border-radius:3px;
-    background-color: #ccc;
+    background-color:#ffffff;
+    border: 2px solid #cccccc;
 }
-#state-buttons div.checkbox.checked {
-    background-color:#fff;
+/*#state-buttons div.checkbox:hover, #type-categories div.checkbox:hover {
+    background-color:#485661;
 }
-#type-categories {
-    display:none
+
+#state-buttons div.checkbox:hover label, #type-categories div.checkbox:hover label {
+    background-color:#485661;
+    color:#ffffff;
+}*/
+#state-buttons div.checkbox label, #type-categories div.checkbox label {
+    text-align:center;
+    display:block;
+    padding:5px;
+    color:#337ab7;
 }
-#type-categories div.checkbox label {
-    display:block
-}
+/*#state-buttons input, #type-categories input {
+    display:none;
+}*/
 #type-categories div.checkbox {
     border-radius:3px;
-    background-color: #ccc;
+    background-color:#ffffff;
+    border: 2px solid #cccccc;
     padding:0 5px 0 5px;
 }
+#nickname {
+    width:90px;
+}
+
+
 /*************** Drill*************/
 
 #drill p {

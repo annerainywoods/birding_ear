@@ -2,34 +2,95 @@
 {% load staticfiles%}
 
 {% block title %}
-    {% if mix_nickname %}
+    {% if mix_id %}
     Edit {{ mix_nickname }}
     {% else %}
     Add New
     {% endif %}
 Mix{% endblock %}
 
-{% block body %}<body class="{{ mix_color }}"  onload="myFunction()">{% endblock %}
+{% block body %}<body class="{{ mix_color }}">{% endblock %}
 
 {% block maincontent %}
-    {% if mix_nickname %}
+    {% if mix_id %}
     <h1><a class="btn btn-default" href="/mix_detail/{{ mix_slug }}" role="button"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> {{ mix_nickname }}</a> Edit</h1>
     {% else %}
     <h1>Add New Mix</h1>
     {% endif %}
     <div id="edit">
-    <form role="form" method="POST">
+    <form role="form" method="POST" id="mix-form">
         {% csrf_token %}
+      <h3>What states and bird types would you like included in your bird mix?</h3>
+      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              <span class="glyphicon glyphicon-chevron-right"></span> Filter by State</a> <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Choose your home state to learn birds in your area. Cover a bigger geographic area by adding bordering states. You can change this later if you want to add or delete states. Or you can make different mixes for different states."><span class="glyphicon glyphicon-info-sign"></span></a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+          <div class="form-group">
+                <fieldset id="state-buttons">
+                <div class="checkbox checkbox-lg"><label><input type="checkbox" checked name="all-states" id="all-states" value="All" class="checkbox-all" > All</label></div>
+                    {% for state in state_list %}
+                        {% if state.selected %}
+                        <div class="checkbox checkbox-lg"><label><input type="checkbox" checked name="states" value="{{ state.id }}" class="checkbox-input" > {{ state }}</label></div>
+                        {% else %}
+                        <div class="checkbox checkbox-lg"><label><input type="checkbox" name="states" value="{{ state.id }}" class="checkbox-input" > {{ state }}</label></div>
+                        {% endif %}
+                    {% endfor %}
+            </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingTwo">
+          <h4 class="panel-title">
+            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            <span class="glyphicon glyphicon-chevron-right"></span> Filter by Bird Type</a> <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Narrow your mix by choosing one or more bird types. You can change this later if you want to add or delete bird types."><span class="glyphicon glyphicon-info-sign"></span></a>
+          </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            <div class="form-group">
+                <fieldset id="type-categories">
+                     <div class="checkbox checkbox-lg"><label><input type="checkbox" name="all-bird-types" value="All" class="checkbox-input" checked > All</label></div>
+                    {% for bird_type in bird_type_list %}
+                        {% if bird_type.selected %}
+                        <div class="checkbox checkbox-lg"><label><input type="checkbox" checked name="bird_types" value="{{ bird_type.id }}" class="checkbox-input" > {{ bird_type }}</label></div>
+                        {% else %}
+                        <div class="checkbox checkbox-lg"><label><input type="checkbox" name="bird_types" value="{{ bird_type.id }}" class="checkbox-input" > {{ bird_type }}</label></div>
+                        {% endif %}
+                    {% endfor %}
+            </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingThree">
+      <h4 class="panel-title">
+        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          <span class="glyphicon glyphicon-chevron-right"></span> Name, Description & Color</a>
+
+      </h4>
+    </div>
+    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+      <div class="panel-body">
+
         <div class="form-group">
-            <label for="">3-Letter Name</label> <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Think of a 1-3 letter nickname or abbreviation to call your bird mix. For example PNW would be a good nickname for a Pacific Northwest bird mix. You can always change this later."><span class="glyphicon glyphicon-info-sign"></span></a>
-            <input name="nickname" type="" class="form-control input-lg" id="" value="{{ mix_nickname }}" maxlength="3">
+            <label for="nickname">Mix Name</label> <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Think of a 1-3 letter nickname or abbreviation to call your bird mix. For example PNW would be a good nickname for a Pacific Northwest bird mix. You can always change this later."><span class="glyphicon glyphicon-info-sign"></span></a>
+            <input name="nickname" type="text" class="form-control input-lg" id="nickname" value="{{ mix_nickname }}" maxlength="3">
          </div>
         <div class="form-group">
-            <label for="">Description</label> <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Descriptions can be as long as you would like, but under 30 characters looks best. You can always change this later."><span class="glyphicon glyphicon-info-sign"></span></a>
-            <input name="description" type="" class="form-control input-lg" id="" value="{{ mix_description }}">
+            <label for="description">Description</label> <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Descriptions can be as long as you would like, but under 30 characters looks best. You can always change this later."><span class="glyphicon glyphicon-info-sign"></span></a>
+            <input name="description" type="text" class="form-control input-lg" id="description" value="{{ mix_description }}">
         </div>
         <div class="form-group">
-            <label>Color</label> <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Choose a color for the icon on the home page. You can change this whenever you want."><span class="glyphicon glyphicon-info-sign"></span></a>
+            <label for="color-options">Color</label> <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Choose a color for the icon on the home page. You can change this whenever you want."><span class="glyphicon glyphicon-info-sign"></span></a>
             <select class="form-control input-lg" id="color-options" name="color">
               <option value="OLV" id="OLV">Olive</option>
               <option value="YEL" id="YEL">Yellow</option>
@@ -40,43 +101,18 @@ Mix{% endblock %}
            </select>
         </div>
 
-        <hr>
-        <div class="form-group">
-            <fieldset name="state">
-            <legend>States <a href="#" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Choose your home state to learn birds in your area. Cover a bigger geographic area by adding bordering states. You can change this later if you want to add or delete states. Or you can make different mixes for different states."><span class="glyphicon glyphicon-info-sign"></span></a></legend>
-            <a href="#" onclick="toggle_visibility('state-buttons'); return false;" ><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Filter by states</a>
-            <div id="state-buttons">
-                {% for state in state_list %}
-                    {% if state.selected %}
-                    <div class="checkbox checkbox-lg"><label><input type="checkbox" checked name="states" value="{{ state.id }}" > {{ state }}</label></div>
-                    {% else %}
-                    <div class="checkbox checkbox-lg"><label><input type="checkbox" name="states" value="{{ state.id }}" > {{ state }}</label></div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </fieldset>
-        </div>
-        <hr>
-        <div class="form-group">
-            <fieldset name="bird_type">
-            <legend>Bird Types <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Narrow your mix by choosing one or more bird types. You can change this later if you want to add or delete bird types."><span class="glyphicon glyphicon-info-sign"></span></a></legend>
-            <a href="#" onclick="toggle_visibility('type-categories'); return false;" ><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>Filter by bird types</a>
-            <div id="type-categories">
-                {% for bird_type in bird_type_list %}
-                    {% if bird_type.selected %}
-                    <div class="checkbox checkbox-lg"><label><input type="checkbox" checked name="bird_types" value="{{ bird_type.id }}" > {{ bird_type }}</label></div>
-                    {% else %}
-                    <div class="checkbox checkbox-lg"><label><input type="checkbox" name="bird_types" value="{{ bird_type.id }}" > {{ bird_type }}</label></div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </fieldset>
-        </div>
-       <hr>
+      </div>
+    </div>
+  </div>
+</div>
 
+
+        <hr><!-- TODO put in accordions -->
+
+        <input type="hidden" name="action" id="action" value="save">
     <input type="submit" class="btn btn-default btn-lg colored-btn" value="SAVE">
     {% if mix_nickname %} <!--TODO what if user hasn't entered nickname. check for id instead-->
-    <input type="submit" class="btn btn-default btn-lg" value="Delete">
+    <input type="button" class="btn btn-default btn-lg" id="delete-btn" value="Delete">
     <a class="btn btn-default btn-lg" href="/mix_detail/{{ mix_slug }}" role="button">Cancel</a>
     {% else%}
     <a class="btn btn-default btn-lg" href="/" role="button">Cancel</a>
@@ -88,11 +124,68 @@ Mix{% endblock %}
     </div><!--edit-->
     <script type="text/javascript">
     <!--
-    function myFunction() {
+    function setMixColor() {
         if ("{{ mix_color }}" != "TGY"){
         document.getElementById("{{ mix_color }}").selected = true;
         }
     }
+    //TODO has value of null for NEW mix because delete button doesn't exist
+    function deleteMix() {
+        var reset = document.getElementById("delete-btn");
+        reset.onclick = function () {
+            var confirm_deletion = window.confirm("{{ mix_nickname }} mix will be permanently deleted!");
+            if(confirm_deletion) {
+                document.getElementById("action").value = "delete";
+                document.getElementById("mix-form").submit();
+                window.location = "/"
+            }
+        };
+    }
+
+    function highlightChangedCheckbox() {
+            if(this.checked) {
+                this.parentElement.parentElement.style.backgroundColor = "#485661";
+                this.parentElement.style.color = "#ffffff";
+            }
+            else {
+                this.parentElement.parentElement.style.backgroundColor = "#ffffff";
+                this.parentElement.style.color = "#337ab7";
+            }
+
+    }
+
+    function highlightCheckboxes(fieldsetID) { //TODO why don't styles show for new mixes
+        var fieldset = document.getElementById(fieldsetID);
+        var checkboxes = fieldset.getElementsByClassName("checkbox-input");
+        var none_checked = true;
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].onchange = highlightChangedCheckbox;
+            if(checkboxes[i].checked) {
+                checkboxes[i].parentElement.parentElement.style.backgroundColor = "#485661";
+                checkboxes[i].parentElement.style.color = "#ffffff";
+                none_checked = false;
+            }
+        }
+        var all_states = document.getElementById("all-states");
+        if(none_checked) {
+            all_states.parentElement.parentElement.style.backgroundColor = "#485661";
+            all_states.parentElement.style.color = "#ffffff";
+            all_states.checked = true;
+        }
+        else {
+            all_states.checked = false;
+        }
+    }
+//TODO add logic so if any thing is selected ALL deselects
+    var states_fieldset = "state-buttons";
+    var bird_types_fieldset = "type-categories";
+    setMixColor();
+    deleteMix(); // delete not showing for new mix
+    highlightCheckboxes(states_fieldset);
+    highlightCheckboxes(bird_types_fieldset);
+
+
+
     //-->
     </script>
 {% endblock maincontent %}

@@ -57,12 +57,18 @@ function updateQuestionNum(index) {
 
 function addHintListener(index) {
     // Give user the bird type when the click the hint button
-    var hint = document.getElementsByTagName("button")[0];
-    var text = document.createTextNode(QUESTION_LIST[index].bird_type + " ");
+    var hint = document.getElementById("birdtype");
+    var strBirdtype = document.createTextNode(QUESTION_LIST[index].bird_type + " ");
     hint.addEventListener("click", function () {
-        hint.appendChild(text);
+        hint.innerHTML = strBirdtype;
         //TODO make icon dark grey
     });
+}
+
+function clearHint() {
+    // Give user the bird type when the click the hint button
+    var hint = document.getElementById("birdtype");
+    hint.innerHTML = "";
 }
 
 function validateInput(input) {
@@ -72,7 +78,7 @@ function validateInput(input) {
     addToAnswers(input);
     //console.log("USER_ANSWERS.length = " + USER_ANSWERS.length + " < " + " NUM_QUESTIONS is " + NUM_QUESTIONS);
     if (USER_ANSWERS.length < NUM_QUESTIONS) {
-        //clearn hint
+        clearHint();
         makeNewQuestion();
     }
     else {
