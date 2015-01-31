@@ -362,28 +362,20 @@ h4.panel-title a:focus {
     background-color:#ffffff;
     border: 2px solid #cccccc;
 }
-/*#state-buttons div.checkbox:hover, #type-categories div.checkbox:hover {
-    background-color:#485661;
+#birdtypes-buttons div.checkbox {
+    border-radius:3px;
+    background-color:#ffffff;
+    border: 2px solid #cccccc;
+    padding:0 5px 0 5px;
 }
-
-#state-buttons div.checkbox:hover label, #type-categories div.checkbox:hover label {
-    background-color:#485661;
-    color:#ffffff;
-}*/
-#state-buttons div.checkbox label, #type-categories div.checkbox label {
+#state-buttons div.checkbox label, #birdtypes-buttons div.checkbox label {
     text-align:center;
     display:block;
     padding:5px;
     color:#337ab7;
 }
-/*#state-buttons input, #type-categories input {
+#state-buttons input, #birdtypes-buttons input {
     display:none;
-}*/
-#type-categories div.checkbox {
-    border-radius:3px;
-    background-color:#ffffff;
-    border: 2px solid #cccccc;
-    padding:0 5px 0 5px;
 }
 #nickname {
     width:90px;

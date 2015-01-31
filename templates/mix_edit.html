@@ -33,7 +33,7 @@ Mix{% endblock %}
           <div class="panel-body">
           <div class="form-group">
                 <fieldset id="state-buttons">
-                <div class="checkbox checkbox-lg"><label><input type="checkbox" checked name="all-states" id="all-states" value="All" class="checkbox-all" > All</label></div>
+                <div class="checkbox checkbox-lg"><label><input type="checkbox" name="all-states" id="all-states" value="All" class="checkbox-input" > All</label></div>
                     {% for state in state_list %}
                         {% if state.selected %}
                         <div class="checkbox checkbox-lg"><label><input type="checkbox" checked name="states" value="{{ state.id }}" class="checkbox-input" > {{ state }}</label></div>
@@ -56,8 +56,8 @@ Mix{% endblock %}
         <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
           <div class="panel-body">
             <div class="form-group">
-                <fieldset id="type-categories">
-                     <div class="checkbox checkbox-lg"><label><input type="checkbox" name="all-bird-types" value="All" class="checkbox-input" checked > All</label></div>
+                <fieldset id="birdtypes-buttons">
+                     <div class="checkbox checkbox-lg"><label><input type="checkbox" name="all-birdtypes" id="all-birdtypes" value="All" class="checkbox-input"  > All</label></div>
                     {% for bird_type in bird_type_list %}
                         {% if bird_type.selected %}
                         <div class="checkbox checkbox-lg"><label><input type="checkbox" checked name="bird_types" value="{{ bird_type.id }}" class="checkbox-input" > {{ bird_type }}</label></div>
@@ -105,13 +105,10 @@ Mix{% endblock %}
     </div>
   </div>
 </div>
-
-
-        <hr><!-- TODO put in accordions -->
-
+        <hr>
         <input type="hidden" name="action" id="action" value="save">
     <input type="submit" class="btn btn-default btn-lg colored-btn" value="SAVE">
-    {% if mix_nickname %} <!--TODO what if user hasn't entered nickname. check for id instead-->
+    {% if mix_id %}
     <input type="button" class="btn btn-default btn-lg" id="delete-btn" value="Delete">
     <a class="btn btn-default btn-lg" href="/mix_detail/{{ mix_slug }}" role="button">Cancel</a>
     {% else%}
@@ -142,47 +139,111 @@ Mix{% endblock %}
         };
     }
 
-    function highlightChangedCheckbox() {
-            if(this.checked) {
-                this.parentElement.parentElement.style.backgroundColor = "#485661";
-                this.parentElement.style.color = "#ffffff";
+    function uncheckBtns(fieldsetID) {
+        var fieldset = document.getElementById(fieldsetID);
+        var checkboxes = fieldset.getElementsByClassName("checkbox-input");
+        for (var i = 0; i < checkboxes.length; i++) {
+            if(checkboxes[i].checked) {
+                checkboxes[i].parentElement.parentElement.style.backgroundColor = unchecked_BG;
+                checkboxes[i].parentElement.style.color = unchecked_FG;
+                checkboxes[i].checked = false;
             }
+        }
+    }
+
+    function noneSelected(fieldsetID) {
+        var fieldset = document.getElementById(fieldsetID);
+        var checkboxes = fieldset.getElementsByClassName("checkbox-input");
+        var none_selected = true;
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                none_selected = false
+            }
+        }
+        return none_selected;
+    }
+
+    function highlightChangedCheckbox() {
+            // if this checkbox is selected...
+            if(this.checked) {
+                // if this is the ALL checkbox, then deselect all the other checkboxes and make the ALL checkbox selected
+                if (this === all_states_checkbox) {
+                    uncheckBtns(states_fieldsetID);
+                    this.checked = true;
+                }
+                // if this is not the ALL button, make sure ALL is deselected
+                else {
+                    if(all_states_checkbox.checked === true) {
+                        all_states_checkbox.parentElement.parentElement.style.backgroundColor = unchecked_BG;
+                        all_states_checkbox.parentElement.style.color = unchecked_FG;
+                        all_states_checkbox.checked = false;
+                    }
+                }
+                // set styles to selected state
+                this.parentElement.parentElement.style.backgroundColor = checked_BG;
+                this.parentElement.style.color = checked_FG;
+
+            }
+            // if this checkbox is not selected...
             else {
-                this.parentElement.parentElement.style.backgroundColor = "#ffffff";
-                this.parentElement.style.color = "#337ab7";
+                if(this === all_states_checkbox) {
+                    // the ALL checkbox can't be deselected by clicking it on it, only by clicking other checkboxes
+                    this.checked = true;
+                }
+                else {
+                    this.parentElement.parentElement.style.backgroundColor = unchecked_BG;
+                    this.parentElement.style.color = unchecked_FG;
+                    // If there aren't any other checkboxes selected, than select the ALL checkbox
+                    var checkAll = noneSelected(states_fieldsetID);
+                    if(checkAll) {
+                        all_states_checkbox.parentElement.parentElement.style.backgroundColor = checked_BG;
+                        all_states_checkbox.parentElement.style.color = checked_FG;
+                        all_states_checkbox.checked = true;
+                    }
+                }
             }
 
     }
 
-    function highlightCheckboxes(fieldsetID) { //TODO why don't styles show for new mixes
-        var fieldset = document.getElementById(fieldsetID);
-        var checkboxes = fieldset.getElementsByClassName("checkbox-input");
+    function highlightCheckboxes(fieldsetID, all_checkbox) { //TODO why don't styles show for new mixes
+
+
         var none_checked = true;
         for (var i = 0; i < checkboxes.length; i++) {
-            checkboxes[i].onchange = highlightChangedCheckbox;
+            checkboxes[i].onchange = highlightChangedCheckbox; //TODO open question
             if(checkboxes[i].checked) {
-                checkboxes[i].parentElement.parentElement.style.backgroundColor = "#485661";
-                checkboxes[i].parentElement.style.color = "#ffffff";
+                checkboxes[i].parentElement.parentElement.style.backgroundColor = checked_BG;
+                checkboxes[i].parentElement.style.color = checked_FG;
                 none_checked = false;
             }
         }
-        var all_states = document.getElementById("all-states");
+        // if nothing is checked, highlight the ALL button
         if(none_checked) {
-            all_states.parentElement.parentElement.style.backgroundColor = "#485661";
-            all_states.parentElement.style.color = "#ffffff";
-            all_states.checked = true;
+            all_checkbox.parentElement.parentElement.style.backgroundColor = checked_BG;
+            all_checkbox.parentElement.style.color = checked_FG;
+            all_checkbox.checked = true;
         }
         else {
-            all_states.checked = false;
+            all_checkbox.parentElement.parentElement.style.backgroundColor = unchecked_BG;
+            all_checkbox.parentElement.style.color = unchecked_FG;
+            all_checkbox.checked = false;
         }
     }
-//TODO add logic so if any thing is selected ALL deselects
-    var states_fieldset = "state-buttons";
-    var bird_types_fieldset = "type-categories";
+//TODO add logic so if any thing is selected ALL deselects for Birdtypes
+//TODO why does ALL checkbox deselect on refresh?
+    var states_fieldsetID = "state-buttons";
+    var birdtypes_fieldsetID = "birdtypes-buttons";
+    var all_states_checkbox = document.getElementById("all-states");
+    var all_birdtypes_checkbox = document.getElementById("all-birdtypes");
+    var checked_BG = "#485661";
+    var checked_FG  = "#ffffff";
+    var unchecked_BG = "#ffffff";
+    var unchecked_FG = "#337ab7";
+
     setMixColor();
-    deleteMix(); // delete not showing for new mix
-    highlightCheckboxes(states_fieldset);
-    highlightCheckboxes(bird_types_fieldset);
+    deleteMix();
+    highlightCheckboxes(states_fieldsetID, all_states_checkbox);
+    highlightCheckboxes(birdtypes_fieldsetID, all_birdtypes_checkbox);
 
 
 
