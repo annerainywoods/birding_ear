@@ -139,7 +139,7 @@ Mix{% endblock %}
         };
     }
 
-    function uncheckBtns(fieldsetID) {
+    function uncheckBoxes(fieldsetID) {
         var fieldset = document.getElementById(fieldsetID);
         var checkboxes = fieldset.getElementsByClassName("checkbox-input");
         for (var i = 0; i < checkboxes.length; i++) {
@@ -165,48 +165,56 @@ Mix{% endblock %}
 
     function highlightChangedCheckbox() {
             // if this checkbox is selected...
+            var parentID = this.parentElement.parentElement.parentElement.getAttribute("id");
             if(this.checked) {
-                // if this is the ALL checkbox, then deselect all the other checkboxes and make the ALL checkbox selected
-                if (this === all_states_checkbox) {
-                    uncheckBtns(states_fieldsetID);
-                    this.checked = true;
-                }
-                // if this is not the ALL button, make sure ALL is deselected
-                else {
-                    if(all_states_checkbox.checked === true) {
-                        all_states_checkbox.parentElement.parentElement.style.backgroundColor = unchecked_BG;
-                        all_states_checkbox.parentElement.style.color = unchecked_FG;
-                        all_states_checkbox.checked = false;
-                    }
-                }
-                // set styles to selected state
-                this.parentElement.parentElement.style.backgroundColor = checked_BG;
-                this.parentElement.style.color = checked_FG;
+               if(parentID == states_fieldsetID) {
+                   // if this is the ALL checkbox, then deselect all the other checkboxes and make the ALL checkbox selected
+                   if (this === all_states_checkbox) {
+                       uncheckBoxes(states_fieldsetID);
+                       this.checked = true;
+                   }
+                   // if this is not the ALL button, make sure ALL is deselected
+                   else {
+                       if (all_states_checkbox.checked === true) {
+                           all_states_checkbox.parentElement.parentElement.style.backgroundColor = unchecked_BG;
+                           all_states_checkbox.parentElement.style.color = unchecked_FG;
+                           all_states_checkbox.checked = false;
+                       }
+                   }
+                   // set styles to selected state
+                   this.parentElement.parentElement.style.backgroundColor = checked_BG;
+                   this.parentElement.style.color = checked_FG;
+               }
 
             }
             // if this checkbox is not selected...
             else {
-                if(this === all_states_checkbox) {
-                    // the ALL checkbox can't be deselected by clicking it on it, only by clicking other checkboxes
-                    this.checked = true;
-                }
-                else {
-                    this.parentElement.parentElement.style.backgroundColor = unchecked_BG;
-                    this.parentElement.style.color = unchecked_FG;
-                    // If there aren't any other checkboxes selected, than select the ALL checkbox
-                    var checkAll = noneSelected(states_fieldsetID);
-                    if(checkAll) {
-                        all_states_checkbox.parentElement.parentElement.style.backgroundColor = checked_BG;
-                        all_states_checkbox.parentElement.style.color = checked_FG;
-                        all_states_checkbox.checked = true;
+                if (parentID == states_fieldsetID) {
+                    if (this === all_states_checkbox) {
+                        // the ALL checkbox can't be deselected by clicking it on it, only by clicking other checkboxes
+                        this.checked = true;
                     }
+                    else {
+                        this.parentElement.parentElement.style.backgroundColor = unchecked_BG;
+                        this.parentElement.style.color = unchecked_FG;
+                        // If there aren't any other checkboxes selected, than select the ALL checkbox
+                        var checkAll = noneSelected(states_fieldsetID);
+                        if (checkAll) {
+                            all_states_checkbox.parentElement.parentElement.style.backgroundColor = checked_BG;
+                            all_states_checkbox.parentElement.style.color = checked_FG;
+                            all_states_checkbox.checked = true;
+                        }
+
+                    }
+
                 }
             }
 
     }
 
     function highlightCheckboxes(fieldsetID, all_checkbox) { //TODO why don't styles show for new mixes
-
+        var fieldset = document.getElementById(fieldsetID);
+        var checkboxes = fieldset.getElementsByClassName("checkbox-input");
 
         var none_checked = true;
         for (var i = 0; i < checkboxes.length; i++) {
@@ -223,6 +231,7 @@ Mix{% endblock %}
             all_checkbox.parentElement.style.color = checked_FG;
             all_checkbox.checked = true;
         }
+        // if something else is checked, deselect the ALL button
         else {
             all_checkbox.parentElement.parentElement.style.backgroundColor = unchecked_BG;
             all_checkbox.parentElement.style.color = unchecked_FG;
@@ -230,7 +239,7 @@ Mix{% endblock %}
         }
     }
 //TODO add logic so if any thing is selected ALL deselects for Birdtypes
-//TODO why does ALL checkbox deselect on refresh?
+//TODO why does ALL checkbox desele
     var states_fieldsetID = "state-buttons";
     var birdtypes_fieldsetID = "birdtypes-buttons";
     var all_states_checkbox = document.getElementById("all-states");

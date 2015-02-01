@@ -472,6 +472,7 @@ AWOODS.DRILL =  function() {
         }
 
         function makeNewQuestion() {
+            //TODO check for "listen only" here: choose 3 random birds, hide question options
             var new_has_birds = verifyNewBirdPile();
             var question_bird_pile = chooseBirdPile(new_has_birds);
             selectBird(question_bird_pile);
