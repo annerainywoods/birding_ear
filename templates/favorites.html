@@ -5,14 +5,14 @@
     Favorites
 {% endblock %}
 
-{% block body %}<body class="TGY"  onload="myFunction()">{% endblock %}
+{% block body %}<body class="TGY">{% endblock %}
 
 {% block maincontent %}
-    <h1>Favorites</h1>
-    <div class="btn-group btn-group-justified theme-grey" role="group" aria-label="Justified button group">
+    <h2>Favorites</h2>
+    <!--<div class="btn-group btn-group-justified theme-grey" role="group" aria-label="Justified button group">
       <a href="#" class="btn btn-default" role="button">DRILL</a>
       <a href="#" class="btn btn-default" role="button">QUIZ</a>
-    </div>
+    </div>-->
     <div id="favorites" class="detail-info">
     <form role="form" method="post">
     {% csrf_token %}
@@ -20,7 +20,7 @@
         {% for favorite in fav_total %}
         <div>
             <a class="{{ favorite.html_classes }} bird_name" href="/bird_detail/{{ favorite.bird.slug }}" >{{ favorite.bird.name }}</a>
-            <a class="unfavorite" href="#" onclick="this.form.submit();">Unfavorite</a>
+            <!--<a class="unfavorite" href="#" onclick="this.form.submit();">Unfavorite</a>-->
             <audio controls>
                 <source src="{{ favorite.bird.bird_call }}" type="audio/mpeg" />
             </audio>
@@ -35,7 +35,7 @@
     </ul>
     </div><!--favorites-->
     <script>
-        function myFunction() {
+        function favoritesLearned() {
             var learnedSpan = " <span class='glyphicon glyphicon-check'></span>";
             var learned = document.getElementsByClassName("learned");
             for (var i = 0; i < learned.length; i++) {
@@ -44,6 +44,7 @@
                 learned[i].innerHTML = content + learnedSpan;
             }
         }
+        favoritesLearned();
 
     </script>
 {% endblock maincontent %}

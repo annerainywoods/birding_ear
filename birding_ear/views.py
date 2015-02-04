@@ -74,7 +74,7 @@ def mix_detail(request, mix_id_slug):
     context_dict['mix_color'] = mix.color
     context_dict['mix_states'] = mix.states.all().order_by("name")
     context_dict['mix_bird_types'] = mix.bird_types.all()
-    context_dict['bird_list'] = mix.bird_list
+    context_dict['bird_list'] = mix.bird_list #TODO order by name
     context_dict['num_learned'] = mix.num_learned
     context = RequestContext(request)
     return render_to_response('mix_detail.html', context_dict, context)
@@ -129,8 +129,8 @@ def settings(request):
     if request.method == "POST":
         if request.POST["action"] == "reset":
             drill_setting.frequency_new = 3
-            drill_setting.frequency_learned = 4
-            drill_setting.frequency_missed = 2
+            drill_setting.frequency_learned = 2
+            drill_setting.frequency_missed = 4
         else:
             #if request.POST["action"] === "delete" ... drill_setting.user = request.user
             #drill_setting.delete()

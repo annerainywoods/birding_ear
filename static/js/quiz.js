@@ -57,22 +57,22 @@ function updateQuestionNum(index) {
 
 function addHintListener(index) {
     // Give user the bird type when the click the hint button
-    var hint = document.getElementById("birdtype");
-    var strBirdtype = document.createTextNode(QUESTION_LIST[index].bird_type + " ");
-    hint.addEventListener("click", function () {
-        hint.innerHTML = strBirdtype;
+    var hint_span = document.getElementById("birdtype");
+    var hint_button = document.getElementById("hint");
+    hint_button.addEventListener("click", function () {
+        hint_span.innerHTML = " " + QUESTION_LIST[index].bird_type;
         //TODO make icon dark grey
     });
 }
 
 function clearHint() {
     // Give user the bird type when the click the hint button
-    var hint = document.getElementById("birdtype");
-    hint.innerHTML = "";
+    var hint_span = document.getElementById("birdtype");
+    hint_span.innerHTML = "";
 }
 
 function validateInput(input) {
-    //input is letters,
+    //TODO form validation for existence and letters,
 
     console.log("input is " + input);
     addToAnswers(input);
@@ -147,6 +147,7 @@ window.addEventListener("load", load);
 
 function captureSubmit() {
     var input = document.getElementById("birdname").value;
+    console.log("captureSubmit input is " + input);
     validateInput(input);
     return false;
 }
