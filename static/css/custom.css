@@ -228,12 +228,24 @@ label, legend {
 .js-variable {
     display:none;
 }
+
+#empty_username, #empty_password {
+    display:none;
+}
+
+.inline-error {
+    color: #a44013;
+    font-size: 14px;
+}
+
+
 #bird-detail, #favorites, #settings, #login, #edit  {
     margin:30px;
 }
 #mix-detail-info, #drill, #quiz, #quiz-results {
     margin: 0 30px 0 30px;
 }
+
 
 /******************** Home ********************/
 a.mix-icon {

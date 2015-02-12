@@ -41,12 +41,12 @@
     <a href="javascript:void(0)" id="menu-icon" onclick="toggle_visibility('menu'); return false;" ><span class="glyphicon glyphicon-list"></span><span class="sr-only">Navigation</span></a>
     <div id="menu">
         <ul class="nav nav-pills nav-stacked">
-          <li role="presentation"><a href="/logout">Logout, {{ user.get_username }}</a></li>
-          <li role="presentation"><a href="/">My Bird Mixes</a></li>
+          <li role="presentation"><a href="/logout" onclick="toggle_visibility('menu')">Logout, {{ user.get_username }}</a></li>
+          <li role="presentation"><a href="/" onclick="toggle_visibility('menu')">My Bird Mixes</a></li>
           <!--<li role="presentation"><a href="#">Search Birds</a></li>-->
-          <li role="presentation"><a href="/favorites">Favorites</a></li>
+          <li role="presentation"><a href="/favorites" onclick="toggle_visibility('menu')">Favorites</a></li>
           <!--<li role="presentation"><a href="#">Quiz History</a></li>-->
-          <li role="presentation"><a href="/settings">Settings</a></li>
+          <li role="presentation"><a href="/settings" onclick="toggle_visibility('menu')">Settings</a></li>
         </ul>
     </div>
     {% endif %}

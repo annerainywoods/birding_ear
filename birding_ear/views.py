@@ -12,19 +12,35 @@ from django.contrib.auth import logout
 
 
 def register(request):
+    context_dict = {}
+    context_dict['username_taken'] = False
+    context_dict['submitted'] = False
     if request.method == "POST":
-        user = User.objects.create_user(request.POST["username"], None, request.POST["password"])
-        #extend the bird model
-        for b in Bird.objects.all():
-            ub = UserBird()
-            ub.bird = b
-            ub.user = user
-            ub.save()
-        #create drill settings
-        drill = Drill()
-        drill.user = user
-        drill.save()
-    return render(request, 'register.html')
+        # check to see if username already exists. Return error.
+        users = User.objects.filter(username=request.POST["username"])
+        print request.POST["username"]
+        print users
+        if len(users) > 0: #test for existence of user
+            print "taken"
+            context_dict['username_taken'] = True
+            context_dict['username_input'] = request.POST["username"]
+        else:
+            print "not taken"
+            user = User.objects.create_user(request.POST["username"], None, request.POST["password"])
+            context_dict['submitted'] = True
+            #extend the bird model
+            for b in Bird.objects.all():
+                ub = UserBird()
+                ub.bird = b
+                ub.user = user
+                ub.save()
+            #create drill settings
+            drill = Drill()
+            drill.user = user
+            drill.save()
+            return redirect('login')
+    context = RequestContext(request)
+    return render_to_response('register.html', context_dict, context)
 
 
 def login(request):
@@ -74,7 +90,7 @@ def mix_detail(request, mix_id_slug):
     context_dict['mix_color'] = mix.color
     context_dict['mix_states'] = mix.states.all().order_by("name")
     context_dict['mix_bird_types'] = mix.bird_types.all()
-    context_dict['bird_list'] = mix.bird_list #TODO order by name
+    context_dict['bird_list'] = mix.bird_list
     context_dict['num_learned'] = mix.num_learned
     context = RequestContext(request)
     return render_to_response('mix_detail.html', context_dict, context)
@@ -87,6 +103,7 @@ def mix_settings_edit(request, mix_id_slug):
     if request.method == "POST":
         if request.POST["action"] == "delete":
             mix.delete()
+            return redirect('/')
         else:
             mix.nickname = request.POST["nickname"]
             mix.description = request.POST["description"]

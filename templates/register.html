@@ -8,19 +8,61 @@
 {% block maincontent %}
     <h2>Register</h2>
     <div id="login">
-        <form method="post">
+        <form method="post" id="registration-form">
             {% csrf_token %}
             <div class="form-group">
                 <label for="">Username</label>
-                <input name="username" type="" class="form-control input-lg" id="">
+                <input name="username" type="text" class="form-control input-lg" id="username">
+                {% if username_taken %}
+                <p class="inline-error" id="username">Sorry, the username "{{ username_input }}" is already taken</p>
+                {% endif %}
+                <p class="inline-error" id="empty_username">Please enter a username</p>
             </div>
             <div class="form-group">
                 <label for="">Password</label>
-                <input name="password" type="password" class="form-control input-lg" id="">
+                <input name="password" type="password" class="form-control input-lg" id="password">
+                <p class="inline-error" id="empty_password">Please enter a password</p>
             </div>
 
             <input type="submit" class="btn btn-default btn-lg colored-btn" value="REGISTER">
 
         </form>
+        {% if submitted %}
+        <script>
+            if (window.confirm("Do you really want to leave?")) {
+                window.open("exit.html", "Thanks for Visiting!");//TODO
+            }
+        </script>
+
+        {% endif %}
+
     </div>
+
+<script>
+    function form_validation(evt) { //TODO
+        var empty_username = document.getElementById("empty_username");
+        var empty_password = document.getElementById("empty_password");
+        if (document.getElementById("username").value.length < 1) {
+            empty_username.style.display = "block";
+            evt.preventDefault();
+        }
+        else {
+            empty_username.style.display = "none";
+        }
+        if (document.getElementById("password").value.length < 1) {
+            empty_password.style.display = "block";
+            evt.preventDefault();
+        }
+        else {
+            empty_password.style.display = "none";
+        }
+    }
+    form = document.getElementById("registration-form");
+    form.addEventListener("submit", form_validation);
+
+
+
+
+</script>
+
 {% endblock maincontent %}

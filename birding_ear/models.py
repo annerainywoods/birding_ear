@@ -127,13 +127,13 @@ class Mix(models.Model):
         user = self.user
         if mix.bird_types.filter(mix__user=user) and mix.states.filter(mix__user=user):
             bird_list = UserBird.objects.filter(user=user).filter(bird__bird_type__in=mix.bird_types.all())\
-                .filter(bird__states__in=mix.states.all()).distinct()
+                .filter(bird__states__in=mix.states.all()).distinct().order_by("bird__name")
         elif mix.bird_types.filter(mix__user=user):
-            bird_list = UserBird.objects.filter(user=user).filter(bird__bird_type__in=mix.bird_types.all())
+            bird_list = UserBird.objects.filter(user=user).filter(bird__bird_type__in=mix.bird_types.all()).order_by("bird__name")
         elif mix.states.filter(mix__user=user):
-            bird_list = UserBird.objects.filter(user=user).filter(bird__states__in=mix.states.all()).distinct()
+            bird_list = UserBird.objects.filter(user=user).filter(bird__states__in=mix.states.all()).distinct().order_by("bird__name")
         else:
-            bird_list = UserBird.objects.filter(user=user)
+            bird_list = UserBird.objects.filter(user=user).order_by("bird__name")
         return bird_list
 
     def __unicode__(self):
