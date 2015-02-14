@@ -524,6 +524,7 @@ AWOODS.DRILL =  function() {
         window.addEventListener("load", load);
 
         function saveData(formData){
+            console.log("formData has " + formData)
             request.onload = undefined;
             request.onreadystatechange = function() {
                 if ((request.readyState == 4) && (request.status == 200)) {
@@ -538,12 +539,13 @@ AWOODS.DRILL =  function() {
         }
 
         function captureBirdpile(birdpile) {
+            console.log("QUESTION_BIRD.bid is " + QUESTION_BIRD.bid);
             //build name value pairs for the POST url
             var formDataList = [];
             formDataList.push(
-                encodeURIComponent("id")
+                encodeURIComponent("bid")
                             + "=" +
-                encodeURIComponent(QUESTION_BIRD.id)
+                encodeURIComponent(QUESTION_BIRD.bid)
             );
             formDataList.push(
                 encodeURIComponent("birdpile")

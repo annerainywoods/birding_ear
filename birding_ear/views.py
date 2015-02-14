@@ -38,7 +38,11 @@ def register(request):
             drill = Drill()
             drill.user = user
             drill.save()
-            return redirect('login')
+            user.save()
+            loginuser = auth.authenticate(username=request.POST["username"], password=request.POST["password"])
+
+            auth.login(request, loginuser)
+            return redirect('index')
     context = RequestContext(request)
     return render_to_response('register.html', context_dict, context)
 
@@ -301,7 +305,8 @@ def mix_drill_birds(request, mix_id_slug):
             "name": b.bird.name,
             "bird_type": b.bird.bird_type.name,
             "excluded": b.excluded,
-            "id": b.id
+            "id": b.id,
+            "bid": b.bird.id
         })
 
     return HttpResponse(dumps(birds_ajax_list), content_type="application/json")
@@ -309,7 +314,7 @@ def mix_drill_birds(request, mix_id_slug):
 @csrf_exempt
 def update_bird_detail(request):
     if request.method == "POST":
-        b_id = request.POST["id"]
+        b_id = request.POST["bid"]
         b_birdpile = request.POST["birdpile"]
         bird = UserBird.objects.filter(user=request.user).get(bird__id=b_id)
         bird.bird_pile = b_birdpile

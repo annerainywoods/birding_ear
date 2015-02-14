@@ -14,7 +14,7 @@
                 <label for="">Username</label>
                 <input name="username" type="text" class="form-control input-lg" id="username">
                 {% if username_taken %}
-                <p class="inline-error" id="username">Sorry, the username "{{ username_input }}" is already taken</p>
+                <p class="inline-error">Sorry, the username "{{ username_input }}" is already taken</p>
                 {% endif %}
                 <p class="inline-error" id="empty_username">Please enter a username</p>
             </div>
@@ -28,10 +28,8 @@
 
         </form>
         {% if submitted %}
-        <script>
-            if (window.confirm("Do you really want to leave?")) {
-                window.open("exit.html", "Thanks for Visiting!");//TODO
-            }
+        <script>s
+            // login and send to index.html
         </script>
 
         {% endif %}
@@ -39,7 +37,7 @@
     </div>
 
 <script>
-    function form_validation(evt) { //TODO
+    function form_validation(evt) {
         var empty_username = document.getElementById("empty_username");
         var empty_password = document.getElementById("empty_password");
         if (document.getElementById("username").value.length < 1) {
