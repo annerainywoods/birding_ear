@@ -76,8 +76,9 @@ body {
 }
 div#wrapper {
     width: 500px;
-    min-height: 1000px;
+    min-height: 500px;
     margin:0 auto;
+    padding: 0 0 30px 0;
     position:relative;
     background: #e0e0e0;
 }
@@ -404,12 +405,13 @@ h4.panel-title a:focus {
     margin: 20px 0 0 0;
 }
 .drill-btns button {
-    height:60px;
+    min-height:60px;
     margin:10px 0;
-    padding:10px 0 0 30px;
+    padding:10px 0 0 0;
     font-size: 24px;
     background-color: #4b6071;
-    color:white
+    color:white;
+    white-space: normal;
 }
 .drill-btns button:hover {
     background-color: #506e86;
@@ -497,4 +499,43 @@ h4.panel-title a:focus {
 }
 #settings form div div {
     display:inline-block;
+}
+
+/********************* media queries *************************/
+@media (max-width: 767px) {
+        div#wrapper {
+        width: 100%;
+    }
+    .btn-group a.btn {
+    font-weight:bold; font-size:22px
+}
+
+  .detail-info ul li ul {
+        margin: 10px 0 0 20px;
+    }
+
+    .detail-info ul li ul li {
+        padding: 0 0 10px 0;
+    }
+    div#menu {
+        width:90%;
+    }
+    h1 {
+    padding: 10px 50px 10px 10px;
+
+    }
+    h2 {
+        margin: 20px 90px 20px 15px;
+    }
+    #bird-detail, #favorites, #settings, #login, #edit  {
+    margin:30px 15px;
+    }
+    #mix-detail-info, #drill, #quiz, #quiz-results {
+    margin: 0 15px;
+    }
+
+
+ /*  */
+
+
 }
