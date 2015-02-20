@@ -23,18 +23,7 @@
     {% block script %}{% endblock %}
   </head>
   {% block body %}<body>{% endblock %}
-    <script type="text/javascript">
-    <!--
-        function toggle_visibility(id) {
-           var e = document.getElementById(id);
-           if(e.style.display == 'block')
-              e.style.display = 'none';
-           else
-              e.style.display = 'block';
-        }
-        /*http://blog.movalog.com/a/javascript-toggle-visibility/*/
-    //-->
-    </script>
+
   <div id="wrapper">
     <h1 id="sitename"><a href="/">Birding<span>Ear</span></a></h1>
     {% if user.get_username %}
@@ -64,6 +53,16 @@
         $(function () {
             $('[data-toggle="popover"]').popover()
         })
+
+        function toggle_visibility(id) {
+           var e = document.getElementById(id);
+           if(e.style.display == 'block')
+              e.style.display = 'none';
+           else
+              e.style.display = 'block';
+        }
+        /*http://blog.movalog.com/a/javascript-toggle-visibility/*/
+    //-->
     </script>
 
   </body>

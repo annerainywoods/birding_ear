@@ -66,6 +66,10 @@ a:focus {
   text-decoration: underline;
 }
 
+.cursor-pointer {
+    cursor:pointer;
+}
+
 /*********** Common *********************/
 body {
     font-family: Verdana, sans-serif;
@@ -76,7 +80,7 @@ body {
 }
 div#wrapper {
     width: 500px;
-    min-height: 500px;
+    min-height: 750px;
     margin:0 auto;
     padding: 0 0 30px 0;
     position:relative;
@@ -502,7 +506,7 @@ h4.panel-title a:focus {
 }
 
 /********************* media queries *************************/
-@media (max-width: 767px) {
+@media (max-width: 500px) {
         div#wrapper {
         width: 100%;
     }
@@ -534,6 +538,22 @@ h4.panel-title a:focus {
     margin: 0 15px;
     }
 
+    .mix-icon {
+        margin: 10px 0 0 15px;
+    }
+    .mix-icon.add-new li.verdana-plus {
+    font-size:60px;
+    display:block;
+    text-align:center;
+    margin:-15px 0 0 0;
+    }
+    .mix-icon.add-new li.mix_abbr {
+        font-size:24px;
+        display:block;
+        text-align:center;
+        margin:-15px 0 0 0;
+        line-height: 24px;
+    }
 
  /*  */
 

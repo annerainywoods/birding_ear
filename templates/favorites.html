@@ -31,7 +31,7 @@
     {% endif %}
     </form>
     <ul>
-        <li><span class="glyphicon glyphicon-check bullet" aria-hidden="true"></span><strong>{{ fav_learned.count }} of {{fav_total.count}} learned</strong> <a href="#" title="When you get a bird right in a drill or quiz, then it gets the status of 'learned'. If you miss the bird in a future drill or quiz, it will go back to 'unlearned'."><span class="glyphicon glyphicon-info-sign"></span></a></li>
+        <li><span class="glyphicon glyphicon-check bullet" aria-hidden="true"></span><strong>{{ fav_learned.count }} of {{fav_total.count}} learned</strong> <a role="button" data-container="body" data-toggle="popover" data-placement="top" class="cursor-pointer" data-content="When you get a bird right in a drill or quiz, then it gets the status of 'learned'. If you miss the bird in a future drill or quiz, it will go back to 'unlearned'."><span class="glyphicon glyphicon-info-sign"></span></a></li>
     </ul>
     </div><!--favorites-->
     <script>

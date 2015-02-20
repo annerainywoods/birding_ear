@@ -16,7 +16,7 @@
     <div id="mix-detail-info" class="detail-info">
 
     <ul>
-        <li><span class="glyphicon glyphicon-check bullet" aria-hidden="true"></span><strong>{{ num_learned }} of {{bird_list.count}} learned </strong> <a href="#" title="When you get a bird right in a drill or quiz, then it gets the status of 'learned'. If you miss the bird in a future drill or quiz, it will go back to 'unlearned'."><span class="glyphicon glyphicon-info-sign"></span></a></li>
+        <li><span class="glyphicon glyphicon-check bullet" aria-hidden="true"></span><strong>{{ num_learned }} of {{bird_list.count}} learned </strong> <a role="button" data-container="body" data-toggle="popover" data-placement="top" class="cursor-pointer" data-content="When you get a bird right in a drill or quiz, then it gets the status of 'learned'. If you miss the bird in a future drill or quiz, it will go back to 'unlearned'."><span class="glyphicon glyphicon-info-sign"></span></a></li>
         <li><span class="glyphicon glyphicon-map-marker bullet" aria-hidden="true"></span><strong>States</strong>
 
             <ul class="inline-list">
@@ -40,7 +40,7 @@
             {% endif %}
             </ul>
         </li>
-        <li><span class="glyphicon glyphicon-folder-open bullet" aria-hidden="true"></span><strong>Birds in the mix</strong>  <a href="#" title="These birds have been filtered by the states and bird types you selected. You can always edit these settings to make your bird mix bigger or smaller."><span class="glyphicon glyphicon-info-sign"></span></a>
+        <li><span class="glyphicon glyphicon-folder-open bullet" aria-hidden="true"></span><strong>Birds in the mix</strong> <a role="button" data-container="body" data-toggle="popover" data-placement="top" class="cursor-pointer" data-content="These birds have been filtered by the states and bird types you selected. You can always edit these settings to make your bird mix bigger or smaller."><span class="glyphicon glyphicon-info-sign"></span></a>
             <ul>
             {% if bird_list %}
                 {% for bird in bird_list %}

@@ -12,7 +12,7 @@
     <div id="settings">
     <form role="form" method="POST" id="settings-form">
         {% csrf_token %}
-        <h4>Bird Frequency in Drills <a href="#" title="Adjust how often new, learned and missed birds come up in the drill questions. Does not apply to listen-only mode."><span class="glyphicon glyphicon-info-sign"></span></a></h4>
+        <h4>Bird Frequency in Drills <a role="button" data-container="body" data-toggle="popover" data-placement="top" class="cursor-pointer" data-content="Adjust how often new, learned and missed birds come up in the drill questions. Does not apply to listen-only mode."><span class="glyphicon glyphicon-info-sign"></span></a></h4>
         <div class="form-group">
             <label class="control-label">New Birds</label>
             <div>

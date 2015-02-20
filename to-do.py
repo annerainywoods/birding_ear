@@ -1,17 +1,7 @@
 '''
 
-uSER TESTING -
- delete cache for form inputs
-
-DRILL
-- learned icon should show when there is one learned bird
 
 
-LOGOUT
-- login screen this redirects to does not accept login
-
-MIX-DETAIL
-- learned icon should show when there is one learned bird
 
 MIX EDIT
 - make only one popover open at time
@@ -27,7 +17,6 @@ HOME
 BASE
 - get menu js into external file?
 
-
-Put in remaining static pages
-
+SEARCH
+- add search page
 '''

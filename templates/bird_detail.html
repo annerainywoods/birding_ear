@@ -17,13 +17,13 @@
             <label>
                 <input type="checkbox" name="favorite" onclick="this.form.submit();" {{ favorite }} > Save as Favorite
             </label>
-            <a href="#" title="You can drill and quiz from your Favorites mix."><span class="glyphicon glyphicon-info-sign"></span></a>
+            <a role="button" data-container="body" data-toggle="popover" data-placement="top" class="cursor-pointer" data-content="You can drill and quiz from your Favorites mix."><span class="glyphicon glyphicon-info-sign"></span></a>
         </div>
         <div class="checkbox checkbox-lg">
             <label>
                 <input type="checkbox" name="excluded" onclick="this.form.submit();" {{ excluded }} > Exclude from drills
             </label>
-            <a href="#" title="Checking this won't delete this bird from your mixes -- it will just disappear from drill questions. You can bring it back anytime."><span class="glyphicon glyphicon-info-sign"></span></a>
+            <a role="button" data-container="body" data-toggle="popover" data-placement="top" class="cursor-pointer" data-content="Checking this won't delete this bird from your mixes -- it will just disappear from drill questions. You can bring it back anytime."><span class="glyphicon glyphicon-info-sign"></span></a>
         </div>
     </form>
     <ul>
@@ -32,13 +32,13 @@
         {% else %}
         <li><span class="glyphicon glyphicon-unchecked bullet" aria-hidden="true"></span><strong>I haven't learned this one yet.</strong>
         {% endif %}
-        <a href="#" title="When you get a bird right in a drill or quiz, then it gets the status of 'learned'. If you miss the bird in a future drill or quiz, it will go back to 'unlearned'."><span class="glyphicon glyphicon-info-sign"></span></a></li>
+        <a role="button" data-container="body" data-toggle="popover" data-placement="top" class="cursor-pointer" data-content="When you get a bird right in a drill or quiz, then it gets the status of 'learned'. If you miss the bird in a future drill or quiz, it will go back to 'unlearned'."><span class="glyphicon glyphicon-info-sign"></span></a></li>
         <li><span class="glyphicon glyphicon-filter bullet" aria-hidden="true"></span><strong>Type of bird</strong>
             <ul>
                 <li>{{ bird_type }}</li>
             </ul>
         </li>
-        <li><span class="glyphicon glyphicon-folder-open bullet" aria-hidden="true"></span><strong>Bird mixes with this bird</strong>
+        <li><span class="glyphicon glyphicon-folder-open bullet" aria-hidden="true"></span><strong>Bird mixes</strong>
             <ul>
                 {% if parent_mixes %}
                     {% for mix in parent_mixes %}
