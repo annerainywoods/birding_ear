@@ -15,16 +15,17 @@
         {% csrf_token %}
         <div class="checkbox checkbox-lg">
             <label>
-                <input type="checkbox" name="favorite" onclick="this.form.submit();" {{ favorite }} > Save as Favorite
+                <input type="checkbox" name="favorite" id="favorite" onclick="captureCheckboxes()" {{ favorite }} > Save as Favorite
             </label>
             <a role="button" data-container="body" data-toggle="popover" data-placement="top" class="cursor-pointer" data-content="You can drill and quiz from your Favorites mix."><span class="glyphicon glyphicon-info-sign"></span></a>
         </div>
         <div class="checkbox checkbox-lg">
             <label>
-                <input type="checkbox" name="excluded" onclick="this.form.submit();" {{ excluded }} > Exclude from drills
+                <input type="checkbox" name="excluded" id="excluded" onclick="captureCheckboxes()" {{ excluded }} > Exclude from drills
             </label>
             <a role="button" data-container="body" data-toggle="popover" data-placement="top" class="cursor-pointer" data-content="Checking this won't delete this bird from your mixes -- it will just disappear from drill questions. You can bring it back anytime."><span class="glyphicon glyphicon-info-sign"></span></a>
         </div>
+         <input type="hidden" id="bid" value="{{ bird_id }}">
     </form>
     <ul>
         {% if bird_pile == "L" %}
@@ -52,8 +53,52 @@
     </ul>
 
 
-
+<!-- create a form and post it. -->
 
 
     </div><!--bird-detail-->
+<script>
+       var request = new XMLHttpRequest();
+
+       function saveData(formData){
+            console.log("formData has " + formData);
+            request.onload = undefined;
+            request.onreadystatechange = function() {
+                if ((request.readyState == 4) && (request.status == 200)) {
+                    var data = JSON.parse(request.responseText);
+                    console.log(data);
+                }
+            };
+            request.open("POST","/update_bird_detail/",true);
+            request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            request.send(formData);
+        }
+
+        function captureCheckboxes() {
+            var form_bid = document.getElementById("bid").value;
+            var form_favorite = document.getElementById("favorite").checked;
+            var form_excluded = document.getElementById("excluded").checked;
+            //build name value pairs for the POST url
+            var formDataList = [];
+            //favorite
+            formDataList.push(
+                encodeURIComponent("bid")
+                            + "=" +
+                encodeURIComponent(form_bid)
+            );
+            //excluded
+            formDataList.push(
+                encodeURIComponent("favorite")
+                            + "=" +
+                encodeURIComponent(form_favorite)
+            );
+            //id
+            formDataList.push(
+                encodeURIComponent("excluded")
+                            + "=" +
+                encodeURIComponent(form_excluded)
+            );
+            saveData(formDataList.join("&"));
+        }
+</script>
 {% endblock maincontent %}

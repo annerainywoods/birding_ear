@@ -16,7 +16,7 @@
         <div class="form-group">
             <label class="control-label">New Birds</label>
             <div>
-                <select class="form-control input-lg" name="frequency_new">
+                <select class="form-control input-lg" name="frequency_new" id="frequency_new">
                   <option value="5" id="fn_5">Very High</option>
                   <option value="4" id="fn_4">High</option>
                   <option value="3" id="fn_3">Medium</option>
@@ -28,7 +28,7 @@
         <div class="form-group">
             <label class="control-label">Learned Birds</label>
             <div>
-                <select class="form-control input-lg" name="frequency_learned">
+                <select class="form-control input-lg" name="frequency_learned" id="frequency_learned">
                   <option value="5" id="fl_5">Very High</option>
                   <option value="4" id="fl_4">High</option>
                   <option value="3" id="fl_3">Medium</option>
@@ -40,7 +40,7 @@
         <div class="form-group">
             <label class="control-label">Missed Birds</label>
             <div>
-                <select class="form-control input-lg" name="frequency_missed">
+                <select class="form-control input-lg" name="frequency_missed" id="frequency_missed">
                   <option value="5" id="fm_5">Very High</option>
                   <option value="4" id="fm_4">High</option>
                   <option value="3" id="fm_3">Medium</option>
@@ -83,11 +83,11 @@
         <div class="checkbox checkbox-lg">
             <label style="width:100%"><input type="checkbox" name="drill_order" {{ drill_order }}> Group related birds together</label>
         </div>-->
-        <input type="hidden" name="action" id="action" value="save">
+        <!--<input type="hidden" name="action" id="action" value="save">-->
         <hr>
         <input type="submit" class="btn btn-default btn-lg colored-btn" id="save-btn" value="SAVE">
-        <input type="button" id="reset-btn" class="btn btn-default btn-lg " value="Reset">
-        <input type="button" id="back-btn" class="btn btn-default btn-lg " value="Back" >
+        <!--<input type="button" id="reset-btn" class="btn btn-default btn-lg " value="Reset">
+        <input type="button" id="back-btn" class="btn btn-default btn-lg " value="Back" >--><!--TODO add in buttons-->
         </form>
 
 
@@ -105,14 +105,15 @@
         //document.getElementById("nb_" + {{ next_batch }}).selected = true;
     }
 
+/*  TODO fix RESET button
     function resetDefaults() {
         var reset = document.getElementById("reset-btn");
         reset.onclick = function () {
             document.getElementById("action").value = "reset";
             document.getElementById("settings-form").submit();
         };
-    }
-
+    }*/
+/* TODO fix BACK button
     function redirectBack() {
         var back = document.getElementById("back-btn");
         back.onclick = function () {
@@ -124,13 +125,62 @@
                 location.href = document.referrer;
             }
         }
-    }
+    }*/
 
     showSelected();
-    resetDefaults();
-    redirectBack();
+    /*resetDefaults();
+    redirectBack(); TODO fix buttons */
     //TODO AJAX for SAVE. Redirect to previous page. Deleted "BACK"
 
     //-->
     </script>
+
+<script>
+       var request = new XMLHttpRequest();
+
+       function saveData(formData){
+            console.log("formData has " + formData);
+            request.onload = undefined;
+            request.onreadystatechange = function() {
+                if ((request.readyState == 4) && (request.status == 200)) {
+                    var data = JSON.parse(request.responseText);
+                    console.log(data);
+                }
+            };
+            request.open("POST","/update_settings/",true);
+            request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            request.send(formData);
+        }
+
+        function captureFrequencies(event) {
+            event.preventDefault();
+            var f_new = document.getElementById("frequency_new").value;
+            var f_learned = document.getElementById("frequency_learned").value;
+            var f_missed = document.getElementById("frequency_missed").value;
+            //build name value pairs for the POST url
+            var formDataList = [];
+            //new
+            formDataList.push(
+                encodeURIComponent("frequency_new")
+                            + "=" +
+                encodeURIComponent(f_new.toString())
+            );
+            //learned
+            formDataList.push(
+                encodeURIComponent("frequency_learned")
+                            + "=" +
+                encodeURIComponent(f_learned.toString())
+            );
+            //missed
+            formDataList.push(
+                encodeURIComponent("frequency_missed")
+                            + "=" +
+                encodeURIComponent(f_missed.toString())
+            );
+            saveData(formDataList.join("&"));
+        }
+
+        document.getElementById("settings-form").addEventListener("submit", captureFrequencies);
+
+</script>
 {% endblock maincontent %}

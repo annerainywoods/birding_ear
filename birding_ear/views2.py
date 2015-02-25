@@ -147,6 +147,32 @@ def mix_settings_edit(request, mix_id_slug):
 def settings(request):
     context_dict = {}
     drill_setting = Drill.objects.get(user=request.user)
+    if request.method == "POST":
+        if request.POST["action"] == "reset":
+            drill_setting.frequency_new = 3
+            drill_setting.frequency_learned = 2
+            drill_setting.frequency_missed = 4
+        else:
+            #if request.POST["action"] === "delete" ... drill_setting.user = request.user
+            #drill_setting.delete()
+            #else...
+            drill_setting.frequency_new = request.POST["frequency_new"]
+            drill_setting.frequency_learned = request.POST["frequency_learned"]
+            drill_setting.frequency_missed = request.POST["frequency_missed"]
+            # drill_setting.batch_size = request.POST["batch_size"]
+            # drill_setting.next_batch = request.POST["next_batch"]
+            # #updates if "Skip audio for answer options" is checked
+            # if "challenge_level" in request.POST:
+            #     drill_setting.challenge_level = True
+            # else:
+            #     drill_setting.challenge_level = False
+            # #updates if "Group related birds together" is checked
+            # if "drill_order" in request.POST:
+            #     drill_setting.challenge_level = "REL"
+            # else:
+            #     drill_setting.challenge_level = "RAN"
+            drill_setting.user = request.user
+            drill_setting.save()
     context_dict['frequency_new'] = drill_setting.frequency_new
     context_dict['frequency_learned'] = drill_setting.frequency_learned
     context_dict['frequency_missed'] = drill_setting.frequency_missed
@@ -165,18 +191,6 @@ def settings(request):
     context = RequestContext(request)
     return render_to_response('settings.html', context_dict, context)
 
-@csrf_exempt
-def update_settings(request):
-    if request.method == "POST":
-        f_new = request.POST["frequency_new"]
-        f_learned = request.POST["frequency_learned"]
-        f_missed = request.POST["frequency_missed"]
-        drill_setting = Drill.objects.get(user=request.user)
-        drill_setting.frequency_new = int(f_new)
-        drill_setting.frequency_learned = int(f_learned)
-        drill_setting.frequency_missed = int(f_missed)
-        drill_setting.save()
-    return HttpResponse('{"status":"success"}', content_type="application/json") #TODO why isn't this saving?
 
 @login_required
 def mix_settings_new(request):

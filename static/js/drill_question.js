@@ -524,7 +524,7 @@ AWOODS.DRILL =  function() {
         window.addEventListener("load", load);
 
         function saveData(formData){
-            console.log("formData has " + formData)
+            console.log("formData has " + formData);
             request.onload = undefined;
             request.onreadystatechange = function() {
                 if ((request.readyState == 4) && (request.status == 200)) {
@@ -533,7 +533,7 @@ AWOODS.DRILL =  function() {
                     console.log(data);
                 }
             };
-            request.open("POST","/update_bird_detail/",true);
+            request.open("POST","/update_birdpile/",true);
             request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
             request.send(formData);
         }
