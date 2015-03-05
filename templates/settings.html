@@ -83,59 +83,20 @@
         <div class="checkbox checkbox-lg">
             <label style="width:100%"><input type="checkbox" name="drill_order" {{ drill_order }}> Group related birds together</label>
         </div>-->
-        <!--<input type="hidden" name="action" id="action" value="save">-->
+        <input type="hidden" name="default-new" id="default-new" value="3">
+        <input type="hidden" name="default-learned" id="default-learned" value="2">
+        <input type="hidden" name="default-missed" id="default-missed" value="4">
         <hr>
         <input type="submit" class="btn btn-default btn-lg colored-btn" id="save-btn" value="SAVE">
-        <!--<input type="button" id="reset-btn" class="btn btn-default btn-lg " value="Reset">
-        <input type="button" id="back-btn" class="btn btn-default btn-lg " value="Back" >--><!--TODO add in buttons-->
+        <input type="button" id="reset-btn" class="btn btn-default btn-lg " value="Default settings">
+        <input type="button" id="back-btn" class="btn btn-default btn-lg " value="Back" >
         </form>
 
 
     </div><!--settings-->
 
-
-    <script type="text/javascript">
-    <!--
-
-    function showSelected() {
-        document.getElementById("fn_" + {{ frequency_new }}).selected = true;
-        document.getElementById("fl_" + {{ frequency_learned }}).selected = true;
-        document.getElementById("fm_" + {{ frequency_missed }}).selected = true;
-        //document.getElementById("bs_" + {{ batch_size }}).selected = true;
-        //document.getElementById("nb_" + {{ next_batch }}).selected = true;
-    }
-
-/*  TODO fix RESET button
-    function resetDefaults() {
-        var reset = document.getElementById("reset-btn");
-        reset.onclick = function () {
-            document.getElementById("action").value = "reset";
-            document.getElementById("settings-form").submit();
-        };
-    }*/
-/* TODO fix BACK button
-    function redirectBack() {
-        var back = document.getElementById("back-btn");
-        back.onclick = function () {
-            if(document.referrer == "http://127.0.0.1:8000/settings") {
-                location.href = document.referrer;
-                history.go(-2);
-            }
-            else {
-                location.href = document.referrer;
-            }
-        }
-    }*/
-
-    showSelected();
-    /*resetDefaults();
-    redirectBack(); TODO fix buttons */
-    //TODO AJAX for SAVE. Redirect to previous page. Deleted "BACK"
-
-    //-->
-    </script>
-
 <script>
+
        var request = new XMLHttpRequest();
 
        function saveData(formData){
@@ -180,7 +141,57 @@
             saveData(formDataList.join("&"));
         }
 
+       function resetFrequencies(event) {
+            event.preventDefault();
+            var f_new = document.getElementById("default-new").value;
+            var f_learned = document.getElementById("default-learned").value;
+            var f_missed = document.getElementById("default-missed").value;
+            document.getElementById("frequency_new").value = f_new;
+            document.getElementById("frequency_learned").value = f_learned;
+            document.getElementById("frequency_missed").value = f_missed;
+            //build name value pairs for the POST url
+            var formDataList = [];
+            //new
+            formDataList.push(
+                encodeURIComponent("frequency_new")
+                            + "=" +
+                encodeURIComponent(f_new.toString())
+            );
+            //learned
+            formDataList.push(
+                encodeURIComponent("frequency_learned")
+                            + "=" +
+                encodeURIComponent(f_learned.toString())
+            );
+            //missed
+            formDataList.push(
+                encodeURIComponent("frequency_missed")
+                            + "=" +
+                encodeURIComponent(f_missed.toString())
+            );
+            saveData(formDataList.join("&"));
+        }
+
+        function redirectBack() {
+            history.go(-1);
+        }
+
+        function showSelected() {
+            document.getElementById("fn_" + {{ frequency_new }}).selected = true;
+            document.getElementById("fl_" + {{ frequency_learned }}).selected = true;
+            document.getElementById("fm_" + {{ frequency_missed }}).selected = true;
+            //document.getElementById("bs_" + {{ batch_size }}).selected = true;
+            //document.getElementById("nb_" + {{ next_batch }}).selected = true;
+        }
+        // show the user's saved settings
+        showSelected();
+        // back button
+        document.getElementById("back-btn").addEventListener("click", redirectBack);
+        // get data from form submission
         document.getElementById("settings-form").addEventListener("submit", captureFrequencies);
+        // reset default frequencies
+        document.getElementById("reset-btn").addEventListener("click", resetFrequencies);
+
 
 </script>
 {% endblock maincontent %}

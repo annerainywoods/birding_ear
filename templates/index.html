@@ -10,15 +10,15 @@
 
     {% if mixes %}
         {% for mix in mixes %}
-        <a href="/mix_detail/{{ mix.slug }}" title="Go to {{ mix.description }}" class="mix-icon">
+        <a href="/mix_detail/{{ mix.slug }}" title="Go to {{ mix.description }}" class="mix-icon no-trophy"><!--TODO add class of trophy-->
         <ul class="{{ mix.color }}">
-            <li class="mix_learned">{{ mix.num_learned }}<span class="sr-only"> Learned</span></li>
-            <li class="mix_total">{{ mix.bird_list.count }}<span class="sr-only"> Total</span></li>
+            <li class="mix_learned">{{ mix.num_learned }}</li>
+            <li class="mix_total">{{ mix.bird_list.count }}</li>
             <li class="mix_abbr">{{ mix.nickname }}</li>
         </ul>
         <h4>{{ mix.description }}</h4>
         </a><!--end mix-icon-->
-    {% endfor %}
+        {% endfor %}
     {% endif %}
     {% if fav_total %}
     <a href="favorites" title="Go to Favorites" class="mix-icon">
@@ -36,7 +36,24 @@
             <li class="mix_abbr">ADD NEW</li>
         </ul>
     </a><!--end mix-icon-->
-
+    <script>
+        function addTrophy() {
+            console.log("hit function");
+            //get arrays for the learned and total numbers, and mix icons
+            var learned_array = document.getElementsByClassName("mix_learned");
+            var total_array = document.getElementsByClassName("mix_total");
+            var mix_array = document.getElementsByClassName("mix-icon no-trophy");
+            // compare pairs and see if they are equal
+            for(var i = 0; i < mix_array.length - 1; i++) {
+                if(learned_array[i].innerHTML === total_array[i].innerHTML) {
+                    mix_array[i].className = "mix-icon trophy";
+                    console.log("trophy");
+                }
+            }
+            // if equal, add "trophy" to the mix-icon class
+        }
+        addTrophy();
+    </script>
 {% endblock maincontent %}
 
 

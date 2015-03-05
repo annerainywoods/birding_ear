@@ -176,7 +176,7 @@ def update_settings(request):
         drill_setting.frequency_learned = int(f_learned)
         drill_setting.frequency_missed = int(f_missed)
         drill_setting.save()
-    return HttpResponse('{"status":"success"}', content_type="application/json") #TODO why isn't this saving?
+    return HttpResponse('{"status":"success"}', content_type="application/json")
 
 @login_required
 def mix_settings_new(request):
