@@ -40,7 +40,7 @@ function buildQuestionList() {
 
     for (var j = 0; j < NUM_QUESTIONS; j++) {
         do {
-            random_bird = Math.floor(Math.random() * (NUM_QUESTIONS - 0)) + 0;
+            random_bird = Math.floor(Math.random() * (quiz_birds_proxy.length - 0)) + 0;
         } while (quiz_birds_proxy[random_bird].used === true);
         //add the used property so we don't get duplicates
         quiz_birds_proxy[random_bird].used = true;
@@ -130,6 +130,7 @@ function getScore() {
     score = Math.round((score / QUESTION_LIST.length) * 100);
     return score;
 }
+
 function showScore(score) {
     console.log("Score is " + score);
     var level;
@@ -155,18 +156,57 @@ function showScore(score) {
     document.getElementById("message").innerHTML = message;
 }
 
-//TODO add listener to toggle audio button
+//listener to toggle audio play button
+function btnPlayAudio() {
+    var playButtons = document.getElementsByClassName("btn-play-audio");
+    for(var i = 0; i < playButtons.length - 1; i++) {
+        playButtons[i].addEventListener("click", function () {
+            // pause other audio
+            // loop thru all buttons to stop them? var otherBird = this.parentNode.parentNode.childNodes[0];
+            //otherBird.pause();
 
-//TODO add listener for btn_new_quiz to reload screen
+            // get sibling "audio".src
+            var thisBird = this.parentNode.childNodes[0];
+            thisBird.play();
 
+            // TODO check if audio source is already playing (flag?)
+            // if yes...
+            // stop any audio that is playing
+            // play appropriate audio
+            // else, play audio
+        })
+    }
+}
+
+//Listener for btn_new_quiz to reload screen
+function btnNewQuiz() {
+
+    document.getElementById("btn_new_quiz").addEventListener("click", function () {
+        location.reload();
+    });
+}
 function showFeedback() {
     var feedbackList = document.getElementById("quiz-feedback");
     for(var i = 0; i < QUESTION_LIST.length; i++) {
-        // TODO http://www.w3schools.com/jsref/met_node_clonenode.asp
         // clone list item and append to feedbackList
-        // Add innerHTML for user's answer and audio source for play button
+        var li = feedbackList.firstElementChild;
+        var cln = li.cloneNode(true);
+        // Add innerHTML for user's answer
+        cln.getElementsByClassName("quiz-user-answer")[0].innerHTML = USER_ANSWERS[i];
+        // Add audio source for correct answer
+        cln.getElementsByTagName("audio")[0].src = QUESTION_LIST[i].bird_call;
+        console.log("bird call is " + QUESTION_LIST[i].bird_call)
         // If user's answer was wrong, add innerHTML for correct answer and relevant glyph class
-        // Remove class "hidden" from the list item
+        if(QUESTION_LIST[i].name.toLowerCase() !== USER_ANSWERS[i].toLowerCase()) {
+            cln.getElementsByClassName("quiz-correct-answer")[0].innerHTML = "<br >Answer: " + QUESTION_LIST[i].name;
+            cln.getElementsByClassName("glyphicon-ok")[0].className = "glyphicon glyphicon-remove";
+        }
+        else
+        {
+            cln.getElementsByClassName("quiz-correct-answer")[0].innerHTML = ""
+        }
+        cln.className = "";
+        feedbackList.appendChild(cln);
     }
 }
 
@@ -179,6 +219,8 @@ function showAnswers() {
     var score = getScore();
     showScore(score);
     showFeedback();
+    btnNewQuiz();
+    btnPlayAudio();
 }
 
 function makeNewQuestion() {

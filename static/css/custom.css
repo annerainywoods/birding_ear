@@ -445,11 +445,15 @@ h4.panel-title a:focus {
 
 
 /********************* Quiz *************************/
+
 #quiz form {
     margin:20px 0 0 0;
 }
 #quiz .glyphicon {
     font-size:20px;
+}
+#quiz-results li.template {
+    display:none;
 }
 #quiz-results h3#level {
     margin-bottom:5px;
@@ -469,8 +473,13 @@ h4.panel-title a:focus {
 #quiz-results .quiz-correct-answer {
     font-size:14px;
 }
+#quiz-results ol {
+    margin: 0 0 20px 25px;
+    padding:0;
+}
 #quiz-results li {
     padding-bottom:20px;
+    margin:0;
 }
 #quiz-results {
     display:none;
@@ -510,17 +519,16 @@ h4.panel-title a:focus {
 
 /********************* media queries *************************/
 @media (max-width: 500px) {
-        div#wrapper {
+
+    div#wrapper {
         width: 100%;
     }
     .btn-group a.btn {
     font-weight:bold; font-size:22px
-}
-
-  .detail-info ul li ul {
+    }
+    .detail-info ul li ul {
         margin: 10px 0 0 20px;
     }
-
     .detail-info ul li ul li {
         padding: 0 0 10px 0;
     }
