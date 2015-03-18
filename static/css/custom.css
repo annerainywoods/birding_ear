@@ -449,28 +449,31 @@ h4.panel-title a:focus {
     margin:20px 0 0 0;
 }
 #quiz .glyphicon {
-    color:#337AB7;
     font-size:20px;
 }
-#answers-btns button {
-    text-align: left
+#quiz-results h3#level {
+    margin-bottom:5px;
 }
-#answers-btns .glyphicon-remove {
+#quiz-results p#message {
+    margin-bottom:20px;
+}
+#quiz-results .glyphicon-remove {
     color:#a44013;
 }
-#answers-btns .glyphicon-ok {
+#quiz-results .glyphicon-ok {
     color:#818506;
 }
-#answers-btns .bird-name-wrong {
-    text-decoration:line-through;
+#quiz-results .btn {
+    display:inline
 }
-#answers-btns .feedback-right{
-    padding-left:22px;
-    display:block;
+#quiz-results .quiz-correct-answer {
+    font-size:14px;
 }
-#answers-btns .feedback-wrong{
-    padding-left:22px;
-    display:block;
+#quiz-results li {
+    padding-bottom:20px;
+}
+#quiz-results {
+    display:none;
 }
 /********************* Favorites*************************/
 
