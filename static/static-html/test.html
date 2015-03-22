@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BirdingEar</title>
+
+    <!-- Bootstrap -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+    <link href='http://fonts.googleapis.com/css?family=Arvo:400,700' rel='stylesheet' type='text/css'>
+    <link href="../css/custom.css" rel="stylesheet">
+  </head>
+  <body>
+  <div id="wrapper">
+    <h1 id="sitename"><a href="#">Birding<span>Ear</span></a></h1>
+    <a href="#" id="menu-icon"><span class="glyphicon glyphicon-list"></span><span class="sr-only">Navigation</span></a>
+    <h2>Red-necked Grebe</h2>
+    <div id="bird-detail"  class="detail-info">
+    <audio controls>
+        <source src="../media/call_common_loon.mp3" type="audio/mpeg" />
+    </audio>
+    <form role="form">
+        <div class="checkbox checkbox-lg">
+            <label><input type="checkbox" value=""> Save as Favorite</label> <a href="#" title="You can drill and quiz from your Favorites mix."><span class="glyphicon glyphicon-info-sign"></span></a>
+        </div>
+        <div class="checkbox checkbox-lg">
+            <label><input type="checkbox" value=""> Exclude from drills</label> <a href="#" title="Checking this won't delete this bird from your mixes -- it will just disappear from drill questions. You can bring it back anytime."><span class="glyphicon glyphicon-info-sign"></span></a>
+        </div>
+    </form>
+    <ul>
+        <li><span class="glyphicon glyphicon-headphones bullet" aria-hidden="true"></span><strong>I have learned it!</strong> <a href="#" title="When you get a bird right in a drill or quiz, then it gets the status of 'learned'. If you miss the bird in a future drill or quiz, it will go back to 'unlearned'."><span class="glyphicon glyphicon-info-sign"></span></a></li>
+        <li><span class="glyphicon glyphicon-filter bullet" aria-hidden="true"></span><strong>Type of bird</strong>
+            <ul>
+                <li>Diving Birds</li>
+            </ul>
+        </li>
+        <li><span class="glyphicon glyphicon-folder-open bullet" aria-hidden="true"></span><strong>Bird mixes with this bird</strong>
+            <ul>
+                <li><a href="#"><strong>COB:</strong> Coastal Birds</a></li>
+                <li><a href="#"><strong>PNW:</strong> Washington and Oregon</a></li>
+            </ul>
+        </li>
+    </ul>
+
+
+
+
+    </div><!--drill-->
+    <div class="clearfix"></div>
+    </div><!--end wrapper-->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../js/bootstrap.min.js"></script>
+  </body>
+</html>
