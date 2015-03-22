@@ -159,28 +159,36 @@ function showScore(score) {
 //listener to toggle audio play button
 function btnPlayAudio() {
     var playButtons = document.getElementsByClassName("btn-play-audio");
-    for(var i = 0; i < playButtons.length - 1; i++) {
+    for (var i = 0; i < playButtons.length; i++) {
         playButtons[i].addEventListener("click", function () {
-            // pause other audio
-            // loop thru all buttons to stop them? var otherBird = this.parentNode.parentNode.childNodes[0];
-            //otherBird.pause();
-
-            // get sibling "audio".src
-            var thisBird = this.parentNode.childNodes[0];
-            thisBird.play();
-
-            // TODO check if audio source is already playing (flag?)
-            // if yes...
-            // stop any audio that is playing
-            // play appropriate audio
-            // else, play audio
+            // target the button's audio tag
+            var answerAudioElement = this.parentNode.firstChild;
+            // check to see if audio is playing
+            if(answerAudioElement.className === "audio-off") {
+                // pause all audio before playing a bird call
+                var feedbackList = document.getElementById("quiz-feedback");
+                var audioElements = feedbackList.getElementsByTagName("audio");
+                for (var j = 0; j < audioElements.length - 1; j++ ) {
+                    audioElements[j].pause();
+                    console.log("pause bird call");
+                }
+                // play audio for correct bird
+                answerAudioElement.play();
+                console.log("play bird call");
+                // switch flag to 'on'
+                answerAudioElement.className = "";
+            }
+            else // audio is not playing
+            {
+                answerAudioElement.pause();
+                answerAudioElement.className = "audio-off";
+            }
         })
     }
 }
 
 //Listener for btn_new_quiz to reload screen
 function btnNewQuiz() {
-
     document.getElementById("btn_new_quiz").addEventListener("click", function () {
         location.reload();
     });
@@ -195,7 +203,6 @@ function showFeedback() {
         cln.getElementsByClassName("quiz-user-answer")[0].innerHTML = USER_ANSWERS[i];
         // Add audio source for correct answer
         cln.getElementsByTagName("audio")[0].src = QUESTION_LIST[i].bird_call;
-        console.log("bird call is " + QUESTION_LIST[i].bird_call)
         // If user's answer was wrong, add innerHTML for correct answer and relevant glyph class
         if(QUESTION_LIST[i].name.toLowerCase() !== USER_ANSWERS[i].toLowerCase()) {
             cln.getElementsByClassName("quiz-correct-answer")[0].innerHTML = "<br >Answer: " + QUESTION_LIST[i].name;
